@@ -11,6 +11,12 @@ public class Category {
         this.catDesc = catDesc;
     }
 
+    public Category() {
+        this.catID = "0000";
+        this.catName = "defaultCategory";
+        this.catDesc = "default";
+    }
+
     public String getCatID() {
         return catID;
     }

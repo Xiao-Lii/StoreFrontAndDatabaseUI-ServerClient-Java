@@ -12,17 +12,21 @@ public class Server implements Runnable {
     private final int port, backlog;
     private int connectionCounter;
     private ServerSocket serverSocket;
+    private boolean keepServerRunning;
 
     public Server(int port, int backlog) {
         this.port = port;
         this.backlog = backlog;
         this.connectionCounter = 0;
+        this.keepServerRunning = true;
     }
 
     public Server() {
         this.port = 10000;
-        this.backlog = 5;
+        this.backlog = 100;
         this.connectionCounter = 0;
+        this.keepServerRunning = true;
+
     }
 
     private Socket waitForClientConnection() throws IOException {
