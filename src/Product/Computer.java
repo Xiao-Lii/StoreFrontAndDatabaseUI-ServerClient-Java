@@ -9,10 +9,14 @@ public class Computer extends Electronic {
 
     public Computer(String productID, String productName, String brandName, String productDesc,
                     LocalDate dateOfIncorp, ArrayList<Category> prodCategory, String serialNum,
-                    LocalDate warrantyPer, String ram, String hardDrive) {
+                    Integer warrantyPer, String ram, String hardDrive) {
         super(productID, productName, brandName, productDesc, dateOfIncorp, prodCategory, serialNum, warrantyPer);
         this.ram = ram;
         this.hardDrive = hardDrive;
+        // Category(String catID, String catName, String catDesc)
+        Category electronic = new Category("Computers72","Computers",
+                "Technological entertainment revolving around computers");
+        prodCategory.add(electronic);
     }
 
     public String getRam() {

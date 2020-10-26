@@ -19,6 +19,19 @@ public abstract class Product {
         this.productDesc = productDesc;
         this.dateOfIncorp = dateOfIncorp;
         this.prodCategory = prodCategory;
+        Category defaultCategory = new Category();
+        this.prodCategory.add(defaultCategory);
+    }
+
+    public Product(String productID, String productName, String brandName, String productDesc,
+                   LocalDate dateOfIncorp) {
+        this.productID = productID;
+        this.productName = productName;
+        this.brandName = brandName;
+        this.productDesc = productDesc;
+        this.dateOfIncorp = dateOfIncorp;
+        Category defaultCategory = new Category();
+        this.prodCategory.add(defaultCategory);
     }
 
     public String getProductID() {
@@ -59,5 +72,13 @@ public abstract class Product {
 
     public void setDateOfIncorp(LocalDate dateOfIncorp) {
         this.dateOfIncorp = dateOfIncorp;
+    }
+
+    public ArrayList<Category> getProdCategory() {
+        return prodCategory;
+    }
+
+    public void setProdCategory(ArrayList<Category> prodCategory) {
+        this.prodCategory = prodCategory;
     }
 }

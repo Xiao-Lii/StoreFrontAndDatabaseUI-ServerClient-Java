@@ -9,10 +9,14 @@ public class Cellphone extends Electronic {
 
     public Cellphone(String productID, String productName, String brandName, String productDesc,
                      LocalDate dateOfIncorp, ArrayList<Category> prodCategory, String serialNum,
-                     LocalDate warrantyPer, String imei, String os) {
+                     Integer warrantyPer, String imei, String os) {
         super(productID, productName, brandName, productDesc, dateOfIncorp, prodCategory, serialNum, warrantyPer);
         this.imei = imei;
         this.os = os;
+        // Category(String catID, String catName, String catDesc)
+        Category electronic = new Category("Cellphones72","Cellphones",
+                "Technological entertainment revolving around personal cellphones");
+        prodCategory.add(electronic);
     }
 
     public String getImei() {
