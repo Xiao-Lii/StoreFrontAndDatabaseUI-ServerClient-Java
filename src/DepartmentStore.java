@@ -139,8 +139,7 @@ public class DepartmentStore {
                     System.out.println("Error: The object type is invalid.\n");
                     break;
 
-            }
-        }
-
-    }
-}
+            }           // END OF SWITCH CASE - ADD BY PRODUCT TYPE
+        }               // END OF CATCH ILLEGAL ARGUMENT EXCEPTION - IF PRODUCT WASN'T ALREADY IN CATALOG
+    }                   // END OF ADD PRODUCT METHOD
+}                       // END OF DEPARTMENT STORE CLASS
