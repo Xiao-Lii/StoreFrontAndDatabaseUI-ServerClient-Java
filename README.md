@@ -1,7 +1,7 @@
 ## JavaPAOne - CSCI 3920 Programming Assignment for PA#1
 
 ### Assumptions
-There's one admin account that manages functions of our Department Store
+Our department store should be able to support many customers/clients all at once. However, there will be one admin account which have options to manipulate products, categories, and orders. 
 
 ### ----------- Team Members -----------
     florealb    -   Alberto Flores
