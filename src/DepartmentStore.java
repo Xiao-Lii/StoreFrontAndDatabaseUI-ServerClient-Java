@@ -1,9 +1,8 @@
-import Product.Category;
-import Product.Product;
-import Users.Admin;
-import Users.Customer;
-import Users.User;
+import Product.*;
+import Users.*;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class DepartmentStore {
@@ -33,7 +32,7 @@ public class DepartmentStore {
                 if (u.getEmail().equalsIgnoreCase(email))
                     throw new Exception();
                 listOfUsers.add(new Customer(email, password, displayName));
-            } catch (Exception e){ System.out.println("Invalid email already exists."); }
+            } catch (Exception e){ System.out.println("Error: Email already exists."); }
         }
         if (listOfUsers.size() == 0)
             listOfUsers.add(new Customer(email, password, displayName));
@@ -53,18 +52,95 @@ public class DepartmentStore {
         }
     }
 
-    public void addProduct(){
-        /*
-        public Product(String productID, String productName, String brandName, String productDesc,
-                   LocalDate dateOfIncorp, ArrayList<Category> prodCategory) {
-        this.productID = productID;
-        this.productName = productName;
-        this.brandName = brandName;
-        this.productDesc = productDesc;
-        this.dateOfIncorp = dateOfIncorp;
-        this.prodCategory = prodCategory;
-         */
+    public Product getProduct(String productID, String productName){
+        for (Product p : catalog){
+            if (p.getProductID().equalsIgnoreCase(productID) && p.getProductName().equalsIgnoreCase(productName))
+                return p; }
+        throw new IllegalArgumentException("Error: Product is not found in the catalog.");
+    }
+
+    public LocalDate getDateInput(){
+        Scanner input = new Scanner(System.in);
+        System.out.println("Please enter a date in the format of: M/D/YYYY.\n");
+        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("M/D/YYYY");
+        LocalDate date = LocalDate.parse(input.nextLine(), dateFormat);
+        return date;
+    }
+
+    public void addProduct(String prodType, String productID, String productName, String brandName, String productDesc,
+                           LocalDate dateOfIncorp, ArrayList<Category> prodCategory) throws IllegalArgumentException{
         // WHEN IN APPLICATION - ADMIN CHOOSES ELECTRONIC - SERIAL NOS - UPDATE TAB
+        Scanner input = new Scanner(System.in);
+        try{
+            this.getProduct(productID, productName);
+        }
+        catch (IllegalArgumentException iae){
+            String serialNum, imei, os, ram, hardDrive, authorName, intendedLoc;
+            Integer yearWarranty, numPages, edition;
+            LocalDate datePublished;
+
+            switch (prodType){
+                case "Electronics":
+                    // SERIAL NO, WARRANTY PERIOD
+                    System.out.println("Please input the serial number.\n");
+                    serialNum = input.nextLine();
+                    System.out.println("Please input how many years the item's warranty is valid for.\n");
+                    yearWarranty = input.nextInt();
+                    catalog.add(new Electronic(productID, productName, brandName, productDesc, dateOfIncorp,
+                            prodCategory, serialNum, yearWarranty));
+                    break;
+                case "Cellphones":
+                    // SERIAL NO, WARRANTY PERIOD, IMEI, OS
+                    System.out.println("Please input the serial number.\n");
+                    serialNum = input.nextLine();
+                    System.out.println("Please input how many years the item's warranty is valid for.\n");
+                    yearWarranty = input.nextInt();
+                    System.out.println("Please input the IMEI number.\n");
+                    imei = input.nextLine();
+                    System.out.println("Please input the operating number.\n");
+                    os = input.nextLine();
+                    catalog.add(new Cellphone(productID, productName, brandName, productDesc, dateOfIncorp,
+                            prodCategory, serialNum, yearWarranty, imei, os));
+                    break;
+                case "Computers":
+                    // SERIAL NO, WARRANTY PERIOD, RAM, HARD DRIVE
+                    System.out.println("Please input the serial number.\n");
+                    serialNum = input.nextLine();
+                    System.out.println("Please input how many years the item's warranty is valid for.\n");
+                    yearWarranty = input.nextInt();
+                    System.out.println("Please input the computer's RAM.\n");
+                    ram = input.nextLine();
+                    System.out.println("Please input the computer's hard drive.\n");
+                    hardDrive = input.nextLine();
+                    catalog.add(new Computer(productID, productName, brandName, productDesc, dateOfIncorp,
+                            prodCategory, serialNum, yearWarranty, ram, hardDrive));
+                    break;
+                case "Books":
+                    // AUTHOR NAME, PUBLICATION DATA, NUM PAGES, EDITION
+                    System.out.println("Please input the author's name.\n");
+                    authorName = input.nextLine();
+                    System.out.println("Please input the book's published date.\n");
+                    datePublished = getDateInput();
+                    System.out.println("Please input the number of pages the book contains.\n");
+                    numPages = input.nextInt();
+                    System.out.println("Please input the number to indicate which edition this book is.\n");
+                    edition = input.nextInt();
+                    catalog.add(new Book(productID, productName, brandName, productDesc, dateOfIncorp,
+                            prodCategory, authorName, datePublished, numPages, edition));
+                    break;
+                case "Homelines":
+                    // INTENDED LOCATION
+                    System.out.println("Please input the intended location for this home product.\n");
+                    intendedLoc = input.nextLine();
+                    catalog.add(new HomeProduct(productID, productName, brandName, productDesc, dateOfIncorp,
+                            prodCategory, intendedLoc));
+                    break;
+                default:
+                    System.out.println("Error: The object type is invalid.\n");
+                    break;
+
+            }
+        }
 
     }
 }

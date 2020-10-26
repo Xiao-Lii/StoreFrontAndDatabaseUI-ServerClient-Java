@@ -12,9 +12,9 @@ public class Category {
     }
 
     public Category() {
-        this.catID = "0000";
-        this.catName = "defaultCategory";
-        this.catDesc = "default";
+        this.catID = "Default00";
+        this.catName = "Default";
+        this.catDesc = "The default category for viewing all the entire contents of the catalog.";
     }
 
     public String getCatID() {
