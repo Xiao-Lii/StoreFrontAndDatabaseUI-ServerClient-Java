@@ -1,14 +1,17 @@
 package Users;
 
+
 public abstract class User {
     private String email;
     private String password;
     private String displayName;
+    private Order custOrder;
 
     public User(String email, String password, String displayName) {
         this.email = email;
         this.password = password;
         this.displayName = displayName;
+        this.custOrder = null;
     }
 
     public String getEmail() {
@@ -34,4 +37,8 @@ public abstract class User {
     public void setDisplayName(String displayName) {
         this.displayName = displayName;
     }
+
+    public Order getCustOrder() { return custOrder; }
+
+    public void setCustOrder(Order custOrder) { this.custOrder = custOrder; }
 }

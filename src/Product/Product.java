@@ -73,4 +73,12 @@ public abstract class Product {
     public void setDateOfIncorp(LocalDate dateOfIncorp) {
         this.dateOfIncorp = dateOfIncorp;
     }
+
+    public ArrayList<Category> getProdCategory() {
+        return prodCategory;
+    }
+
+    public void setProdCategory(ArrayList<Category> prodCategory) {
+        this.prodCategory = prodCategory;
+    }
 }

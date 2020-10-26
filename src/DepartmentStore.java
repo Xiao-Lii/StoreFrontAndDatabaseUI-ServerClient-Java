@@ -142,4 +142,22 @@ public class DepartmentStore {
             }           // END OF SWITCH CASE - ADD BY PRODUCT TYPE
         }               // END OF CATCH ILLEGAL ARGUMENT EXCEPTION - IF PRODUCT WASN'T ALREADY IN CATALOG
     }                   // END OF ADD PRODUCT METHOD
+
+    public void removeProduct(Product product){
+        for (Product p : catalog) {
+            if (catalog.contains(product))
+                catalog.remove(product);
+            else
+                throw new IllegalArgumentException("Error: There's no such item that can be removed.");
+        }
+    }                   // END OF REMOVE PRODUCT FROM CATALOG METHOD
+
+    public void addCatToProduct(Product product){
+        product.getProdCategory();
+    }
+
+    public void removeCatFromProduct(Product product){
+
+    }
+
 }                       // END OF DEPARTMENT STORE CLASS
