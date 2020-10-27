@@ -11,7 +11,8 @@ public class DepartmentStore{
     private ArrayList<Category> listOfCategories; //electronics
     private ArrayList<User> listOfUsers; // list of all users
     private ArrayList<Order> listOfCustOrders; // list of all the orders -> list of list
-    //move listOfCustOrders to Customer class
+    // move listOfCustOrders to Customer class
+
     public void createUser(String type, String email, String password, String displayName) {
         if(type.equalsIgnoreCase("Users.Admin") || type.equalsIgnoreCase("Administrator"))
             listOfUsers.add(new Admin(email, password, displayName));
@@ -24,37 +25,42 @@ public class DepartmentStore{
     //#7order management
 
 
-    //Customer's credentials has already been authenticated
-    public void newOrder(Customer dName){
+    //Customer's credentials should already been authenticated
+    public void newOrder(Customer dName, Product p) {
         SecureRandom random = new SecureRandom();//order#
         Order o = null;
-        Product p;
-        for (Iterator<User> us = listOfUsers.iterator(); us.hasNext();) {
+
+
+        for (Iterator<User> us = listOfUsers.iterator(); us.hasNext(); ) {
             //check if the list of users is = dName;
-            if (listOfUsers.contains(dName)){
+            if (listOfUsers.contains(dName)) {
                 for (Iterator<Order> or = listOfCustOrders.iterator(); or.hasNext(); ) {
-
-                  //  if (or.next().prodsInOrder.contains(p.getProductName())){
-
-                    }
-                    /*if user has an existing order, continue-
-                     * else create new order
-                     * maybe an if-else statement?*/
-                }else{
-                o.setOrderNum(random);
+                    //need to figure out how to access product inventory... HELP!!
+                    o.getOrderNum();
+                    addProduct(dName, p);
+                 //   if (or.next().prodsInOrder.contains(p.getProductName())) {}
+                }
+            }else {//user with no open orders will get an order number +
+                o.setOrderNum(Integer.valueOf(String.valueOf(random)));
+                addProduct(dName, p);
             }
-
-            }
-
-
+        }
     }
 
-    public Product addProduct(Customer dName, Product p){
+    public void addProduct(Customer dName, Product p){
+        //Order o; should this be part of the addProduct parameter???
+        for (Iterator<User> us = listOfUsers.iterator(); us.hasNext();) {
+            if (listOfUsers.contains(dName)) {
+                 {
+
+                }
+            }
+        }
         //iterate through listCustOfOrder
         //check if propsInProduct conatins p
     }
 
-    public Product removeProduct(Customer dName, Product p){
+    public void removeProduct(Customer dName, Product p){
         for (Iterator<User> us = listOfUsers.iterator(); us.hasNext();) {
             if (listOfUsers.contains(dName)){
                 for (Iterator<Order> or = listOfCustOrders.iterator(); or.hasNext(); ) {
@@ -64,7 +70,6 @@ public class DepartmentStore{
                 }
             }
         }
-        return;
     }
 
     public Order finalizeOrder(){
