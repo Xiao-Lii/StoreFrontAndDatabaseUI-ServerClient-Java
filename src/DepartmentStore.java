@@ -160,4 +160,33 @@ public class DepartmentStore {
 
     }
 
+    public void addCategory(String catID, String catName, String catDesc) {
+        listOfCategories.add(new Category(catID,catName,catDesc));
+        if(listOfCategories.size() == 0) {
+            listOfCategories.add(new Category(catID,catName,catDesc));
+            System.out.println("Category " + catName + " successfully added!");
+            return;
+        }
+        for(Category c : listOfCategories){
+            if(c.getCatID().equalsIgnoreCase(catID)) {
+                System.out.println("Error adding category: Category already exists.");
+                return;
+            }
+        }
+        listOfCategories.add(new Category(catID,catName,catDesc));
+        System.out.println("Category " + catName + " successfully added!");
+    }
+
+    public void removeCategory(String catID) {
+        for(int i = 0; i < listOfCategories.size(); i ++) {
+            if(listOfCategories.get(i).getCatID().equalsIgnoreCase(catID)) {
+                listOfCategories.remove(i);
+            }
+        }
+        for(Product p : catalog) {
+            if(p.getProductID().equalsIgnoreCase(catID))
+                p.setProductID("Default"); //If a product's category was deleted, change to Default.
+        }
+    }
+
 }                       // END OF DEPARTMENT STORE CLASS
