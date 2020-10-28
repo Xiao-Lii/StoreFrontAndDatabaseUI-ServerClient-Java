@@ -12,7 +12,7 @@ public class Book extends Product {
     public Book(String productID, String productName, String brandName, String productDesc,
                 LocalDate dateOfIncorp, ArrayList<Category> prodCategory, String authorName,
                 LocalDate publicationData, int numPages, int edition) {
-        super(productID, productName, brandName, productDesc, dateOfIncorp, prodCategory);
+        super(productID, productName, brandName, productDesc, dateOfIncorp);
         this.authorName = authorName;
         this.publicationData = publicationData;
         this.numPages = numPages;

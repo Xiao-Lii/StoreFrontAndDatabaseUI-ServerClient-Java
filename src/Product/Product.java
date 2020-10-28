@@ -11,6 +11,7 @@ public abstract class Product {
     private LocalDate dateOfIncorp;
     private ArrayList<Category> prodCategory;
 
+
     public Product(String productID, String productName, String brandName, String productDesc,
                    LocalDate dateOfIncorp, ArrayList<Category> prodCategory) {
         this.productID = productID;
