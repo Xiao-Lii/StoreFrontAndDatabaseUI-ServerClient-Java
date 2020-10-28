@@ -3,6 +3,7 @@ import Product.Product;
 import Users.Admin;
 import Users.Customer;
 import Users.User;
+import com.sun.org.apache.xpath.internal.operations.Or;
 
 import java.security.SecureRandom;
 import java.util.*;
@@ -51,9 +52,7 @@ public class DepartmentStore{
         //Order o; should this be part of the addProduct parameter???
         for (Iterator<User> us = listOfUsers.iterator(); us.hasNext();) {
             if (listOfUsers.contains(dName)) {
-                 {
 
-                }
             }
         }
         //iterate through listCustOfOrder
@@ -72,12 +71,29 @@ public class DepartmentStore{
         }
     }
 
-    public Order finalizeOrder(){
+    //is this right???
+    public Order finalizeOrder(Customer dName, Order o){
+        for(Iterator<User> u = listOfUsers.iterator(); u.hasNext();){//can I delete this?
+            if(listOfUsers.contains(dName)){
+                for(Iterator<Order> or = listOfCustOrders.iterator(); or.hasNext();){
+                    if(listOfCustOrders.contains(o.getOrderNum())){
+                         o.setStatus(true);// is this right?
+                    }else{
+                        o.setStatus(false);
 
+                    }
+                }
+            }
+        }
+        return o;
     }
 
-    public Order cancelOrder(){
-
+    public void cancelOrder(Customer dName, Order o){
+        if(listOfUsers.contains(dName)){
+            if(listOfCustOrders.contains(o.getOrderNum())){
+                listOfCustOrders.remove(o.getOrderNum());
+            }
+        }
     }
 
 }
