@@ -1,3 +1,5 @@
+package Users;
+
 import Product.*;
 import Users.*;
 
@@ -7,21 +9,17 @@ import java.util.*;
 
 public class DepartmentStore {
     private ArrayList<Category> listOfCategories;
-    private ArrayList<Order> listOfCustOrders;
     private ArrayList<User> listOfUsers;
     private ArrayList<Product> catalog;
 
-    public DepartmentStore(ArrayList<Category> listOfCategories, ArrayList<Order> listOfCustOrders,
-                           ArrayList<User> listOfUsers, ArrayList<Product> catalog) {
+    public DepartmentStore(ArrayList<Category> listOfCategories, ArrayList<User> listOfUsers, ArrayList<Product> catalog) {
         this.listOfCategories = listOfCategories;
-        this.listOfCustOrders = listOfCustOrders;
         this.listOfUsers = listOfUsers;
         this.catalog = catalog;
     }
 
     public DepartmentStore() {
         this.listOfCategories = new ArrayList<Category>();
-        this.listOfCustOrders = new ArrayList<Order>();
         this.listOfUsers = new ArrayList<User>();
         this.catalog = new ArrayList<Product>();
     }

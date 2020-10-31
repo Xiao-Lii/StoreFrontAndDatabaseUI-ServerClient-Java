@@ -73,15 +73,34 @@ public class Client {
 
     }
 
-    public String sendRequest(String request) throws IOException {
+
+    // ************** !!!!!!!! LOOK AT ME YOU BLIND BAT !!!!!!!! **************
+    // MAY NEED TO CONVERT THIS BACK TO STRING TO SEND MESSAGES BACK TO SERVER
+    // ************** !!!!!!!! LOOK AT ME YOU BLIND BAT !!!!!!!! **************
+    public void sendRequest(String request) throws IOException {
         this.output.println(request);
         displayMessage("CLIENT >> " + request);
+        /*
         String srvResponse = this.input.readLine();
         displayMessage("SERVER >> " + srvResponse);
         return srvResponse;
+        */
+
     }
 
     public void displayMessage(String message) {
         System.out.println(message);
+    }
+
+    // TESTING CLIENT - DELETE MAIN LATER
+    public static void main (String[] args){
+        Client client = new Client();
+        client.connect();
+        try {
+            client.sendRequest("SERVER YOU SUCK");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 }
