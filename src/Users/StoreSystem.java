@@ -14,18 +14,28 @@ public class StoreSystem {
     private static ArrayList<Product> catalog;
     private static ArrayList<Order> listOfCustOrders;
 
-    public StoreSystem(ArrayList<Category> listOfCategories, ArrayList<User> listOfUsers, ArrayList<Product> catalog) {
-        StoreSystem.listOfCategories = listOfCategories;
-        StoreSystem.listOfUsers = listOfUsers;
-        StoreSystem.catalog = catalog;
-    }
-
     public StoreSystem() {
         listOfCategories = new ArrayList<Category>();
         listOfUsers = new ArrayList<User>();
         catalog = new ArrayList<Product>();
 
         listOfUsers.add(new Admin("departmentstore@admin.com", "password", "admin"));
+    }
+
+    public static ArrayList<Category> getListOfCategories() {
+        return listOfCategories;
+    }
+
+    public static ArrayList<User> getListOfUsers() {
+        return listOfUsers;
+    }
+
+    public static ArrayList<Product> getCatalog() {
+        return catalog;
+    }
+
+    public static ArrayList<Order> getListOfCustOrders() {
+        return listOfCustOrders;
     }
 
     public void createUser(String email, String password, String displayName) {
