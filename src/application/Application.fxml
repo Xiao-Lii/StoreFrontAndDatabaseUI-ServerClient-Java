@@ -21,7 +21,7 @@
       <RowConstraints />
    </rowConstraints>
    <children>
-      <TabPane prefHeight="800.0" prefWidth="1400.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane prefHeight="600.0" prefWidth="1000.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
             <Tab text="Manage Users">
                 <content>

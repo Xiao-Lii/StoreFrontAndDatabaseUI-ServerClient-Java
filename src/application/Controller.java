@@ -23,7 +23,6 @@ public class Controller{
     public TextField txtPassword;
     public TextField txtUsername;
 
-
     Client client;
 
     public Button loginButton;
