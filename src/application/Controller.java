@@ -5,10 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import server.*;
@@ -23,8 +20,18 @@ public class Controller{
     public TextField txtPassword;
     public TextField txtUsername;
 
+    // CATEGORY MANAGEMENT
+    public TextField addCatIdTextField;
+    public TextField addCatNameTextField;
+    public TextField addCatDescTextField;
+    public Button addCatButton;
+    public TextField removeCatIdTextField;
+    public Button removeCatButton;
+
+
     Client client;
 
+    // LOGIN WINDOW
     public Button loginButton;
     public TextField usernameTextField;
     public TextField passwordTextField;
@@ -65,6 +72,30 @@ public class Controller{
         }
         catch (IllegalArgumentException iae){
             Alert error = new Alert(Alert.AlertType.ERROR, "Error adding user: Email or display name already exists.");
+            error.show();
+        }
+    }
+
+    public void addCategory() {
+        try {
+            store.addCategory(addCatIdTextField.getText(), addCatNameTextField.getText(), addCatDescTextField.getText());
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Category created successfully.");
+            alert.show();
+        }
+        catch (IllegalArgumentException iae){
+            Alert error = new Alert(Alert.AlertType.ERROR, "Error adding category: Category already exists.");
+            error.show();
+        }
+    }
+
+    public void removeCategory() {
+        try {
+            store.removeCategory(removeCatIdTextField.getText());
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Category removed successfully.");
+            alert.show();
+        }
+        catch (IllegalArgumentException iae){
+            Alert error = new Alert(Alert.AlertType.ERROR, "Error removing category: Category does not exist.");
             error.show();
         }
     }
