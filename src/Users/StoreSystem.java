@@ -3,6 +3,7 @@ package Users;
 import Product.*;
 import Users.*;
 
+import java.security.SecureRandom;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -11,6 +12,7 @@ public class StoreSystem {
     private ArrayList<Category> listOfCategories;
     private ArrayList<User> listOfUsers;
     private ArrayList<Product> catalog;
+    private ArrayList<Order> listOfCustOrders;
 
     public StoreSystem(ArrayList<Category> listOfCategories, ArrayList<User> listOfUsers, ArrayList<Product> catalog) {
         this.listOfCategories = listOfCategories;
@@ -57,84 +59,46 @@ public class StoreSystem {
         throw new IllegalArgumentException("Error: Product is not found in the catalog.");
     }
 
-    public LocalDate getDateInput(){
-        Scanner input = new Scanner(System.in);
-        System.out.println("Please enter a date in the format of: M/D/YYYY.\n");
-        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("M/D/YYYY");
-        LocalDate date = LocalDate.parse(input.nextLine(), dateFormat);
-        return date;
-    }
-
+    // WHEN ATTEMPTING TO ADD PRODUCT - IF THESE VALUES ARE EMPTY, THESE VALUES = NULL
     public void addProduct(String prodType, String productID, String productName, String brandName, String productDesc,
-                           LocalDate dateOfIncorp, ArrayList<Category> prodCategory) throws IllegalArgumentException{
-        // WHEN IN APPLICATION - ADMIN CHOOSES ELECTRONIC - SERIAL NOS - UPDATE TAB
-        Scanner input = new Scanner(System.in);
+                           LocalDate dateOfIncorp, ArrayList<Category> prodCategory, String serialNum, String imei,
+                           String os, String ram, String hardDrive, String authorName, String intendedLoc,
+                           Integer yearWarranty, Integer numPages, Integer edition, LocalDate datePublished)
+                            throws IllegalArgumentException{
+
+        // WHEN IN APPLICATION - ADMIN CHOOSES PRODUCT TYPE - THIS STRING DECIDES WHICH ADD-CASE TO EXECUTE
         try{
             this.getProduct(productID, productName);
         }
         catch (IllegalArgumentException iae){
-            String serialNum, imei, os, ram, hardDrive, authorName, intendedLoc;
-            Integer yearWarranty, numPages, edition;
-            LocalDate datePublished;
-
             switch (prodType){
                 case "Electronics":
                     // SERIAL NO, WARRANTY PERIOD
-                    System.out.println("Please input the serial number.\n");
-                    serialNum = input.nextLine();
-                    System.out.println("Please input how many years the item's warranty is valid for.\n");
-                    yearWarranty = input.nextInt();
                     catalog.add(new Electronic(productID, productName, brandName, productDesc, dateOfIncorp,
                             prodCategory, serialNum, yearWarranty));
                     break;
                 case "Cellphones":
                     // SERIAL NO, WARRANTY PERIOD, IMEI, OS
-                    System.out.println("Please input the serial number.\n");
-                    serialNum = input.nextLine();
-                    System.out.println("Please input how many years the item's warranty is valid for.\n");
-                    yearWarranty = input.nextInt();
-                    System.out.println("Please input the IMEI number.\n");
-                    imei = input.nextLine();
-                    System.out.println("Please input the operating number.\n");
-                    os = input.nextLine();
                     catalog.add(new Cellphone(productID, productName, brandName, productDesc, dateOfIncorp,
                             prodCategory, serialNum, yearWarranty, imei, os));
                     break;
                 case "Computers":
                     // SERIAL NO, WARRANTY PERIOD, RAM, HARD DRIVE
-                    System.out.println("Please input the serial number.\n");
-                    serialNum = input.nextLine();
-                    System.out.println("Please input how many years the item's warranty is valid for.\n");
-                    yearWarranty = input.nextInt();
-                    System.out.println("Please input the computer's RAM.\n");
-                    ram = input.nextLine();
-                    System.out.println("Please input the computer's hard drive.\n");
-                    hardDrive = input.nextLine();
                     catalog.add(new Computer(productID, productName, brandName, productDesc, dateOfIncorp,
                             prodCategory, serialNum, yearWarranty, ram, hardDrive));
                     break;
                 case "Books":
                     // AUTHOR NAME, PUBLICATION DATA, NUM PAGES, EDITION
-                    System.out.println("Please input the author's name.\n");
-                    authorName = input.nextLine();
-                    System.out.println("Please input the book's published date.\n");
-                    datePublished = getDateInput();
-                    System.out.println("Please input the number of pages the book contains.\n");
-                    numPages = input.nextInt();
-                    System.out.println("Please input the number to indicate which edition this book is.\n");
-                    edition = input.nextInt();
                     catalog.add(new Book(productID, productName, brandName, productDesc, dateOfIncorp,
                             prodCategory, authorName, datePublished, numPages, edition));
                     break;
                 case "Homelines":
                     // INTENDED LOCATION
-                    System.out.println("Please input the intended location for this home product.\n");
-                    intendedLoc = input.nextLine();
                     catalog.add(new HomeProduct(productID, productName, brandName, productDesc, dateOfIncorp,
                             prodCategory, intendedLoc));
                     break;
                 default:
-                    System.out.println("Error: The object type is invalid.\n");
+                    System.out.println("ERROR ADDING PRODUCT TO CATALOG.\n");
                     break;
 
             }           // END OF SWITCH CASE - ADD BY PRODUCT TYPE
@@ -146,17 +110,9 @@ public class StoreSystem {
             if (catalog.contains(product))
                 catalog.remove(product);
             else
-                throw new IllegalArgumentException("Error: There's no such item that can be removed.");
+                throw new IllegalArgumentException("ERROR: NO SUCH PRODUCT EXISTS");
         }
     }                   // END OF REMOVE PRODUCT FROM CATALOG METHOD
-
-    public void addCatToProduct(Product product){
-        product.getProdCategory();
-    }
-
-    public void removeCatFromProduct(Product product){
-
-    }
 
     public void addCategory(String catID, String catName, String catDesc) {
         listOfCategories.add(new Category(catID,catName,catDesc));
@@ -186,5 +142,91 @@ public class StoreSystem {
                 p.setProductID("Default"); //If a product's category was deleted, change to Default.
         }
     }
+
+    /*
+    //Customer's credentials should already been authenticated
+    public void newOrder(Customer c, Product p) {
+        SecureRandom random = new SecureRandom();//order#
+        Order o = null;
+
+        for (Iterator<User> us = listOfUsers.iterator(); us.hasNext(); ) {
+            //if user has an account...
+            if (listOfUsers.contains(c)) {
+                //if user has a open order
+                for (Iterator<Order> or = c.getListOfCustOrders().iterator(); or.hasNext(); ) {
+                    o.getOrderNum();
+                    addProduct(c, p, o);
+                }
+            }else {//user with no open orders will get an order number +
+                o.setOrderNum(Integer.valueOf(String.valueOf(random)));
+                addProduct(c, p, o);
+            }
+        }
+    }
+
+    public void addProduct(Customer c, Product p, Order o){
+        StoreSystem sp = null;
+        for (Iterator<User> us = listOfUsers.iterator(); us.hasNext();) {
+            if(listOfUsers.contains(c)){//if user is in listsOfUsers
+
+                //need to figure out how to check prod availability
+                for (Iterator<Order> or= c.getListOfCustOrders().iterator(); or.hasNext();){
+                    if (c.getListOfCustOrders().contains(o.getOrderNum())){//if user has order number
+                        // if(sp.getProduct(p.getProductID(), p.getProductName()) == IS AVAILABLE! )//how to find out prod avail?
+                        o.getProdsInOrder().add(sp.getProduct(p.getProductID(), p.getProductName()));// prod will be added
+                    }//else{
+                    //prod not available!!!
+
+                }
+            }
+
+        }
+    }
+
+    public void removeProduct(Customer c, Product p){
+        for (Iterator<User> us = listOfUsers.iterator(); us.hasNext();) {
+            if (listOfUsers.contains(c)){
+                for (Iterator<Order> or = c.getListOfCustOrders().iterator(); or.hasNext(); ) {
+                    if (or.next().getProdsInOrder().contains(p.getProductName())) {
+                        or.remove();
+                    }
+                }
+            }
+        }
+    }
+
+    //counts list of orders... will change if needed
+    public void countDuplicateItems(Customer c){
+        Set<Order> orderList = new HashSet<Order>(c.getListOfCustOrders());
+        for (Order temp : orderList){
+            System.out.println(temp + ": " + Collections.frequency(orderList, temp));
+        }
+    }
+
+    //is this right???
+    public Order finalizeOrder(Customer c, Order o){
+        for(Iterator<User> u = listOfUsers.iterator(); u.hasNext();){//can I delete this?
+            if(listOfUsers.contains(c)){
+                for(Iterator<Order> or = c.getListOfCustOrders().iterator(); or.hasNext();){
+                    if(c.getListOfCustOrders().contains(o.getOrderNum())){
+                        o.setStatus(true);// is this right?
+                    }else{
+                        o.setStatus(false);
+
+                    }
+                }
+            }
+        }
+        return o;
+    }
+
+    public void cancelOrder(Customer c, Order o){
+        if(listOfUsers.contains(c)){
+            if(c.getListOfCustOrders().contains(o.getOrderNum())){
+                c.getListOfCustOrders().remove(o.getOrderNum());
+            }
+        }
+    }
+    */
 
 }                       // END OF DEPARTMENT STORE CLASS
