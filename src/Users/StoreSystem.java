@@ -7,18 +7,18 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
-public class DepartmentStore {
+public class StoreSystem {
     private ArrayList<Category> listOfCategories;
     private ArrayList<User> listOfUsers;
     private ArrayList<Product> catalog;
 
-    public DepartmentStore(ArrayList<Category> listOfCategories, ArrayList<User> listOfUsers, ArrayList<Product> catalog) {
+    public StoreSystem(ArrayList<Category> listOfCategories, ArrayList<User> listOfUsers, ArrayList<Product> catalog) {
         this.listOfCategories = listOfCategories;
         this.listOfUsers = listOfUsers;
         this.catalog = catalog;
     }
 
-    public DepartmentStore() {
+    public StoreSystem() {
         this.listOfCategories = new ArrayList<Category>();
         this.listOfUsers = new ArrayList<User>();
         this.catalog = new ArrayList<Product>();

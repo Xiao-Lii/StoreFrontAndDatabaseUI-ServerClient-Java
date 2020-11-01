@@ -1,4 +1,4 @@
-import Users.DepartmentStore;
+import Users.StoreSystem;
 import server.Client;
 import server.MultiThreadServer;
 
@@ -6,9 +6,9 @@ import java.io.IOException;
 
 public class tempMain {
     public static void main(String[] args) {
-        DepartmentStore departmentStore = new DepartmentStore();
-        departmentStore.createUser( "email@email.com", "pw", "defaultUser");
-        //departmentStore.createUser( "email@email.com", "pw", "defaultUser");
+        StoreSystem storeSystem = new StoreSystem();
+        storeSystem.createUser( "email@email.com", "pw", "defaultUser");
+        //storeSystem.createUser( "email@email.com", "pw", "defaultUser");
 
         MultiThreadServer server = new MultiThreadServer(10000);
         new Thread(server).start();
