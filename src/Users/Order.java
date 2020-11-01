@@ -1,6 +1,7 @@
 package Users;
 
 import Product.Product;
+import sun.awt.HKSCS;
 
 import java.time.LocalDate;
 import java.util.*;
@@ -17,6 +18,8 @@ public class Order {
         this.finalizationDate = finalizationDate;
         this.prodsInOrder = prodsInOrder;
     }
+
+    public  ArrayList<Product> getProdsInOrder(){return prodsInOrder; }
 
     public int getOrderNum() {
         return orderNum;
