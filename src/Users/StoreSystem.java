@@ -3,40 +3,58 @@ package Users;
 import Product.*;
 import Users.*;
 
+import java.lang.reflect.InvocationTargetException;
 import java.security.SecureRandom;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class StoreSystem {
-    private ArrayList<Category> listOfCategories;
-    private ArrayList<User> listOfUsers;
-    private ArrayList<Product> catalog;
-    private ArrayList<Order> listOfCustOrders;
-
-    public StoreSystem(ArrayList<Category> listOfCategories, ArrayList<User> listOfUsers, ArrayList<Product> catalog) {
-        this.listOfCategories = listOfCategories;
-        this.listOfUsers = listOfUsers;
-        this.catalog = catalog;
-    }
+    private static ArrayList<Category> listOfCategories;
+    private static ArrayList<User> listOfUsers;
+    private static ArrayList<Product> catalog;
+    private static ArrayList<Order> listOfCustOrders;
 
     public StoreSystem() {
-        this.listOfCategories = new ArrayList<Category>();
-        this.listOfUsers = new ArrayList<User>();
-        this.catalog = new ArrayList<Product>();
+        listOfCategories = new ArrayList<Category>();
+        listOfUsers = new ArrayList<User>();
+        catalog = new ArrayList<Product>();
+
+        listOfUsers.add(new Admin("departmentstore@admin.com", "password", "admin"));
     }
 
-    public void createUser(String email, String password, String displayName) {
-        for (User u : listOfUsers){
-            try {
-                if (u.getEmail().equalsIgnoreCase(email))
-                    throw new Exception();
-                listOfUsers.add(new Customer(email, password, displayName));
-            } catch (Exception e){ System.out.println("Error: Email already exists."); }
-        }
-        if (listOfUsers.size() == 0)
-            listOfUsers.add(new Customer(email, password, displayName));
+    public static ArrayList<Category> getListOfCategories() {
+        return listOfCategories;
     }
+
+    public static ArrayList<User> getListOfUsers() {
+        return listOfUsers;
+    }
+
+    public static ArrayList<Product> getCatalog() {
+        return catalog;
+    }
+
+    public static ArrayList<Order> getListOfCustOrders() {
+        return listOfCustOrders;
+    }
+
+
+    public void createUser(String email, String password, String displayName) throws IllegalArgumentException {
+        if(listOfUsers.size() == 0) {
+            listOfUsers.add(new Customer(email,password,displayName));
+            System.out.println("User " + displayName + " successfully added!");
+            return;
+        }
+        for(User u : listOfUsers)
+            if(u.getEmail().equalsIgnoreCase(email) || u.getDisplayName().equalsIgnoreCase(displayName)) {
+                throw new IllegalArgumentException("Email or username already exists.");
+            }
+        listOfUsers.add(new Customer(email,password,displayName));
+        System.out.println("User " + displayName + " successfully added!");
+    }
+
+
 
     public void loginUser(String email, String password){
         for (User u : listOfUsers){
