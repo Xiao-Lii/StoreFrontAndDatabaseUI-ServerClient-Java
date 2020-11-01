@@ -5,19 +5,25 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import server.*;
-
-import javax.xml.soap.Text;
-import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.util.logging.SocketHandler;
 
 public class Controller{
+    // -------------- ADMIN APPLICATION --------------
+
+    // CREATE A USER
+    public Button btnCreateUser;
+    public TextField txtEmailAddress;
+    public TextField txtPassword;
+    public TextField txtUsername;
+
+
     Client client;
 
     public Button loginButton;
@@ -43,22 +49,16 @@ public class Controller{
                 Parent root = FXMLLoader.load(getClass().getResource("Application.fxml"));
                 Stage primaryStage = new Stage();
                 primaryStage.setTitle("Department Store Application");
-<<<<<<< Updated upstream
-                primaryStage.setScene(new Scene(root, 1400, 800));
-=======
                 primaryStage.setScene(new Scene(root, 1000, 600));
->>>>>>> Stashed changes
                 primaryStage.show();
                 return;
             }
         }
         loginConfirmLabel.setText("Username or password incorrect.");
         loginConfirmLabel.setTextFill(Color.RED);
-<<<<<<< Updated upstream
-=======
     }
 
-    public void createUser(ActionEvent actionEvent) {
+    public void createUser(javafx.event.ActionEvent actionEvent) {
         try {
             store.createUser(txtEmailAddress.getText(), txtPassword.getText(), txtUsername.getText());
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Account created successfully.");
@@ -68,6 +68,5 @@ public class Controller{
             Alert error = new Alert(Alert.AlertType.ERROR, "Error adding user: Email or display name already exists.");
             error.show();
         }
->>>>>>> Stashed changes
     }
 }
