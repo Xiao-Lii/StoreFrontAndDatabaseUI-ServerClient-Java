@@ -132,8 +132,7 @@ public class StoreSystem {
         }
     }                   // END OF REMOVE PRODUCT FROM CATALOG METHOD
 
-    public void addCategory(String catID, String catName, String catDesc) {
-        listOfCategories.add(new Category(catID,catName,catDesc));
+    public void addCategory(String catID, String catName, String catDesc) throws IllegalArgumentException {
         if(listOfCategories.size() == 0) {
             listOfCategories.add(new Category(catID,catName,catDesc));
             System.out.println("Category " + catName + " successfully added!");
@@ -142,22 +141,29 @@ public class StoreSystem {
         for(Category c : listOfCategories){
             if(c.getCatID().equalsIgnoreCase(catID)) {
                 System.out.println("Error adding category: Category already exists.");
-                return;
+                throw new IllegalArgumentException("Category already exists.");
             }
         }
         listOfCategories.add(new Category(catID,catName,catDesc));
         System.out.println("Category " + catName + " successfully added!");
     }
 
-    public void removeCategory(String catID) {
+    public void removeCategory(String catID) throws IllegalArgumentException {
+        boolean removed = false;
         for(int i = 0; i < listOfCategories.size(); i ++) {
             if(listOfCategories.get(i).getCatID().equalsIgnoreCase(catID)) {
                 listOfCategories.remove(i);
+                removed = true;
+                break;
             }
         }
-        for(Product p : catalog) {
-            if(p.getProductID().equalsIgnoreCase(catID))
-                p.setProductID("Default"); //If a product's category was deleted, change to Default.
+        if(removed) {
+            for (Product p : catalog) {
+                if (p.getProductID().equalsIgnoreCase(catID))
+                    p.setProductID("Default"); //If a product's category was deleted, change to Default.
+            }
+        }else{
+            throw new IllegalArgumentException("Category doesn't exist.");
         }
     }
 
