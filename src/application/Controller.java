@@ -43,12 +43,31 @@ public class Controller{
                 Parent root = FXMLLoader.load(getClass().getResource("Application.fxml"));
                 Stage primaryStage = new Stage();
                 primaryStage.setTitle("Department Store Application");
+<<<<<<< Updated upstream
                 primaryStage.setScene(new Scene(root, 1400, 800));
+=======
+                primaryStage.setScene(new Scene(root, 1000, 600));
+>>>>>>> Stashed changes
                 primaryStage.show();
                 return;
             }
         }
         loginConfirmLabel.setText("Username or password incorrect.");
         loginConfirmLabel.setTextFill(Color.RED);
+<<<<<<< Updated upstream
+=======
+    }
+
+    public void createUser(ActionEvent actionEvent) {
+        try {
+            store.createUser(txtEmailAddress.getText(), txtPassword.getText(), txtUsername.getText());
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Account created successfully.");
+            alert.show();
+        }
+        catch (IllegalArgumentException iae){
+            Alert error = new Alert(Alert.AlertType.ERROR, "Error adding user: Email or display name already exists.");
+            error.show();
+        }
+>>>>>>> Stashed changes
     }
 }

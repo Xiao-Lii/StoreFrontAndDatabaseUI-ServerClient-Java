@@ -3,6 +3,7 @@ package Users;
 import Product.*;
 import Users.*;
 
+import java.lang.reflect.InvocationTargetException;
 import java.security.SecureRandom;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -38,6 +39,7 @@ public class StoreSystem {
         return listOfCustOrders;
     }
 
+<<<<<<< Updated upstream
     public void createUser(String email, String password, String displayName) {
         for (User u : listOfUsers){
             try {
@@ -45,10 +47,23 @@ public class StoreSystem {
                     throw new Exception();
                 listOfUsers.add(new Customer(email, password, displayName));
             } catch (Exception e){ System.out.println("Error: Email already exists."); }
+=======
+    public void createUser(String email, String password, String displayName) throws IllegalArgumentException {
+        if(listOfUsers.size() == 0) {
+            listOfUsers.add(new Customer(email,password,displayName));
+            System.out.println("User " + displayName + " successfully added!");
+            return;
+>>>>>>> Stashed changes
         }
-        if (listOfUsers.size() == 0)
-            listOfUsers.add(new Customer(email, password, displayName));
+        for(User u : listOfUsers)
+            if(u.getEmail().equalsIgnoreCase(email) || u.getDisplayName().equalsIgnoreCase(displayName)) {
+                throw new IllegalArgumentException("Email or username already exists.");
+            }
+        listOfUsers.add(new Customer(email,password,displayName));
+        System.out.println("User " + displayName + " successfully added!");
     }
+
+
 
     public void loginUser(String email, String password){
         for (User u : listOfUsers){
