@@ -1,6 +1,7 @@
 package application;
 
 import Users.StoreSystem;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -12,7 +13,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import server.*;
-import java.awt.event.ActionEvent;
+
+import javax.xml.soap.Text;
+import java.awt.*;
 
 public class Controller{
     // -------------- ADMIN APPLICATION --------------
@@ -23,9 +26,9 @@ public class Controller{
     public TextField txtPassword;
     public TextField txtUsername;
 
-
     Client client;
 
+    // -------------- LOGIN APPLICATION --------------
     public Button loginButton;
     public TextField usernameTextField;
     public TextField passwordTextField;
@@ -40,33 +43,24 @@ public class Controller{
     }
 
     public void login(javafx.event.ActionEvent actionEvent) throws Exception {
-        for(int i = 0; i < store.getListOfUsers().size(); i ++) {
-            if (usernameTextField.getText().equals(store.getListOfUsers().get(i).getDisplayName()) &&
-                    passwordTextField.getText().equals(store.getListOfUsers().get(i).getPassword())) {
-                loginConfirmLabel.setText("Login Successful.");
-                loginConfirmLabel.setTextFill(Color.GREEN);
+        if(usernameTextField.getText().equals("username") && passwordTextField.getText().equals("password")) {
+            loginConfirmLabel.setText("Login Successful.");
+            loginConfirmLabel.setTextFill(Color.GREEN);
 
-                Parent root = FXMLLoader.load(getClass().getResource("Application.fxml"));
-                Stage primaryStage = new Stage();
-                primaryStage.setTitle("Department Store Application");
-                primaryStage.setScene(new Scene(root, 1000, 600));
-                primaryStage.show();
-                return;
-            }
+            Parent root = FXMLLoader.load(getClass().getResource("Application.fxml"));
+            Stage primaryStage = new Stage();
+            primaryStage.setTitle("Department Store Application");
+            primaryStage.setScene(new Scene(root, 1400, 800));
+            primaryStage.show();
+        }else{
+            loginConfirmLabel.setText("Username or password incorrect.");
+            loginConfirmLabel.setTextFill(Color.RED);
         }
-        loginConfirmLabel.setText("Username or password incorrect.");
-        loginConfirmLabel.setTextFill(Color.RED);
     }
 
-    public void createUser(javafx.event.ActionEvent actionEvent) {
-        try {
-            store.createUser(txtEmailAddress.getText(), txtPassword.getText(), txtUsername.getText());
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Account created successfully.");
-            alert.show();
-        }
-        catch (IllegalArgumentException iae){
-            Alert error = new Alert(Alert.AlertType.ERROR, "Error adding user: Email or display name already exists.");
-            error.show();
-        }
+    public void createUser(ActionEvent actionEvent) {
+        store.createUser(this.txtEmailAddress.getText(), this.txtPassword.getText(), this.txtUsername.getText());
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Account created successfully.");
+        alert.show();
     }
 }

@@ -3,7 +3,6 @@ package Users;
 import Product.*;
 import Users.*;
 
-import java.lang.reflect.InvocationTargetException;
 import java.security.SecureRandom;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -18,9 +17,8 @@ public class StoreSystem {
     public StoreSystem() {
         listOfCategories = new ArrayList<Category>();
         listOfUsers = new ArrayList<User>();
+        listOfUsers.add(new Admin("admin@admin.com", "password", "admin"));
         catalog = new ArrayList<Product>();
-
-        listOfUsers.add(new Admin("departmentstore@admin.com", "password", "admin"));
     }
 
     public static ArrayList<Category> getListOfCategories() {
@@ -39,22 +37,17 @@ public class StoreSystem {
         return listOfCustOrders;
     }
 
-
-    public void createUser(String email, String password, String displayName) throws IllegalArgumentException {
-        if(listOfUsers.size() == 0) {
-            listOfUsers.add(new Customer(email,password,displayName));
-            System.out.println("User " + displayName + " successfully added!");
-            return;
+    public void createUser(String email, String password, String displayName) {
+        for (User u : listOfUsers){
+            try {
+                if (u.getEmail().equalsIgnoreCase(email) && u.getDisplayName().equalsIgnoreCase(displayName))
+                    throw new Exception();
+                listOfUsers.add(new Customer(email, password, displayName));
+            } catch (Exception e){ System.out.println("Error: Email or username already exists."); }
         }
-        for(User u : listOfUsers)
-            if(u.getEmail().equalsIgnoreCase(email) || u.getDisplayName().equalsIgnoreCase(displayName)) {
-                throw new IllegalArgumentException("Email or username already exists.");
-            }
-        listOfUsers.add(new Customer(email,password,displayName));
-        System.out.println("User " + displayName + " successfully added!");
+        if (listOfUsers.size() == 0)
+            listOfUsers.add(new Customer(email, password, displayName));
     }
-
-
 
     public void loginUser(String email, String password){
         for (User u : listOfUsers){
