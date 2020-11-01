@@ -1,6 +1,7 @@
 package application;
 
 import Users.StoreSystem;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -9,7 +10,6 @@ import javafx.scene.control.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import server.*;
-import java.awt.event.ActionEvent;
 
 public class Controller{
     // -------------- ADMIN APPLICATION --------------
@@ -28,6 +28,29 @@ public class Controller{
     public TextField removeCatIdTextField;
     public Button removeCatButton;
 
+    // PRODUCT MANAGEMENT
+    public TextField txtProductID;
+    public TextField txtProductName;
+    public TextField txtBrandName;
+    public TextField txtProductDesc;
+    public TextField txtWarranty;
+    public TextField txtIMEI;
+    public TextField txtRAM;
+    public TextField txtOS;
+    public TextField txtHardDrive;
+    public TextField txtAuthorName;
+    public TextField txtNumPages;
+    public TextField txtBookEdition;
+    public DatePicker calDateIncorp;
+    public DatePicker calPubDate;
+    public TextField txtSerialNum;
+    public TextField txtIntendedLoc;
+    public ComboBox boxProdType;
+    public Button btnAddElectronic;
+    public Button btnAddCellphone;
+    public Button btnAddComputer;
+    public Button btnAddBook;
+    public Button btnAddHome;
 
     Client client;
 
@@ -98,5 +121,20 @@ public class Controller{
             Alert error = new Alert(Alert.AlertType.ERROR, "Error removing category: Category does not exist.");
             error.show();
         }
+    }
+
+    public void addElectronic(ActionEvent actionEvent) {
+    }
+
+    public void addCellphone(ActionEvent actionEvent) {
+    }
+
+    public void addComputer(ActionEvent actionEvent) {
+    }
+
+    public void addBook(ActionEvent actionEvent) {
+    }
+
+    public void addHome(ActionEvent actionEvent) {
     }
 }
