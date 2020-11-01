@@ -50,27 +50,16 @@ public class Client {
             this.serverConnection = null;
             this.isConnected = false;
         }
-
     }
 
     public void disconnect() {
-        displayMessage("\nTerminating Client Connection to Server.\n");
+        displayMessage("\n[CLIENT] TERMINATING CLIENT CONNECTION TO SERVER.\n");
         try {
             this.input.close();
-        } catch (IOException | NullPointerException e) {
-            e.printStackTrace();
-        }
-        try {
             this.output.close();
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-        }
-        try {
             this.serverConnection.close();
-        } catch (IOException | NullPointerException e) {
-            e.printStackTrace();
         }
-
+        catch (IOException | NullPointerException e) { e.printStackTrace(); }
     }
 
 
@@ -79,13 +68,7 @@ public class Client {
     // ************** !!!!!!!! LOOK AT ME YOU BLIND BAT !!!!!!!! **************
     public void sendRequest(String request) throws IOException {
         this.output.println(request);
-        displayMessage("CLIENT >> " + request);
-        /*
-        String srvResponse = this.input.readLine();
-        displayMessage("SERVER >> " + srvResponse);
-        return srvResponse;
-        */
-
+        displayMessage("[CLIENT] " + request);
     }
 
     public void displayMessage(String message) {
@@ -100,6 +83,9 @@ public class Client {
             client.sendRequest("SERVER YOU SUCK");
         } catch (IOException e) {
             e.printStackTrace();
+        }
+        finally {
+            client.disconnect();
         }
 
     }
