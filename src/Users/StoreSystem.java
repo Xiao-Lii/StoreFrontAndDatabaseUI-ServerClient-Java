@@ -9,21 +9,23 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class StoreSystem {
-    private ArrayList<Category> listOfCategories;
-    private ArrayList<User> listOfUsers;
-    private ArrayList<Product> catalog;
-    private ArrayList<Order> listOfCustOrders;
+    private static ArrayList<Category> listOfCategories;
+    private static ArrayList<User> listOfUsers;
+    private static ArrayList<Product> catalog;
+    private static ArrayList<Order> listOfCustOrders;
 
     public StoreSystem(ArrayList<Category> listOfCategories, ArrayList<User> listOfUsers, ArrayList<Product> catalog) {
-        this.listOfCategories = listOfCategories;
-        this.listOfUsers = listOfUsers;
-        this.catalog = catalog;
+        StoreSystem.listOfCategories = listOfCategories;
+        StoreSystem.listOfUsers = listOfUsers;
+        StoreSystem.catalog = catalog;
     }
 
     public StoreSystem() {
-        this.listOfCategories = new ArrayList<Category>();
-        this.listOfUsers = new ArrayList<User>();
-        this.catalog = new ArrayList<Product>();
+        listOfCategories = new ArrayList<Category>();
+        listOfUsers = new ArrayList<User>();
+        catalog = new ArrayList<Product>();
+
+        listOfUsers.add(new Admin("departmentstore@admin.com", "password", "admin"));
     }
 
     public void createUser(String email, String password, String displayName) {

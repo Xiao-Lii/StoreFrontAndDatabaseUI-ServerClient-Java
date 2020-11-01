@@ -1,5 +1,6 @@
 package application;
 
+import Users.StoreSystem;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -23,6 +24,8 @@ public class Controller{
     public TextField passwordTextField;
     public Label loginLabel;
     public Label loginConfirmLabel;
+
+    StoreSystem store = new StoreSystem();
 
     public Controller(){
         client = new Client();
