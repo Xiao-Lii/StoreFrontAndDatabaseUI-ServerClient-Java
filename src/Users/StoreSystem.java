@@ -154,9 +154,10 @@ public class StoreSystem {
         }
     }
 
-    /*
+
     //Customer's credentials should already been authenticated
     public void newOrder(Customer c, Product p) {
+
         SecureRandom random = new SecureRandom();//order#
         Order o = null;
 
@@ -207,7 +208,8 @@ public class StoreSystem {
     }
 
     //counts list of orders... will change if needed
-    public void countDuplicateItems(Customer c){
+    public void countDuplicateItems(String userName){
+        Customer c = new Customer();
         Set<Order> orderList = new HashSet<Order>(c.getListOfCustOrders());
         for (Order temp : orderList){
             System.out.println(temp + ": " + Collections.frequency(orderList, temp));
@@ -215,7 +217,12 @@ public class StoreSystem {
     }
 
     //is this right???
-    public Order finalizeOrder(Customer c, Order o){
+    public void finalizeOrder(String userName, int orderNum){
+        Customer c = new Customer();
+        Order o = new Order();
+
+        c.setDisplayName(userName);
+        o.setOrderNum(orderNum);
         for(Iterator<User> u = listOfUsers.iterator(); u.hasNext();){//can I delete this?
             if(listOfUsers.contains(c)){
                 for(Iterator<Order> or = c.getListOfCustOrders().iterator(); or.hasNext();){
@@ -228,7 +235,6 @@ public class StoreSystem {
                 }
             }
         }
-        return o;
     }
 
     public void cancelOrder(Customer c, Order o){
@@ -238,6 +244,5 @@ public class StoreSystem {
             }
         }
     }
-    */
 
 }                       // END OF DEPARTMENT STORE CLASS

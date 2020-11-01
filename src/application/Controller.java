@@ -1,5 +1,7 @@
 package application;
 
+import Users.Customer;
+import Users.Order;
 import Users.StoreSystem;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,6 +16,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import server.*;
 
+import javax.swing.text.html.ImageView;
 import javax.xml.soap.Text;
 import java.awt.*;
 
@@ -36,6 +39,14 @@ public class Controller{
     public Label loginConfirmLabel;
 
     private StoreSystem store = new StoreSystem();
+
+    // --------------- Finalize Order ----------------
+    //uses public TextField txtUsername;
+    public Button checkOut;
+    public TextField Orderlist;
+
+    private Order order = new Order();
+    private  Customer c = new Customer();
 
     public Controller(){
         client = new Client();
@@ -61,6 +72,16 @@ public class Controller{
     public void createUser(ActionEvent actionEvent) {
         store.createUser(this.txtEmailAddress.getText(), this.txtPassword.getText(), this.txtUsername.getText());
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Account created successfully.");
+        alert.show();
+    }
+
+    public void custOrderList(ActionEvent actionEvent){
+        store.countDuplicateItems(this.txtUsername.getText());
+    }
+
+    public void finalizeOrder(ActionEvent actionEvent){
+        store.finalizeOrder(this.txtUsername.getText(), order.getOrderNum());
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Order Finalized!");
         alert.show();
     }
 }

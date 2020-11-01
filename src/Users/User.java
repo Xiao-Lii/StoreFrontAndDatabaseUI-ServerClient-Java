@@ -14,6 +14,10 @@ public abstract class User {
         this.custOrder = null;
     }
 
+    public User() {
+
+    }
+
     public String getEmail() {
         return email;
     }
