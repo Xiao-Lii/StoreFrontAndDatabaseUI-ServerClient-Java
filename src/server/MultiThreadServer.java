@@ -1,4 +1,6 @@
 package server;
+import java.io.BufferedReader;
+import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.io.IOException;
@@ -20,33 +22,20 @@ public class MultiThreadServer implements Runnable {
         this.serverPort = port;
     }
 
-    /*
-    public static void main (String[] args) throws IOException{
-        ServerSocket serverSocket = new ServerSocket(PORT);
-        while (true){
-            System.out.println("WAITING FOR CLIENT CONNECTION.");
-            Socket client = serverSocket.accept();
-            System.out.println("CONNECTED TO CLIENT.\n");
-            clientHandler clientThread = new clientHandler(client);
-            clients.add(clientThread);
-            executorService.execute(clientThread);
-        }
-    }*/
-
     public void run(){
         // SETTING UP MAIN THREAD
         synchronized(this){ this.runningThread = Thread.currentThread(); }
 
         // OPENING THE SERVER SOCKET
         try { this.serverSocket = new ServerSocket(this.serverPort); } catch (IOException e) {
-            throw new RuntimeException("Error: Failed to open port #: " + this.serverPort);
+            throw new RuntimeException("[SERVER] ERROR CREATING SERVER SOCKET WITH PORT #: " + this.serverPort);
         }
 
         // WHILE THE SERVER ISN'T CLOSE - EXECUTE FOLLOWING EMBEDDED CODE
         // CREATE A NEW THREAD FOR EACH CLIENT CONNECTION - EACH HAVE THEIR OWN INPUT AND OUTPUT
         while(!isServerClosed()){
             Socket clientSocket = null;
-            System.out.println("[SERVER] WAITING FOR CLIENT CONNECTION.");
+            System.out.println("[SERVER] WAITING FOR CLIENT CONNECTION.\n");
 
             // ATTEMPT TO ACCEPT CLIENT CONNECTION
             try {
@@ -54,9 +43,9 @@ public class MultiThreadServer implements Runnable {
                 System.out.println("[SERVER] ACCEPTED CLIENT CONNECTION.\n");
             } catch (IOException e) {
                 if(isServerClosed()) {
-                    System.out.println("[SERVER] THE SERVER CONNECTION IS NOW CLOSED.") ;
+                    System.out.println("[SERVER] THE SERVER CONNECTION IS NOW CLOSED.\n") ;
                 }
-                throw new RuntimeException("[SERVER] ERROR ACCEPTING CLIENT CONNECTION");
+                throw new RuntimeException("[SERVER] ERROR ACCEPTING CLIENT CONNECTION.\n");
             }
 
             // ATTEMPT TO CREATE NEW THREAD & START A CLIENT HANDLER
@@ -69,7 +58,7 @@ public class MultiThreadServer implements Runnable {
             }
         }
         // SERVER SHUTDOWN - DONE WITH CLIENT CONNECTIONS
-        System.out.println("[SERVER] THE SERVER CONNECTION WILL NOW CLOSED.\n") ;
+        this.stop();
     }
 
     private synchronized boolean isServerClosed() {
@@ -82,8 +71,9 @@ public class MultiThreadServer implements Runnable {
             this.serverSocket.close();
             System.out.println("[SERVER] THE SERVER CONNECTION WILL NOW CLOSED.\n") ;
         } catch (IOException e) {
-            throw new RuntimeException("[SERVER] ERROR CLOSING SERVER.", e);
+            throw new RuntimeException("[SERVER] ERROR CLOSING SERVER.\n", e);
         }
     }
+
 
 }

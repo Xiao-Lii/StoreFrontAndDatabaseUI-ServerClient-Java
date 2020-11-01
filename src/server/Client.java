@@ -1,35 +1,40 @@
 package server;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.*;
 import java.net.Socket;
 
 public class Client {
-    private final int serverPort;
-    private final String serverIP;
-    private boolean isConnected;
+    private static final int SERVER_PORT = 10000;
+    private static final String SERVER_IP = "127.0.0.1";
+    private boolean isConnected = false;
     private Socket serverConnection;
-    private PrintWriter output;
-    private BufferedReader input;
+    private ObjectOutputStream output;
+    private ObjectInputStream input;
+    private BufferedReader serverResponse;
 
-    public Client(String ip, int port) {
-        this.serverPort = port;
-        this.serverIP = ip;
-        this.isConnected = false;
-    }
+    // TESTING CLIENT - DELETE MAIN LATER
+    public static void main (String[] args) throws IOException {
+        Client client = new Client();
+        client.connect();
 
-    public Client() {
-        this("127.0.0.1", 10000);
+        while (client.isConnected()){
+            String serverResponse = client.serverResponse.readLine();
+            System.out.println("Server says:\n" + serverResponse);
+        }
+        client.disconnect();
+
     }
 
     public boolean isConnected() {
         return this.isConnected;
     }
 
-    private PrintWriter getOutputStream() throws IOException {
-        return new PrintWriter(this.serverConnection.getOutputStream(), true);
+    private ObjectOutputStream getObjectOutputStream() throws IOException{
+        return new ObjectOutputStream(this.serverConnection.getOutputStream());
+    }
+
+    private ObjectInputStream getObjectInputStream() throws IOException{
+        return new ObjectInputStream(this.serverConnection.getInputStream());
     }
 
     private BufferedReader getInputStream() throws IOException {
@@ -37,56 +42,47 @@ public class Client {
     }
 
     public void connect() {
-        displayMessage("Attempting to connect to server.");
+        displayMessage("[CLIENT] ATTEMPTING TO CONNECT TO SERVER.\n");
         try {
-            this.serverConnection = new Socket(this.serverIP, this.serverPort);
+            this.serverConnection = new Socket(SERVER_IP, SERVER_PORT);
             this.isConnected = true;
-            this.output = this.getOutputStream();
-            this.input = this.getInputStream();
-
+            this.output = this.getObjectOutputStream();         // OBJECT OUTPUT STREAM MUST BE CREATED FIRST
+            this.input = this.getObjectInputStream();           // ELSE ERRORS WILL OCCUR
+            this.serverResponse = this.getInputStream();
+            displayMessage("[CLIENT] CONNECTION TO SERVER SUCCESSFUL.\n");
         } catch (IOException ioe) {
-            this.input = null;
-            this.output = null;
             this.serverConnection = null;
             this.isConnected = false;
+            this.output = null;
+            this.input = null;
+            this.serverResponse = null;
+            displayMessage("[CLIENT] CONNECTION TO SERVER FAILED.\n");
         }
     }
 
     public void disconnect() {
         displayMessage("\n[CLIENT] TERMINATING CLIENT CONNECTION TO SERVER.\n");
         try {
-            this.input.close();
-            this.output.close();
             this.serverConnection.close();
+            this.isConnected = false;
+            this.output = null;
+            this.input = null;
+            this.serverResponse = null;
         }
         catch (IOException | NullPointerException e) { e.printStackTrace(); }
     }
 
-
+    /*
     // ************** !!!!!!!! LOOK AT ME YOU BLIND BAT !!!!!!!! **************
     // MAY NEED TO CONVERT THIS BACK TO STRING TO SEND MESSAGES BACK TO SERVER
     // ************** !!!!!!!! LOOK AT ME YOU BLIND BAT !!!!!!!! **************
     public void sendRequest(String request) throws IOException {
-        this.output.println(request);
+        this.keyboardInput.println(request);
         displayMessage("[CLIENT] " + request);
     }
+    */
 
     public void displayMessage(String message) {
         System.out.println(message);
-    }
-
-    // TESTING CLIENT - DELETE MAIN LATER
-    public static void main (String[] args){
-        Client client = new Client();
-        client.connect();
-        try {
-            client.sendRequest("SERVER YOU SUCK");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        finally {
-            client.disconnect();
-        }
-
     }
 }

@@ -47,7 +47,7 @@ public class Server implements Runnable {
     }
 
     private void sendMessage(PrintWriter output, String message) {
-        output.println("Connected to the server.");
+        output.println(message);
     }
 
     private void processClientRequest(BufferedReader input) throws IOException {
@@ -59,19 +59,9 @@ public class Server implements Runnable {
         // Closing input, output, and client connection.
         try {
             input.close();
-        } catch (IOException | NullPointerException e) {
-            e.printStackTrace();
-        }
-        try {
             output.close();
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-        }
-        try {
             clientConnection.close();
-        } catch (IOException | NullPointerException e) {
-            e.printStackTrace();
-        }
+        } catch (IOException | NullPointerException e) { e.printStackTrace(); }
     }
 
     @Override
@@ -94,8 +84,6 @@ public class Server implements Runnable {
                     sendMessage(output, "Connected to the server.\n");
                     processClientRequest(input);
 
-                    Thread.sleep(100);
-
                     output.println("Connected to simple Java Server!\n");       // Send to Client
 
                     String clientMessage = input.readLine();
@@ -106,7 +94,7 @@ public class Server implements Runnable {
                     closeClientConnection(clientConnection, input, output);
                 }
             }
-        } catch (IOException | InterruptedException e) {
+        } catch (IOException e) {
             System.out.println("Error: Cannot open the server.\n");
             e.printStackTrace();
         }

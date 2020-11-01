@@ -57,84 +57,46 @@ public class StoreSystem {
         throw new IllegalArgumentException("Error: Product is not found in the catalog.");
     }
 
-    public LocalDate getDateInput(){
-        Scanner input = new Scanner(System.in);
-        System.out.println("Please enter a date in the format of: M/D/YYYY.\n");
-        DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("M/D/YYYY");
-        LocalDate date = LocalDate.parse(input.nextLine(), dateFormat);
-        return date;
-    }
-
+    // WHEN ATTEMPTING TO ADD PRODUCT - IF THESE VALUES ARE EMPTY, THESE VALUES = NULL
     public void addProduct(String prodType, String productID, String productName, String brandName, String productDesc,
-                           LocalDate dateOfIncorp, ArrayList<Category> prodCategory) throws IllegalArgumentException{
-        // WHEN IN APPLICATION - ADMIN CHOOSES ELECTRONIC - SERIAL NOS - UPDATE TAB
-        Scanner input = new Scanner(System.in);
+                           LocalDate dateOfIncorp, ArrayList<Category> prodCategory, String serialNum, String imei,
+                           String os, String ram, String hardDrive, String authorName, String intendedLoc,
+                           Integer yearWarranty, Integer numPages, Integer edition, LocalDate datePublished)
+                            throws IllegalArgumentException{
+
+        // WHEN IN APPLICATION - ADMIN CHOOSES PRODUCT TYPE - THIS STRING DECIDES WHICH ADD-CASE TO EXECUTE
         try{
             this.getProduct(productID, productName);
         }
         catch (IllegalArgumentException iae){
-            String serialNum, imei, os, ram, hardDrive, authorName, intendedLoc;
-            Integer yearWarranty, numPages, edition;
-            LocalDate datePublished;
-
             switch (prodType){
                 case "Electronics":
                     // SERIAL NO, WARRANTY PERIOD
-                    System.out.println("Please input the serial number.\n");
-                    serialNum = input.nextLine();
-                    System.out.println("Please input how many years the item's warranty is valid for.\n");
-                    yearWarranty = input.nextInt();
                     catalog.add(new Electronic(productID, productName, brandName, productDesc, dateOfIncorp,
                             prodCategory, serialNum, yearWarranty));
                     break;
                 case "Cellphones":
                     // SERIAL NO, WARRANTY PERIOD, IMEI, OS
-                    System.out.println("Please input the serial number.\n");
-                    serialNum = input.nextLine();
-                    System.out.println("Please input how many years the item's warranty is valid for.\n");
-                    yearWarranty = input.nextInt();
-                    System.out.println("Please input the IMEI number.\n");
-                    imei = input.nextLine();
-                    System.out.println("Please input the operating number.\n");
-                    os = input.nextLine();
                     catalog.add(new Cellphone(productID, productName, brandName, productDesc, dateOfIncorp,
                             prodCategory, serialNum, yearWarranty, imei, os));
                     break;
                 case "Computers":
                     // SERIAL NO, WARRANTY PERIOD, RAM, HARD DRIVE
-                    System.out.println("Please input the serial number.\n");
-                    serialNum = input.nextLine();
-                    System.out.println("Please input how many years the item's warranty is valid for.\n");
-                    yearWarranty = input.nextInt();
-                    System.out.println("Please input the computer's RAM.\n");
-                    ram = input.nextLine();
-                    System.out.println("Please input the computer's hard drive.\n");
-                    hardDrive = input.nextLine();
                     catalog.add(new Computer(productID, productName, brandName, productDesc, dateOfIncorp,
                             prodCategory, serialNum, yearWarranty, ram, hardDrive));
                     break;
                 case "Books":
                     // AUTHOR NAME, PUBLICATION DATA, NUM PAGES, EDITION
-                    System.out.println("Please input the author's name.\n");
-                    authorName = input.nextLine();
-                    System.out.println("Please input the book's published date.\n");
-                    datePublished = getDateInput();
-                    System.out.println("Please input the number of pages the book contains.\n");
-                    numPages = input.nextInt();
-                    System.out.println("Please input the number to indicate which edition this book is.\n");
-                    edition = input.nextInt();
                     catalog.add(new Book(productID, productName, brandName, productDesc, dateOfIncorp,
                             prodCategory, authorName, datePublished, numPages, edition));
                     break;
                 case "Homelines":
                     // INTENDED LOCATION
-                    System.out.println("Please input the intended location for this home product.\n");
-                    intendedLoc = input.nextLine();
                     catalog.add(new HomeProduct(productID, productName, brandName, productDesc, dateOfIncorp,
                             prodCategory, intendedLoc));
                     break;
                 default:
-                    System.out.println("Error: The object type is invalid.\n");
+                    System.out.println("ERROR ADDING PRODUCT TO CATALOG.\n");
                     break;
 
             }           // END OF SWITCH CASE - ADD BY PRODUCT TYPE
@@ -146,17 +108,9 @@ public class StoreSystem {
             if (catalog.contains(product))
                 catalog.remove(product);
             else
-                throw new IllegalArgumentException("Error: There's no such item that can be removed.");
+                throw new IllegalArgumentException("ERROR: NO SUCH PRODUCT EXISTS");
         }
     }                   // END OF REMOVE PRODUCT FROM CATALOG METHOD
-
-    public void addCatToProduct(Product product){
-        product.getProdCategory();
-    }
-
-    public void removeCatFromProduct(Product product){
-
-    }
 
     public void addCategory(String catID, String catName, String catDesc) {
         listOfCategories.add(new Category(catID,catName,catDesc));

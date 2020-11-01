@@ -1,27 +1,29 @@
 package server;
 
+import Users.User;
+
 import java.io.*;
 import java.net.Socket;
 
 public class clientHandler implements Runnable{
     private Socket clientSocket = null;
-    private BufferedReader input;
-    private PrintWriter output;
+    private ObjectInputStream input;
+    private ObjectOutputStream output;
+    User user;
 
     public clientHandler(Socket clientSocket) throws IOException {
         this.clientSocket = clientSocket;
-        this.input = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-        this.output = new PrintWriter(new PrintStream(clientSocket.getOutputStream()));
+        this.input = new ObjectInputStream(clientSocket.getInputStream());
+        this.output = new ObjectOutputStream(clientSocket.getOutputStream());
     }
 
     public void run() {
         try {
             while (true){
-                output.write("PROCESS HAS BEEN COMPLETED.");
+                //output.writeObject(this.user);
             }
 
-        } /*
-        catch (IOException e) {
+        } /*catch (IOException e) {
             // Reports the exception.
             System.err.println("IO Exception in client handler.");
             e.printStackTrace();
