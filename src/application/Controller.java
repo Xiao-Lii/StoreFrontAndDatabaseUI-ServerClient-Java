@@ -15,6 +15,7 @@ import server.*;
 import javax.xml.soap.Text;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.util.logging.SocketHandler;
 
 public class Controller{
     Client client;
@@ -25,7 +26,7 @@ public class Controller{
     public Label loginLabel;
     public Label loginConfirmLabel;
 
-    StoreSystem store = new StoreSystem();
+    private StoreSystem store = new StoreSystem();
 
     public Controller(){
         client = new Client();
@@ -33,18 +34,21 @@ public class Controller{
     }
 
     public void login(javafx.event.ActionEvent actionEvent) throws Exception {
-        if(usernameTextField.getText().equals("username") && passwordTextField.getText().equals("password")) {
-            loginConfirmLabel.setText("Login Successful.");
-            loginConfirmLabel.setTextFill(Color.GREEN);
+        for(int i = 0; i < store.getListOfUsers().size(); i ++) {
+            if (usernameTextField.getText().equals(store.getListOfUsers().get(i).getDisplayName()) &&
+                    passwordTextField.getText().equals(store.getListOfUsers().get(i).getPassword())) {
+                loginConfirmLabel.setText("Login Successful.");
+                loginConfirmLabel.setTextFill(Color.GREEN);
 
-            Parent root = FXMLLoader.load(getClass().getResource("Application.fxml"));
-            Stage primaryStage = new Stage();
-            primaryStage.setTitle("Department Store Application");
-            primaryStage.setScene(new Scene(root, 1400, 800));
-            primaryStage.show();
-        }else{
-            loginConfirmLabel.setText("Username or password incorrect.");
-            loginConfirmLabel.setTextFill(Color.RED);
+                Parent root = FXMLLoader.load(getClass().getResource("Application.fxml"));
+                Stage primaryStage = new Stage();
+                primaryStage.setTitle("Department Store Application");
+                primaryStage.setScene(new Scene(root, 1400, 800));
+                primaryStage.show();
+                return;
+            }
         }
+        loginConfirmLabel.setText("Username or password incorrect.");
+        loginConfirmLabel.setTextFill(Color.RED);
     }
 }

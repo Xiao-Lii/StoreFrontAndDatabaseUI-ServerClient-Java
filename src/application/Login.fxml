@@ -29,6 +29,6 @@
             <Font size="16.0" />
          </font>
       </Label>
-      <Label fx:id="loginConfirmLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="115.0" layoutY="207.0" textFill="RED" />
+      <Label fx:id="loginConfirmLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="25.0" layoutY="213.0" prefHeight="18.0" prefWidth="250.0" textFill="RED" />
    </children>
 </AnchorPane>
