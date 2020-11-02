@@ -87,14 +87,14 @@ public class Controller{
                 if(store.getListOfUsers().get(i).getClass().getSimpleName().equals("Admin")) {
                     Parent root = FXMLLoader.load(getClass().getResource("Application.fxml"));
                     Stage primaryStage = new Stage();
-                    primaryStage.setTitle("Department Store Application");
+                    primaryStage.setTitle("Department Store Admin");
                     primaryStage.setScene(new Scene(root, 1000, 600));
                     primaryStage.show();
                     return;
                 }else if(store.getListOfUsers().get(i).getClass().getSimpleName().equals("Customer")) {
                     Parent root = FXMLLoader.load(getClass().getResource("CatalogApp.fxml"));
                     Stage primaryStage = new Stage();
-                    primaryStage.setTitle("Department Store Application");
+                    primaryStage.setTitle("Department Store Catalog");
                     primaryStage.setScene(new Scene(root, 1000, 600));
                     primaryStage.show();
                     return;
