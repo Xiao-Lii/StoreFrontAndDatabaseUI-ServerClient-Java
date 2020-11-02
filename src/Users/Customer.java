@@ -19,9 +19,7 @@ public class Customer extends User {
         super(email, password, displayName);
     }
 
-    public Customer() {
-        super();
-    }
+
 
     public ArrayList<Order> getListOfCustOrders(){return listOfCustOrders;}
 }

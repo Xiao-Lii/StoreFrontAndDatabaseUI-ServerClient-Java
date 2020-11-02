@@ -214,29 +214,33 @@ public class StoreSystem {
     }
 
     //counts list of orders... will change if needed
-    public void countDuplicateItems(String userName){
+    public void countDuplicateItems(String userName) {
         Customer c = new Customer();
+        c.setDisplayName(userName);
         Set<Order> orderList = new HashSet<Order>(c.getListOfCustOrders());
-        for (Order temp : orderList){
-            System.out.println(temp + ": " + Collections.frequency(orderList, temp));
+        for (Iterator<User> u = listOfUsers.iterator(); u.hasNext(); ) {
+            if (listOfUsers.contains(c.getDisplayName())) {
+                for (Order temp : orderList) {
+                    System.out.println(temp + ": " + Collections.frequency(orderList, temp));
+                }
+            }
         }
     }
 
-    //is this right???
     public void finalizeOrder(String userName, int orderNum){
         Customer c = new Customer();
         Order o = new Order();
 
         c.setDisplayName(userName);
         o.setOrderNum(orderNum);
+
         for(Iterator<User> u = listOfUsers.iterator(); u.hasNext();){//can I delete this?
-            if(listOfUsers.contains(c)){
+            if(listOfUsers.contains(c.getDisplayName())){
                 for(Iterator<Order> or = c.getListOfCustOrders().iterator(); or.hasNext();){
                     if(c.getListOfCustOrders().contains(o.getOrderNum())){
                         o.setStatus(true);// is this right?
                     }else{
                         o.setStatus(false);
-
                     }
                 }
             }
