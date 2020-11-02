@@ -26,6 +26,12 @@ public class Order {
         this.prodsInOrder = null;
     }
 
+    // THIS IS IMPORTANT WHEN DISPLAYING TO LISTVIEW TABLES
+    @Override
+    public String toString(){
+        return String.format("%d - %d - %tD", this.getOrderNum(), this.isStatus(), this.getFinalizationDate());
+    }
+
     public  ArrayList<Product> getProdsInOrder(){return prodsInOrder; }
 
     public int getOrderNum() {
