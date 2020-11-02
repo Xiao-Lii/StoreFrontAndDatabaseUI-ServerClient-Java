@@ -30,6 +30,7 @@ public abstract class Product {
         this.brandName = brandName;
         this.productDesc = productDesc;
         this.dateOfIncorp = dateOfIncorp;
+        this.prodCategory = new ArrayList<Category>();
         Category defaultCategory = new Category();
         this.prodCategory.add(defaultCategory);
     }

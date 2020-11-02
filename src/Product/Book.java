@@ -8,6 +8,8 @@ public class Book extends Product {
     private LocalDate publicationData;
     private int numPages;
     private int edition;
+    private ArrayList<Category> prodCategory;
+
 
     public Book(String productID, String productName, String brandName, String productDesc,
                 LocalDate dateOfIncorp, ArrayList<Category> prodCategory, String authorName,
@@ -17,9 +19,21 @@ public class Book extends Product {
         this.publicationData = publicationData;
         this.numPages = numPages;
         this.edition = edition;
-        // Category(String catID, String catName, String catDesc)
-        Category books = new Category("Books21", "Books", "Paperback media entertainment.");
-        prodCategory.add(books);
+        this.prodCategory = new ArrayList<Category>();
+        Category books = new Category("Book", "Book", "Paperback media entertainment.");
+        this.prodCategory.add(books);
+    }
+
+    public Book(String productID, String productName, String brandName, String productDesc,
+                LocalDate dateOfIncorp, String authorName, LocalDate publicationData, int numPages, int edition) {
+        super(productID, productName, brandName, productDesc, dateOfIncorp);
+        this.authorName = authorName;
+        this.publicationData = publicationData;
+        this.numPages = numPages;
+        this.edition = edition;
+        this.prodCategory = new ArrayList<Category>();
+        Category books = new Category("Book", "Book", "Paperback media entertainment.");
+        this.prodCategory.add(books);
     }
 
     public String getAuthorName() {

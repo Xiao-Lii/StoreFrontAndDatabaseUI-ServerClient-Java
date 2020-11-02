@@ -6,6 +6,7 @@ import java.util.ArrayList;
 public class Cellphone extends Electronic {
     private String imei;
     private String os;
+    private ArrayList<Category> prodCategory;
 
     public Cellphone(String productID, String productName, String brandName, String productDesc,
                      LocalDate dateOfIncorp, ArrayList<Category> prodCategory, String serialNum,
@@ -13,10 +14,21 @@ public class Cellphone extends Electronic {
         super(productID, productName, brandName, productDesc, dateOfIncorp, prodCategory, serialNum, warrantyPer);
         this.imei = imei;
         this.os = os;
-        // Category(String catID, String catName, String catDesc)
-        Category electronic = new Category("Cellphones72","Cellphones",
+        this.prodCategory = new ArrayList<Category>();
+        Category electronic = new Category("Cellphone","Cellphone",
                 "Technological entertainment revolving around personal cellphones");
-        prodCategory.add(electronic);
+        this.prodCategory.add(electronic);
+    }
+
+    public Cellphone(String productID, String productName, String brandName, String productDesc,
+                     LocalDate dateOfIncorp, String serialNum, String warrantyPer, String imei, String os) {
+        super(productID, productName, brandName, productDesc, dateOfIncorp, serialNum, warrantyPer);
+        this.imei = imei;
+        this.os = os;
+        this.prodCategory = new ArrayList<Category>();
+        Category electronic = new Category("Cellphone","Cellphone",
+                "Technological entertainment revolving around personal cellphones");
+        this.prodCategory.add(electronic);
     }
 
     public String getImei() {

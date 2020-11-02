@@ -92,18 +92,17 @@ public class StoreSystem {
             if (p.getProductID().equalsIgnoreCase(productID)) {
                 throw new IllegalArgumentException("Error: Product already exists in catalog.");
             }
+            if (prodType != "Electronic")
+                throw new IllegalArgumentException("Error: Invalid product addition.");
         }
         // SERIAL NO, WARRANTY PERIOD
-        catalog.add(new Electronic(productID, productName, brandName, productDesc, dateOfIncorp,
-                prodCategory, serialNum, yearWarranty));
+        catalog.add(new Cellphone(productID, productName, brandName, productDesc, dateOfIncorp,
+                prodCategory, serialNum, yearWarranty, imei, os));
     }
 
-
+    /*
     // WHEN ATTEMPTING TO ADD PRODUCT - IF THESE VALUES ARE EMPTY, THESE VALUES = NULL
-    public void addProduct(String prodType, String productID, String productName, String brandName, String productDesc,
-                           LocalDate dateOfIncorp, ArrayList<Category> prodCategory, String serialNum, String imei,
-                           String os, String ram, String hardDrive, String authorName, String intendedLoc,
-                           String yearWarranty, Integer numPages, Integer edition, LocalDate datePublished)
+    public void addProduct(String prodType)
             throws IllegalArgumentException{
 
         // WHEN IN APPLICATION - ADMIN CHOOSES PRODUCT TYPE - THIS STRING DECIDES WHICH ADD-CASE TO EXECUTE
@@ -144,6 +143,8 @@ public class StoreSystem {
             }           // END OF SWITCH CASE - ADD BY PRODUCT TYPE
         }               // END OF CATCH ILLEGAL ARGUMENT EXCEPTION - IF PRODUCT WASN'T ALREADY IN CATALOG
     }                   // END OF ADD PRODUCT METHOD
+
+     */
 
     public void removeProduct(Product product){
         for (Product p : catalog) {

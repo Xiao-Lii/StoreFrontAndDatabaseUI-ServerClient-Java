@@ -142,6 +142,9 @@ public class Controller{
     }
 
     public void addElectronic(ActionEvent actionEvent) {
+        store.addElectronic("", txtProductID.getText(), txtProductName.getText(),
+                txtBrandName.getText(), txtProductDesc.getText(), calDateIncorp.getValue(), null,
+                txtSerialNum.getText(), txtWarranty.getText());
     }
 
     public void addCellphone(ActionEvent actionEvent) {
