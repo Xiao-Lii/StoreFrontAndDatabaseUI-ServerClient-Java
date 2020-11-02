@@ -142,8 +142,8 @@ public class Controller{
     }
 
     public void addElectronic(ActionEvent actionEvent) {
-        store.addElectronic("", txtProductID.getText(), txtProductName.getText(),
-                txtBrandName.getText(), txtProductDesc.getText(), calDateIncorp.getValue(), null,
+        store.addElectronic(boxProdType.getTypeSelector(), txtProductID.getText(), txtProductName.getText(),
+                txtBrandName.getText(), txtProductDesc.getText(), calDateIncorp.getValue(),
                 txtSerialNum.getText(), txtWarranty.getText());
     }
 
