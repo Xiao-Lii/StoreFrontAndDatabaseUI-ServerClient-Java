@@ -5,14 +5,14 @@ import java.util.ArrayList;
 
 public class Electronic extends Product {
     private String serialNum;
-    private Integer yearsOnWarranty;
+    private String lengthOfWarranty;
 
     public Electronic(String productID, String productName, String brandName, String productDesc,
                       LocalDate dateOfIncorp, ArrayList<Category> prodCategory, String serialNum,
-                      Integer yearsOnWarranty) {
+                      String lengthOfWarranty) {
         super(productID, productName, brandName, productDesc, dateOfIncorp, prodCategory);
         this.serialNum = serialNum;
-        this.yearsOnWarranty = yearsOnWarranty;
+        this.lengthOfWarranty = lengthOfWarranty;
         // Category(String catID, String catName, String catDesc)
         Category electronic = new Category("Electronics72","Electronics",
                 "Technological entertainment revolving around electronic devices and media.");
@@ -27,11 +27,11 @@ public class Electronic extends Product {
         this.serialNum = serialNum;
     }
 
-    public Integer getYearsOnWarranty() {
-        return yearsOnWarranty;
+    public String getLengthOfWarranty() {
+        return lengthOfWarranty;
     }
 
-    public void setYearsOnWarranty(Integer yearsOnWarranty) {
-        this.yearsOnWarranty = yearsOnWarranty;
+    public void setLengthOfWarranty(String lengthOfWarranty) {
+        this.lengthOfWarranty = lengthOfWarranty;
     }
 }

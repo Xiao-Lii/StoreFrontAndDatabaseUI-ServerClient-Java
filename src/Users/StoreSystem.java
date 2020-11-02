@@ -1,12 +1,9 @@
 package Users;
 
 import Product.*;
-import Users.*;
 
-import java.lang.reflect.InvocationTargetException;
 import java.security.SecureRandom;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class StoreSystem {
@@ -20,6 +17,7 @@ public class StoreSystem {
         listOfUsers = new ArrayList<User>();
         catalog = new ArrayList<Product>();
         listOfUsers.add(new Admin("departmentstore@admin.com", "password", "admin"));
+        listOfUsers.add(new Customer("customer@gmail.com", "pw", "user"));
     }
 
     public static ArrayList<Category> getListOfCategories() {
@@ -74,11 +72,38 @@ public class StoreSystem {
         throw new IllegalArgumentException("Error: Product is not found in the catalog.");
     }
 
+    public void addElectronic(String prodType, String productID, String productName, String brandName, String productDesc,
+                              LocalDate dateOfIncorp, ArrayList<Category> prodCategory, String serialNum, String yearWarranty)
+                            throws IllegalArgumentException {
+        for (Product p : catalog) {
+            if (p.getProductID().equalsIgnoreCase(productID)) {
+                throw new IllegalArgumentException("Error: Product already exists in catalog.");
+            }
+        }
+        // SERIAL NO, WARRANTY PERIOD
+        catalog.add(new Electronic(productID, productName, brandName, productDesc, dateOfIncorp,
+                prodCategory, serialNum, yearWarranty));
+    }
+
+    public void addCellphone(String prodType, String productID, String productName, String brandName, String productDesc,
+                             LocalDate dateOfIncorp, ArrayList<Category> prodCategory, String serialNum, String yearWarranty,
+                             String imei, String os) throws IllegalArgumentException {
+        for (Product p : catalog) {
+            if (p.getProductID().equalsIgnoreCase(productID)) {
+                throw new IllegalArgumentException("Error: Product already exists in catalog.");
+            }
+        }
+        // SERIAL NO, WARRANTY PERIOD
+        catalog.add(new Electronic(productID, productName, brandName, productDesc, dateOfIncorp,
+                prodCategory, serialNum, yearWarranty));
+    }
+
+
     // WHEN ATTEMPTING TO ADD PRODUCT - IF THESE VALUES ARE EMPTY, THESE VALUES = NULL
     public void addProduct(String prodType, String productID, String productName, String brandName, String productDesc,
                            LocalDate dateOfIncorp, ArrayList<Category> prodCategory, String serialNum, String imei,
                            String os, String ram, String hardDrive, String authorName, String intendedLoc,
-                           Integer yearWarranty, Integer numPages, Integer edition, LocalDate datePublished)
+                           String yearWarranty, Integer numPages, Integer edition, LocalDate datePublished)
             throws IllegalArgumentException{
 
         // WHEN IN APPLICATION - ADMIN CHOOSES PRODUCT TYPE - THIS STRING DECIDES WHICH ADD-CASE TO EXECUTE
