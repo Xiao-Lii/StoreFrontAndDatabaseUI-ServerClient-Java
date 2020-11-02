@@ -17,6 +17,12 @@ public class Category {
         this.catDesc = "The default category for viewing all the entire contents of the catalog.";
     }
 
+    // THIS IS IMPORTANT WHEN DISPLAYING TO LISTVIEW TABLES
+    @Override
+    public String toString(){
+        return String.format("%-30s\t - \t%-20s\t - \t%s", this.getCatID(), this.getCatName(), this.getCatDesc());
+    }
+
     public String getCatID() {
         return catID;
     }

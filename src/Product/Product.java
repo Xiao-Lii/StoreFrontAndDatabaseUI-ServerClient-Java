@@ -1,9 +1,10 @@
 package Product;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public abstract class Product {
+public abstract class Product implements Serializable {
     private String productID;
     private String productName;
     private String brandName;
@@ -33,6 +34,13 @@ public abstract class Product {
         this.prodCategory = new ArrayList<Category>();
         Category defaultCategory = new Category();
         this.prodCategory.add(defaultCategory);
+    }
+
+    // THIS IS IMPORTANT WHEN DISPLAYING TO LISTVIEW TABLES
+    @Override
+    public String toString(){
+        return String.format("%s - %s - %s - %s - %tD", this.getProductID(), this.getProductName(), this.getBrandName(),
+                this.getProductDesc(), this.getDateOfIncorp());
     }
 
     public String getProductID() {

@@ -36,6 +36,16 @@ public class Book extends Product {
         this.prodCategory.add(books);
     }
 
+    // THIS IS IMPORTANT WHEN DISPLAYING TO LISTVIEW TABLES
+    @Override
+    public String toString(){
+        StringBuilder sb = new StringBuilder();
+        sb.append(super.toString());
+        sb.append(String.format(" - %s - %tD - %d - %d", this.getAuthorName(), this.getPublicationData(), this.getNumPages(),
+                this.getEdition()));
+        return sb.toString();
+    }
+
     public String getAuthorName() {
         return authorName;
     }
@@ -59,4 +69,18 @@ public class Book extends Product {
     public void setEdition(int edition) {
         this.edition = edition;
     }
+
+    public int getNumPages() {
+        return numPages;
+    }
+
+    public void setNumPages(int numPages) {
+        this.numPages = numPages;
+    }
+
+    public void setProdCategory(ArrayList<Category> prodCategory) {
+        this.prodCategory = prodCategory;
+    }
+
+
 }

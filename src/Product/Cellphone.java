@@ -31,6 +31,15 @@ public class Cellphone extends Electronic {
         this.prodCategory.add(electronic);
     }
 
+    // THIS IS IMPORTANT WHEN DISPLAYING TO LISTVIEW TABLES
+    @Override
+    public String toString(){
+        StringBuilder sb = new StringBuilder();
+        sb.append(super.toString());
+        sb.append(String.format(" - %s - %s", this.getImei(), this.getOs()));
+        return sb.toString();
+    }
+
     public String getImei() {
         return imei;
     }

@@ -7,7 +7,7 @@ import java.security.SecureRandom;
 import java.time.LocalDate;
 import java.util.*;
 
-public class StoreSystem {
+public class StoreSystem implements Serializable {
     private static ArrayList<Category> listOfCategories;
     private static ArrayList<User> listOfUsers;
     private static ArrayList<Product> catalog;
@@ -16,28 +16,50 @@ public class StoreSystem {
 
     public StoreSystem() {
         listOfCategories = new ArrayList<Category>();
+        listOfCategories.add(new Category("Default", "Default", "Default Category"));
+        listOfCategories.add(new Category("Electronic","Electronic",
+                "Technological entertainment revolving around electronic devices and media."));
+        listOfCategories.add(new Category("Computer","Computer",
+                "Technological entertainment revolving around computers"));
+        listOfCategories.add(new Category("Cellphone","Cellphone",
+                "Technological entertainment revolving around personal cellphones"));
+        listOfCategories.add(new Category("Book", "Book", "Paperback media entertainment."));
+        listOfCategories.add(new Category("Home", "Home", "For decorating the household."));
         listOfUsers = new ArrayList<User>();
         catalog = new ArrayList<Product>();
         listOfUsers.add(new Admin("admin@admin.com", "password", "admin"));
         listOfUsers.add(new Customer("customer@gmail.com", "pw", "user"));
     }
 
-    public static ArrayList<Category> getListOfCategories() {
+    public ArrayList<Category> getListOfCategories() {
         return listOfCategories;
     }
 
-    public static ArrayList<User> getListOfUsers() {
+    public ArrayList<String> getNameListOfCategories(){
+        ArrayList<String> catNames = new ArrayList<>();
+        for (Category c: listOfCategories){
+            catNames.add(c.getCatName());
+        }
+        return catNames;
+    }
+
+    public ArrayList<User> getListOfUsers() {
         return listOfUsers;
     }
 
-    public static ArrayList<Product> getCatalog() {
+    public ArrayList<Product> getCatalog() {
         return catalog;
     }
 
-    public static ArrayList<Order> getListOfCustOrders() {
+    public ArrayList<Order> getListOfCustOrders() {
         return listOfCustOrders;
     }
 
+    @Override
+    public String toString() {
+        return String.format("Department Store with %d items and %d categories.", getCatalog().size(),
+                getListOfCategories().size());
+    }
 
     public void createUser(String email, String password, String displayName) throws IllegalArgumentException {
         if(listOfUsers.size() == 0) {
@@ -74,69 +96,80 @@ public class StoreSystem {
         throw new IllegalArgumentException("Error: Product is not found in the catalog.");
     }
 
-    public void addElectronic(String prodType, String productID, String productName, String brandName, String productDesc,
-                              LocalDate dateOfIncorp, String serialNum, String yearWarranty)
+    public void addElectronic(String productID, String productName, String brandName, String productDesc,
+                              LocalDate dateOfIncorp, String serialNum, String warranty)
                             throws IllegalArgumentException {
+        if (productID == "" | productName == "" | brandName == "" | productDesc == "" |
+                dateOfIncorp == null | serialNum == "" | warranty == "")
+            throw new IllegalArgumentException();
+
         for (Product p : catalog) {
             if (p.getProductID().equalsIgnoreCase(productID)) {
-                throw new IllegalArgumentException("Error: Product already exists in catalog.");
+                throw new IllegalArgumentException();
             }
-            if (prodType != "Electronic")
-                throw new IllegalArgumentException("Error: Invalid product addition.");
         }
-        catalog.add(new Electronic(productID, productName, brandName, productDesc, dateOfIncorp, serialNum, yearWarranty));
+        catalog.add(new Electronic(productID, productName, brandName, productDesc, dateOfIncorp, serialNum, warranty));
     }
 
-    public void addCellphone(String prodType, String productID, String productName, String brandName, String productDesc,
+    public void addCellphone(String productID, String productName, String brandName, String productDesc,
                              LocalDate dateOfIncorp, String serialNum, String yearWarranty, String imei, String os)
                             throws IllegalArgumentException {
+        if (productID == "" | productName == "" | brandName == "" | productDesc == "" |
+                dateOfIncorp == null | serialNum == "" | yearWarranty == "" | imei == "" | os == "")
+            throw new IllegalArgumentException();
+
         for (Product p : catalog) {
             if (p.getProductID().equalsIgnoreCase(productID)) {
-                throw new IllegalArgumentException("Error: Product already exists in catalog.");
+                throw new IllegalArgumentException();
             }
-            if (prodType != "Cellphone")
-                throw new IllegalArgumentException("Error: Invalid product addition.");
         }
         catalog.add(new Cellphone(productID, productName, brandName, productDesc, dateOfIncorp, serialNum, yearWarranty,
                 imei, os));
     }
 
-    public void addComputer(String prodType, String productID, String productName, String brandName, String productDesc,
+    public void addComputer(String productID, String productName, String brandName, String productDesc,
                              LocalDate dateOfIncorp, String serialNum, String yearWarranty, String ram, String hardDrive)
                             throws IllegalArgumentException {
+        if (productID == "" | productName == "" | brandName == "" | productDesc == "" |
+                dateOfIncorp == null | serialNum == "" | yearWarranty == "" | serialNum == "" | yearWarranty == null
+                | ram == "" | hardDrive == "")
+            throw new IllegalArgumentException();
+
         for (Product p : catalog) {
             if (p.getProductID().equalsIgnoreCase(productID)) {
-                throw new IllegalArgumentException("Error: Product already exists in catalog.");
+                throw new IllegalArgumentException();
             }
-            if (prodType != "Computer")
-                throw new IllegalArgumentException("Error: Invalid product addition.");
         }
         catalog.add(new Computer(productID, productName, brandName, productDesc, dateOfIncorp, serialNum, yearWarranty,
                 ram, hardDrive));
     }
 
-    public void addBook(String prodType, String productID, String productName, String brandName, String productDesc,
+    public void addBook(String productID, String productName, String brandName, String productDesc,
                             LocalDate dateOfIncorp, String authorName, LocalDate datePublished, Integer numPages,
                             Integer edition) throws IllegalArgumentException {
+        if (productID == "" | productName == "" | brandName == "" | productDesc == "" |
+                dateOfIncorp == null | authorName == "" | datePublished == null | numPages == null | edition == null)
+            throw new IllegalArgumentException();
+
         for (Product p : catalog) {
             if (p.getProductID().equalsIgnoreCase(productID)) {
-                throw new IllegalArgumentException("Error: Product already exists in catalog.");
+                throw new IllegalArgumentException();
             }
-            if (prodType != "Book")
-                throw new IllegalArgumentException("Error: Invalid product addition.");
         }
         catalog.add(new Book(productID, productName, brandName, productDesc, dateOfIncorp, authorName, datePublished,
                 numPages, edition));
     }
 
-    public void addHome(String prodType, String productID, String productName, String brandName, String productDesc,
+    public void addHome(String productID, String productName, String brandName, String productDesc,
                         LocalDate dateOfIncorp, String intendedLoc) throws IllegalArgumentException {
+        if (productID == "" | productName == "" | brandName == "" | productDesc == "" |
+                dateOfIncorp == null | intendedLoc == "")
+            throw new IllegalArgumentException();
+
         for (Product p : catalog) {
             if (p.getProductID().equalsIgnoreCase(productID)) {
-                throw new IllegalArgumentException("Error: Product already exists in catalog.");
+                throw new IllegalArgumentException();
             }
-            if (prodType != "Home")
-                throw new IllegalArgumentException("Error: Invalid product addition.");
         }
         catalog.add(new HomeProduct(productID, productName, brandName, productDesc, dateOfIncorp, intendedLoc));
     }

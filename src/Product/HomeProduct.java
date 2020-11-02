@@ -27,6 +27,15 @@ public class HomeProduct extends Product {
         this.prodCategory.add(homeCategory);
     }
 
+    // THIS IS IMPORTANT WHEN DISPLAYING TO LISTVIEW TABLES
+    @Override
+    public String toString(){
+        StringBuilder sb = new StringBuilder();
+        sb.append(super.toString());
+        sb.append(String.format(" - %s", this.getIntendedLoc()));
+        return sb.toString();
+    }
+
     public String getIntendedLoc() {
         return intendedLoc;
     }

@@ -20,8 +20,7 @@ public class Electronic extends Product {
     }
 
     public Electronic(String productID, String productName, String brandName, String productDesc,
-                      LocalDate dateOfIncorp, String serialNum,
-                      String lengthOfWarranty) {
+                      LocalDate dateOfIncorp, String serialNum, String lengthOfWarranty) {
         super(productID, productName, brandName, productDesc, dateOfIncorp);
         this.serialNum = serialNum;
         this.lengthOfWarranty = lengthOfWarranty;
@@ -29,6 +28,15 @@ public class Electronic extends Product {
         Category electronic = new Category("Electronic","Electronic",
                 "Technological entertainment revolving around electronic devices and media.");
         this.prodCategory.add(electronic);
+    }
+
+    // THIS IS IMPORTANT WHEN DISPLAYING TO LISTVIEW TABLES
+    @Override
+    public String toString(){
+        StringBuilder sb = new StringBuilder();
+        sb.append(super.toString());
+        sb.append(String.format(" - %s - %s", this.getSerialNum(), this.getLengthOfWarranty()));
+        return sb.toString();
     }
 
     public String getSerialNum() {

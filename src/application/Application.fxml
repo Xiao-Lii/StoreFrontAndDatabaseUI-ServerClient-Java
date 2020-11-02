@@ -4,6 +4,7 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextField?>
@@ -87,10 +88,10 @@
                                         <Label text="Product Description" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
                                         <Label text="Brand Name" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
                                         <Label text="Date Incorporated" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-                                        <Label text="Product Category" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+                                        <Label text="Default Category" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
                                         <Label text="Product ID" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
                                         <Label text="Serial Num (Required for Electronics)" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
-                                        <Label text="Warranty Year(s) (Required for Electronics)" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+                                        <Label text="Length of Warranty (Required for Electronics)" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
                                         <Label text="IMEI (Required for Cellphones)" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
                                         <Label text="Operating System (Required for Cellphones)" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
                                         <Label text="RAM (Required for Computers)" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
@@ -262,11 +263,38 @@
                             </children></AnchorPane>
                     </content>
                 </Tab>
-                <Tab text="Terminate Server">
+                <Tab fx:id="tabProductList" onSelectionChanged="#listProducts" text="List All Products">
                     <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <ListView fx:id="listOfProducts" layoutX="28.0" layoutY="79.0" prefHeight="454.0" prefWidth="944.0" />
+                        <Label layoutX="28.0" layoutY="14.0" text="Product List">
+                           <font>
+                              <Font size="38.0" />
+                           </font>
+                        </Label>
+                     </children></AnchorPane>
                     </content>
                 </Tab>
+            <Tab fx:id="tabCategoryList" onSelectionChanged="#listCategories" text="List All Categories">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <ListView fx:id="listOfCategories" layoutX="28.0" layoutY="79.0" prefHeight="454.0" prefWidth="944.0" />
+                        <Label layoutX="28.0" layoutY="14.0" text="Category List">
+                           <font>
+                              <Font size="38.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+            <Tab text="Terminate Server">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+               </content>
+            </Tab>
             </tabs>
         </TabPane>
     </children>

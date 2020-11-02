@@ -1,19 +1,25 @@
 package application;
 
 import Product.Category;
+import Product.Product;
 import Users.StoreSystem;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
+import javafx.event.*;
+import javafx.scene.control.*;
+import javafx.stage.Stage;
 import javafx.fxml.FXML;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
 import javafx.scene.paint.Color;
-import javafx.stage.Stage;
 import server.*;
 import Users.Customer;
 import Users.Order;
+import javafx.scene.control.ListView;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -61,6 +67,15 @@ public class Controller{
     public Button btnAddComputer;
     public Button btnAddBook;
     public Button btnAddHome;
+    public EventListener eventListener;
+
+    // LIST ALL PRODUCTS TAB
+    public ListView listOfProducts;
+    public Tab tabProductList;
+
+    //LIST ALL CATEGORIES TAB
+    public ListView listOfCategories;
+    public Tab tabCategoryList;
 
     // FINALIZED ORDER REPORT
     public TextField Orderlist;
@@ -80,13 +95,17 @@ public class Controller{
     private StoreSystem store = new StoreSystem();
 
     public Controller(){
-        this.boxProdType = new ComboBox<Category>();
+        this.boxProdType = new ComboBox<>();
+        this.listOfCategories = new ListView<>();
+        this.listOfProducts = new ListView<>();
         client = new Client();
         client.connect();
     }
 
-    public void initialize(){
-        this.boxProdType.setItems(FXCollections.observableArrayList(store.getListOfCategories()));
+    public void initialize() {
+        boxProdType.setItems(FXCollections.observableArrayList(store.getListOfCategories()));
+        listOfProducts.setItems(FXCollections.observableArrayList(store.getCatalog()));
+        listOfCategories.setItems(FXCollections.observableArrayList(store.getListOfCategories()));
     }
 
     public void login(javafx.event.ActionEvent actionEvent) throws Exception {
@@ -156,7 +175,7 @@ public class Controller{
 
     public void addElectronic(ActionEvent actionEvent) {
         try {
-            store.addElectronic(boxProdType.getTypeSelector(), txtProductID.getText(), txtProductName.getText(),
+            store.addElectronic(txtProductID.getText(), txtProductName.getText(),
                     txtBrandName.getText(), txtProductDesc.getText(), calDateIncorp.getValue(),
                     txtSerialNum.getText(), txtWarranty.getText());
             Alert success = new Alert(Alert.AlertType.CONFIRMATION, "Product has been added successfully.");
@@ -170,7 +189,7 @@ public class Controller{
 
     public void addCellphone(ActionEvent actionEvent) {
         try {
-        store.addCellphone(boxProdType.getTypeSelector(), txtProductID.getText(), txtProductName.getText(),
+        store.addCellphone(txtProductID.getText(), txtProductName.getText(),
                 txtBrandName.getText(), txtProductDesc.getText(), calDateIncorp.getValue(),
                 txtSerialNum.getText(), txtWarranty.getText(), txtIMEI.getText(), txtOS.getText());
             Alert success = new Alert(Alert.AlertType.CONFIRMATION, "Product has been added successfully.");
@@ -184,7 +203,7 @@ public class Controller{
 
     public void addComputer(ActionEvent actionEvent) {
         try {
-        store.addComputer(boxProdType.getTypeSelector(), txtProductID.getText(), txtProductName.getText(),
+        store.addComputer(txtProductID.getText(), txtProductName.getText(),
                 txtBrandName.getText(), txtProductDesc.getText(), calDateIncorp.getValue(),
                 txtSerialNum.getText(), txtWarranty.getText(), txtRAM.getText(), txtHardDrive.getText());
             Alert success = new Alert(Alert.AlertType.CONFIRMATION, "Product has been added successfully.");
@@ -198,7 +217,7 @@ public class Controller{
 
     public void addBook(ActionEvent actionEvent) {
         try {
-        store.addBook(boxProdType.getTypeSelector(), txtProductID.getText(), txtProductName.getText(),
+        store.addBook(txtProductID.getText(), txtProductName.getText(),
                 txtBrandName.getText(), txtProductDesc.getText(), calDateIncorp.getValue(),
                 txtAuthorName.getText(), calPubDate.getValue(), Integer.parseInt(txtNumPages.getText()),
                 Integer.parseInt(txtBookEdition.getText()));
@@ -213,7 +232,7 @@ public class Controller{
 
     public void addHome(ActionEvent actionEvent) {
         try {
-        store.addHome(boxProdType.getTypeSelector(), txtProductID.getText(), txtProductName.getText(),
+        store.addHome(txtProductID.getText(), txtProductName.getText(),
                 txtBrandName.getText(), txtProductDesc.getText(), calDateIncorp.getValue(),
                 txtIntendedLoc.getText());
             Alert success = new Alert(Alert.AlertType.CONFIRMATION, "Product has been added successfully.");
@@ -235,5 +254,16 @@ public class Controller{
         alert.show();
     }
 
+    public void listProducts(Event event){
+        if (this.tabProductList.isSelected()){
+            this.listOfProducts.setItems(FXCollections.observableArrayList(store.getCatalog()));
+        }
+    }
+
+    public void listCategories(Event event){
+        if (this.tabCategoryList.isSelected()){
+            this.listOfCategories.setItems(FXCollections.observableArrayList(store.getListOfCategories()));
+        }
+    }
 
 }
