@@ -9,7 +9,7 @@ public class Cellphone extends Electronic {
 
     public Cellphone(String productID, String productName, String brandName, String productDesc,
                      LocalDate dateOfIncorp, ArrayList<Category> prodCategory, String serialNum,
-                     Integer warrantyPer, String imei, String os) {
+                     String warrantyPer, String imei, String os) {
         super(productID, productName, brandName, productDesc, dateOfIncorp, prodCategory, serialNum, warrantyPer);
         this.imei = imei;
         this.os = os;

@@ -9,7 +9,7 @@ public class Computer extends Electronic {
 
     public Computer(String productID, String productName, String brandName, String productDesc,
                     LocalDate dateOfIncorp, ArrayList<Category> prodCategory, String serialNum,
-                    Integer warrantyPer, String ram, String hardDrive) {
+                    String warrantyPer, String ram, String hardDrive) {
         super(productID, productName, brandName, productDesc, dateOfIncorp, prodCategory, serialNum, warrantyPer);
         this.ram = ram;
         this.hardDrive = hardDrive;

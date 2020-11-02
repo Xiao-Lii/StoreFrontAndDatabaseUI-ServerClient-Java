@@ -1,11 +1,9 @@
 package Users;
 
 import Product.*;
-import Users.*;
 
 import java.security.SecureRandom;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class StoreSystem {
@@ -17,8 +15,9 @@ public class StoreSystem {
     public StoreSystem() {
         listOfCategories = new ArrayList<Category>();
         listOfUsers = new ArrayList<User>();
-        listOfUsers.add(new Admin("admin@admin.com", "password", "admin"));
         catalog = new ArrayList<Product>();
+        listOfUsers.add(new Admin("departmentstore@admin.com", "password", "admin"));
+        listOfUsers.add(new Customer("customer@gmail.com", "pw", "user"));
     }
 
     public static ArrayList<Category> getListOfCategories() {
@@ -37,16 +36,19 @@ public class StoreSystem {
         return listOfCustOrders;
     }
 
-    public void createUser(String email, String password, String displayName) {
-        for (User u : listOfUsers){
-            try {
-                if (u.getEmail().equalsIgnoreCase(email) && u.getDisplayName().equalsIgnoreCase(displayName))
-                    throw new Exception();
-                listOfUsers.add(new Customer(email, password, displayName));
-            } catch (Exception e){ System.out.println("Error: Email or username already exists."); }
+
+    public void createUser(String email, String password, String displayName) throws IllegalArgumentException {
+        if(listOfUsers.size() == 0) {
+            listOfUsers.add(new Customer(email,password,displayName));
+            System.out.println("User " + displayName + " successfully added!");
+            return;
         }
-        if (listOfUsers.size() == 0)
-            listOfUsers.add(new Customer(email, password, displayName));
+        for(User u : listOfUsers)
+            if(u.getEmail().equalsIgnoreCase(email) || u.getDisplayName().equalsIgnoreCase(displayName)) {
+                throw new IllegalArgumentException("Email or username already exists.");
+            }
+        listOfUsers.add(new Customer(email,password,displayName));
+        System.out.println("User " + displayName + " successfully added!");
     }
 
     public void loginUser(String email, String password){
@@ -70,11 +72,38 @@ public class StoreSystem {
         throw new IllegalArgumentException("Error: Product is not found in the catalog.");
     }
 
+    public void addElectronic(String prodType, String productID, String productName, String brandName, String productDesc,
+                              LocalDate dateOfIncorp, ArrayList<Category> prodCategory, String serialNum, String yearWarranty)
+                            throws IllegalArgumentException {
+        for (Product p : catalog) {
+            if (p.getProductID().equalsIgnoreCase(productID)) {
+                throw new IllegalArgumentException("Error: Product already exists in catalog.");
+            }
+        }
+        // SERIAL NO, WARRANTY PERIOD
+        catalog.add(new Electronic(productID, productName, brandName, productDesc, dateOfIncorp,
+                prodCategory, serialNum, yearWarranty));
+    }
+
+    public void addCellphone(String prodType, String productID, String productName, String brandName, String productDesc,
+                             LocalDate dateOfIncorp, ArrayList<Category> prodCategory, String serialNum, String yearWarranty,
+                             String imei, String os) throws IllegalArgumentException {
+        for (Product p : catalog) {
+            if (p.getProductID().equalsIgnoreCase(productID)) {
+                throw new IllegalArgumentException("Error: Product already exists in catalog.");
+            }
+        }
+        // SERIAL NO, WARRANTY PERIOD
+        catalog.add(new Electronic(productID, productName, brandName, productDesc, dateOfIncorp,
+                prodCategory, serialNum, yearWarranty));
+    }
+
+
     // WHEN ATTEMPTING TO ADD PRODUCT - IF THESE VALUES ARE EMPTY, THESE VALUES = NULL
     public void addProduct(String prodType, String productID, String productName, String brandName, String productDesc,
                            LocalDate dateOfIncorp, ArrayList<Category> prodCategory, String serialNum, String imei,
                            String os, String ram, String hardDrive, String authorName, String intendedLoc,
-                           Integer yearWarranty, Integer numPages, Integer edition, LocalDate datePublished)
+                           String yearWarranty, Integer numPages, Integer edition, LocalDate datePublished)
             throws IllegalArgumentException{
 
         // WHEN IN APPLICATION - ADMIN CHOOSES PRODUCT TYPE - THIS STRING DECIDES WHICH ADD-CASE TO EXECUTE
@@ -163,7 +192,6 @@ public class StoreSystem {
 
     //Customer's credentials should already been authenticated
     public void newOrder(Customer c, Product p) {
-
         SecureRandom random = new SecureRandom();//order#
         Order o = null;
 
@@ -214,33 +242,29 @@ public class StoreSystem {
     }
 
     //counts list of orders... will change if needed
-    public void countDuplicateItems(String userName) {
+    public void countDuplicateItems(String userName){
         Customer c = new Customer();
-        c.setDisplayName(userName);
         Set<Order> orderList = new HashSet<Order>(c.getListOfCustOrders());
-        for (Iterator<User> u = listOfUsers.iterator(); u.hasNext(); ) {
-            if (listOfUsers.contains(c.getDisplayName())) {
-                for (Order temp : orderList) {
-                    System.out.println(temp + ": " + Collections.frequency(orderList, temp));
-                }
-            }
+        for (Order temp : orderList){
+            System.out.println(temp + ": " + Collections.frequency(orderList, temp));
         }
     }
 
+    //is this right???
     public void finalizeOrder(String userName, int orderNum){
         Customer c = new Customer();
         Order o = new Order();
 
         c.setDisplayName(userName);
         o.setOrderNum(orderNum);
-
         for(Iterator<User> u = listOfUsers.iterator(); u.hasNext();){//can I delete this?
-            if(listOfUsers.contains(c.getDisplayName())){
+            if(listOfUsers.contains(c)){
                 for(Iterator<Order> or = c.getListOfCustOrders().iterator(); or.hasNext();){
                     if(c.getListOfCustOrders().contains(o.getOrderNum())){
                         o.setStatus(true);// is this right?
                     }else{
                         o.setStatus(false);
+
                     }
                 }
             }
@@ -254,5 +278,6 @@ public class StoreSystem {
             }
         }
     }
+
 
 }                       // END OF DEPARTMENT STORE CLASS
