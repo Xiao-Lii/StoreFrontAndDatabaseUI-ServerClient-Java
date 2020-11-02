@@ -1,6 +1,8 @@
 package application;
 
+import Product.Category;
 import Users.StoreSystem;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -12,6 +14,11 @@ import javafx.stage.Stage;
 import server.*;
 import Users.Customer;
 import Users.Order;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.util.EventListener;
 
 
 public class Controller{
@@ -48,7 +55,7 @@ public class Controller{
     public DatePicker calPubDate;
     public TextField txtSerialNum;
     public TextField txtIntendedLoc;
-    public ComboBox boxProdType;
+    public ComboBox<Category> boxProdType;
     public Button btnAddElectronic;
     public Button btnAddCellphone;
     public Button btnAddComputer;
@@ -73,13 +80,19 @@ public class Controller{
     private StoreSystem store = new StoreSystem();
 
     public Controller(){
+        this.boxProdType = new ComboBox<Category>();
         client = new Client();
         client.connect();
     }
 
+    public void initialize(){
+        this.boxProdType.setItems(FXCollections.observableArrayList(store.getListOfCategories()));
+    }
+
     public void login(javafx.event.ActionEvent actionEvent) throws Exception {
         for(int i = 0; i < store.getListOfUsers().size(); i ++) {
-            if (usernameTextField.getText().equals(store.getListOfUsers().get(i).getDisplayName()) &&
+            if ((usernameTextField.getText().equals(store.getListOfUsers().get(i).getDisplayName()) |
+                    usernameTextField.getText().equals(store.getListOfUsers().get(i).getEmail())) &&
                     passwordTextField.getText().equals(store.getListOfUsers().get(i).getPassword())) {
                 loginConfirmLabel.setText("Login Successful.");
                 loginConfirmLabel.setTextFill(Color.GREEN);
@@ -142,21 +155,74 @@ public class Controller{
     }
 
     public void addElectronic(ActionEvent actionEvent) {
-        store.addElectronic(boxProdType.getTypeSelector(), txtProductID.getText(), txtProductName.getText(),
-                txtBrandName.getText(), txtProductDesc.getText(), calDateIncorp.getValue(),
-                txtSerialNum.getText(), txtWarranty.getText());
+        try {
+            store.addElectronic(boxProdType.getTypeSelector(), txtProductID.getText(), txtProductName.getText(),
+                    txtBrandName.getText(), txtProductDesc.getText(), calDateIncorp.getValue(),
+                    txtSerialNum.getText(), txtWarranty.getText());
+            Alert success = new Alert(Alert.AlertType.CONFIRMATION, "Product has been added successfully.");
+            success.show();
+        }
+        catch (IllegalArgumentException iae){
+            Alert error = new Alert(Alert.AlertType.ERROR, "Error adding product. Please try again.");
+            error.show();
+        }
     }
 
     public void addCellphone(ActionEvent actionEvent) {
+        try {
+        store.addCellphone(boxProdType.getTypeSelector(), txtProductID.getText(), txtProductName.getText(),
+                txtBrandName.getText(), txtProductDesc.getText(), calDateIncorp.getValue(),
+                txtSerialNum.getText(), txtWarranty.getText(), txtIMEI.getText(), txtOS.getText());
+            Alert success = new Alert(Alert.AlertType.CONFIRMATION, "Product has been added successfully.");
+            success.show();
+        }
+        catch (IllegalArgumentException iae){
+            Alert error = new Alert(Alert.AlertType.ERROR, "Error adding product. Please try again.");
+            error.show();
+        }
     }
 
     public void addComputer(ActionEvent actionEvent) {
+        try {
+        store.addComputer(boxProdType.getTypeSelector(), txtProductID.getText(), txtProductName.getText(),
+                txtBrandName.getText(), txtProductDesc.getText(), calDateIncorp.getValue(),
+                txtSerialNum.getText(), txtWarranty.getText(), txtRAM.getText(), txtHardDrive.getText());
+            Alert success = new Alert(Alert.AlertType.CONFIRMATION, "Product has been added successfully.");
+            success.show();
+        }
+        catch (IllegalArgumentException iae){
+            Alert error = new Alert(Alert.AlertType.ERROR, "Error adding product. Please try again.");
+            error.show();
+        }
     }
 
     public void addBook(ActionEvent actionEvent) {
+        try {
+        store.addBook(boxProdType.getTypeSelector(), txtProductID.getText(), txtProductName.getText(),
+                txtBrandName.getText(), txtProductDesc.getText(), calDateIncorp.getValue(),
+                txtAuthorName.getText(), calPubDate.getValue(), Integer.parseInt(txtNumPages.getText()),
+                Integer.parseInt(txtBookEdition.getText()));
+            Alert success = new Alert(Alert.AlertType.CONFIRMATION, "Product has been added successfully.");
+            success.show();
+        }
+        catch (IllegalArgumentException iae){
+            Alert error = new Alert(Alert.AlertType.ERROR, "Error adding product. Please try again.");
+            error.show();
+        }
     }
 
     public void addHome(ActionEvent actionEvent) {
+        try {
+        store.addHome(boxProdType.getTypeSelector(), txtProductID.getText(), txtProductName.getText(),
+                txtBrandName.getText(), txtProductDesc.getText(), calDateIncorp.getValue(),
+                txtIntendedLoc.getText());
+            Alert success = new Alert(Alert.AlertType.CONFIRMATION, "Product has been added successfully.");
+            success.show();
+        }
+        catch (IllegalArgumentException iae){
+            Alert error = new Alert(Alert.AlertType.ERROR, "Error adding product. Please try again.");
+            error.show();
+        }
     }
 
     public void custOrderList(ActionEvent actionEvent) {
@@ -168,4 +234,6 @@ public class Controller{
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Order Finalized!");
         alert.show();
     }
+
+
 }

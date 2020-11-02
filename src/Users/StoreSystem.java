@@ -2,6 +2,7 @@ package Users;
 
 import Product.*;
 
+import java.io.*;
 import java.security.SecureRandom;
 import java.time.LocalDate;
 import java.util.*;
@@ -11,12 +12,13 @@ public class StoreSystem {
     private static ArrayList<User> listOfUsers;
     private static ArrayList<Product> catalog;
     private static ArrayList<Order> listOfCustOrders;
+    public static final String filename = "./storeSystem.ser";
 
     public StoreSystem() {
         listOfCategories = new ArrayList<Category>();
         listOfUsers = new ArrayList<User>();
         catalog = new ArrayList<Product>();
-        listOfUsers.add(new Admin("departmentstore@admin.com", "password", "admin"));
+        listOfUsers.add(new Admin("admin@admin.com", "password", "admin"));
         listOfUsers.add(new Customer("customer@gmail.com", "pw", "user"));
     }
 
@@ -273,5 +275,48 @@ public class StoreSystem {
         }
     }
 
+    // LOAD STORE SYSTEM DATABASE - REFERENCE URL: https://ucdenver.instructure.com/courses/440985/modules/items/2561187
+    // BEGIN AT TIME 22:30 TO SEE JAVIER'S EXAMPLE OF LOADING IN A UNIVERSITY
+    public static StoreSystem loadFromFile(){
+        ObjectInputStream ois = null;
+        StoreSystem storeSystem = null;
+
+        try {
+            ois = new ObjectInputStream(new FileInputStream(StoreSystem.filename));
+            storeSystem = (StoreSystem) ois.readObject();
+        } catch (Exception e) {
+            e.printStackTrace();
+            storeSystem = new StoreSystem();
+        } finally {
+            if (ois != null) {
+                try {
+                    ois.close();
+                } catch (IOException ioe) {
+                    ioe.printStackTrace();
+                }
+            }
+        }
+        return storeSystem;
+    }
+
+    public void saveToFile() {
+        ObjectOutputStream objectOutputStream = null;
+
+        try {
+            // Opening the stream to a file - Saves to filename
+            objectOutputStream = new ObjectOutputStream(new FileOutputStream(filename));
+            objectOutputStream.writeObject(this);
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
+        } finally {
+            if (objectOutputStream != null) {
+                try {
+                    objectOutputStream.close();
+                } catch (IOException ioe) {
+                    ioe.printStackTrace();
+                }
+            }
+        }
+    }
 
 }                       // END OF DEPARTMENT STORE CLASS
