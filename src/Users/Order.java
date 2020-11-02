@@ -19,6 +19,13 @@ public class Order {
         this.prodsInOrder = prodsInOrder;
     }
 
+    public Order(){
+        this.orderNum = 0;
+        this.status = false;
+        this.finalizationDate = null;
+        this.prodsInOrder = null;
+    }
+
     public  ArrayList<Product> getProdsInOrder(){return prodsInOrder; }
 
     public int getOrderNum() {

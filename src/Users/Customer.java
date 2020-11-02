@@ -12,6 +12,9 @@ public class Customer extends User {
         this.listOfCustOrders = listOfCustOrders;
     }
 
+    public Customer() { super(); }
+
+
     public Customer(String email, String password, String displayName) {
         super(email, password, displayName);
     }

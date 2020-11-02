@@ -10,6 +10,9 @@ import javafx.scene.control.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import server.*;
+import Users.Customer;
+import Users.Order;
+
 
 public class Controller{
     // -------------- ADMIN APPLICATION --------------
@@ -51,6 +54,12 @@ public class Controller{
     public Button btnAddComputer;
     public Button btnAddBook;
     public Button btnAddHome;
+
+    // FINALIZED ORDER REPORT
+    public TextField Orderlist;
+    public Button checkOut;
+    private Order order = new Order();
+    private  Customer c = new Customer();
 
     Client client;
 
@@ -136,5 +145,15 @@ public class Controller{
     }
 
     public void addHome(ActionEvent actionEvent) {
+    }
+
+    public void custOrderList(ActionEvent actionEvent) {
+        store.countDuplicateItems(this.txtUsername.getText());
+    }
+
+    public void finalizeOrder(ActionEvent actionEvent) {
+        store.finalizeOrder(this.txtUsername.getText(), order.getOrderNum());
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Order Finalized!");
+        alert.show();
     }
 }
