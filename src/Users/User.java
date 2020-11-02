@@ -14,6 +14,13 @@ public abstract class User {
         this.custOrder = null;
     }
 
+    public User() {
+        this.email = null;
+        this.password = null;
+        this.displayName = null;
+        this.custOrder = null;
+    }
+
     public String getEmail() {
         return email;
     }
