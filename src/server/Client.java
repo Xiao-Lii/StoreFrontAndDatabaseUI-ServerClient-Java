@@ -53,7 +53,7 @@ public class Client {
     }
 
     public void disconnect() {
-        displayMessage("\n[CLIENT] TERMINATING CLIENT CONNECTION TO SERVER.\n");
+        displayMessage("[CLIENT] TERMINATING CLIENT CONNECTION TO SERVER.");
         try {
             this.input.close();
             this.output.close();
