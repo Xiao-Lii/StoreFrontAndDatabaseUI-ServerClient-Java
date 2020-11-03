@@ -9,6 +9,7 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.*;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.TextFieldListCell;
 import javafx.stage.Stage;
 import javafx.fxml.FXML;
 import javafx.beans.value.ChangeListener;
@@ -22,6 +23,8 @@ import Users.Customer;
 import Users.Order;
 import javafx.scene.control.ListView;
 
+import javax.swing.*;
+import java.awt.event.MouseEvent;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -353,6 +356,37 @@ public class Controller{
     public void listCategories(Event event){
         if (this.tabCategoryList.isSelected()){
             this.listOfCategories.setItems(FXCollections.observableArrayList(store.getListOfCategories()));
+        }
+    }
+
+    //variables for browse -> will move it up
+    public ListView catalogCategories;
+    public ListView catalogProducts;
+    public Tab productSearchTab;
+    public TextField userProdInput;
+    public TextField userCatInput;
+    public ListView searchedProd;
+    public CheckBox prodAvailability;
+    public Button search;
+    public Button resetSearch;
+
+    public void custCatalogList(ActionEvent actionEvent){//why this not working
+        this.catalogCategories.setItems(FXCollections.observableArrayList(store.getListOfCategories()));
+        this.catalogCategories.setCellFactory(TextFieldListCell.forListView());
+    }
+
+    public void custProductList(ActionEvent actionEvent){
+    }
+
+    //search
+    public void searchProducts(ActionEvent actionEvent){
+        if(this.productSearchTab.isSelected()){
+//            if(this.userProdInput.equals("") || this.userCatInput.equals("")){
+//                Alert alert = new Alert(Alert.AlertType.ERROR, "Empty search fields!");
+//                alert.show();
+//            }else {
+//
+//                }
         }
     }
 

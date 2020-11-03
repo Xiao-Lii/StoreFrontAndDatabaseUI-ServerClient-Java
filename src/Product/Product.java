@@ -90,4 +90,5 @@ public abstract class Product implements Serializable {
     public void setProdCategory(ArrayList<Category> prodCategory) {
         this.prodCategory = prodCategory;
     }
+
 }
