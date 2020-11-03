@@ -102,8 +102,6 @@ public class Controller{
     Client client;
 
     public void loadFromFile(ActionEvent actionEvent) {
-
-
         /*
         public static StoreSystem loadFromFile(){
             ObjectInputStream ois = null;
@@ -390,4 +388,10 @@ public class Controller{
     }
 
 
+    // BROWSE CATEGORY - CUSTOMER SIDE APP - ADD ITEM TO CART
+    public void addItemToCart(ActionEvent actionEvent) {
+        // CHECK IF CUSTOMER HAS ANY OPEN ORDERS
+            // IF YES = ADD ITEM TO CURRENT OPEN ORDER
+            // IF NO = CALL CREATE ORDER FOR USER
+    }
 }
