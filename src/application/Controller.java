@@ -102,6 +102,8 @@ public class Controller{
     Client client;
 
     public void loadFromFile(ActionEvent actionEvent) {
+
+
         /*
         public static StoreSystem loadFromFile(){
             ObjectInputStream ois = null;
