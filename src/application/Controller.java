@@ -162,7 +162,6 @@ public class Controller{
         listOfProducts.setItems(FXCollections.observableArrayList(store.getCatalog()));
         listOfCategories.setItems(FXCollections.observableArrayList(store.getListOfCategories()));
         listBrowseListOfCategories.setItems(FXCollections.observableArrayList(store.getListOfCategories()));
-        
 
         // FOR ADMIN APP - ADD PRODUCT TAB - PRODUCT DEFAULT CATEGORY SELECTION OPTIONS
         boxProdType.getSelectionModel().selectedItemProperty().addListener( (v, oldValue, newValue) ->
