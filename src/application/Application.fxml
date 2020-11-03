@@ -8,6 +8,8 @@
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
@@ -295,9 +297,22 @@
                   </AnchorPane>
                </content>
             </Tab>
-            <Tab text="Terminate Server">
+            <Tab text="Exit Admin Application">
                <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Button fx:id="btnCloseAdminApp" layoutX="366.0" layoutY="157.0" mnemonicParsing="false" onAction="#stopAdminApp" prefHeight="37.0" prefWidth="236.0" text="Yes Please Exit" />
+                        <Label layoutX="26.0" layoutY="47.0" prefHeight="68.0" prefWidth="948.0" text="Are you sure you want to leave the Admin Application?">
+                           <font>
+                              <Font size="39.0" />
+                           </font>
+                        </Label>
+                        <ImageView fitHeight="174.0" fitWidth="305.0" layoutX="630.0" layoutY="124.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@Resources/sadface2.png" />
+                           </image>
+                        </ImageView>
+                     </children></AnchorPane>
                </content>
             </Tab>
             </tabs>
