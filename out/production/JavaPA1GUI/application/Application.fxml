@@ -62,7 +62,7 @@
                             </children></AnchorPane>
                     </content>
                 </Tab>
-                <Tab text="Product Management">
+                <Tab fx:id="tabProductManagement" onSelectionChanged="#updateDefaultCategoryBox" text="Product Management">
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                             <children>
@@ -316,7 +316,7 @@
                                     <Font size="20.0" />
                                  </font>
                               </Label>
-                              <Button fx:id="btnSaveDatabase" mnemonicParsing="false" text="Save Database to a File" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                              <Button fx:id="btnSaveDatabase" mnemonicParsing="false" onAction="#saveDatabaseToFile" text="Save Database to a File" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
                               <Label prefHeight="36.0" prefWidth="111.0" text="Exit Options" GridPane.halignment="CENTER" GridPane.rowIndex="1">
                                  <font>
                                     <Font size="20.0" />

@@ -28,6 +28,7 @@ public class Controller{
     public Button btnLoadData;
     public Button btnStartServer;
     public Button btnCloseAdminApp;
+    public Button btnSaveDatabase;
     private MultiThreadServer server;
 
     // LOGIN WINDOW
@@ -52,6 +53,7 @@ public class Controller{
     public Button removeCatButton;
 
     // PRODUCT MANAGEMENT - ADMIN APP
+    public Tab tabProductManagement;
     public TextField txtProductID;
     public TextField txtProductName;
     public TextField txtBrandName;
@@ -101,29 +103,32 @@ public class Controller{
     private StoreSystem store = new StoreSystem();
     Client client;
 
+    // TESTING LOAD FROM FILE FUNCTION - ADMIN SIDE - LEE
     public void loadFromFile(ActionEvent actionEvent) {
-        /*
-        public static StoreSystem loadFromFile(){
-            ObjectInputStream ois = null;
-            StoreSystem storeSystem = null;
+        try {
+            this.store.loadFromFile();
+            Alert success = new Alert(Alert.AlertType.CONFIRMATION,
+                    "Success. The database has now been preloaded with data from the file.");
+            success.show();
+        }
+        catch (Exception e){
+            Alert error = new Alert(Alert.AlertType.ERROR, "Data could not be uploaded to the server.");
+            error.show();
+        }
+    }
 
-            try {
-                ois = new ObjectInputStream(new FileInputStream(StoreSystem.filename));
-                storeSystem = (StoreSystem) ois.readObject();
-            } catch (Exception e) {
-                e.printStackTrace();
-                storeSystem = new StoreSystem();
-            } finally {
-                if (ois != null) {
-                    try {
-                        ois.close();
-                    } catch (IOException ioe) {
-                        ioe.printStackTrace();
-                    }
-                }
-            }
-            return storeSystem;
-        } */
+    // TESTING SAVE DATABASE TO FILE FUNCTION - ADMIN SIDE - LEE
+    public void saveDatabaseToFile(ActionEvent actionEvent) {
+        try {
+            this.store.saveToFile();
+            Alert success = new Alert(Alert.AlertType.CONFIRMATION,
+                    "The database has been successfully saved.");
+            success.show();
+        }
+        catch (Exception e){
+            Alert error = new Alert(Alert.AlertType.ERROR, "The database could not be saved.");
+            error.show();
+        }
     }
 
     public void startServer(javafx.event.ActionEvent actionEvent) throws IOException {
@@ -155,6 +160,12 @@ public class Controller{
         this.listItemsInCategory = new ListView<>();            // INITIALIZING LIST OF ITEMS IN A CATEGORY - CUSTOMER APP
         client = new Client();
         client.connect();
+    }
+
+    public void updateDefaultCategoryBox(Event event) {
+        if (this.tabProductManagement.isSelected()){
+            boxProdType.setItems(FXCollections.observableArrayList(store.getListOfCategories()));
+        }
     }
 
     public void initialize() {
@@ -394,4 +405,6 @@ public class Controller{
             // IF YES = ADD ITEM TO CURRENT OPEN ORDER
             // IF NO = CALL CREATE ORDER FOR USER
     }
+
+
 }
