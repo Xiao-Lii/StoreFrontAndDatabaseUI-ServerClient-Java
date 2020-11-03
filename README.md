@@ -6,6 +6,7 @@ Upon the start of the program, it will prompt the user if they'd like to:
 2. Start Server
 
 If prompted to 'Start the Server,' a login window will appear asking the user to either sign in, depending on the account type, it will prompt different windows to appear.
+
 IMPORTANT NOTE: Only an admin account can manipulate the data for the store system and if the program detects a 'Admin' login, it will only prompt the Admin Application. If the system detects a Customer has signed in, it will prompt the Customer Catalog Application. The Admin account will not be able to view the catalog application otherwise or vice versa for a Customer account. 
 
 Admin Username: admin
