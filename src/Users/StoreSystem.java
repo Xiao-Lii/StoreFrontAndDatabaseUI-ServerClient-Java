@@ -341,7 +341,7 @@ public class StoreSystem implements Serializable {
     // LOAD STORE SYSTEM DATABASE - REFERENCE URL: https://ucdenver.instructure.com/courses/440985/modules/items/2561187
     // BEGIN AT TIME 22:30 TO SEE JAVIER'S EXAMPLE OF LOADING IN A UNIVERSITY
     // THIS WAS A STATIC METHOD AND I CHANGED IT NOT TO BE STATIC TO ACCESS METHOD IN CONTROLLER CLASS
-    public StoreSystem loadFromFile(){
+    public static StoreSystem loadFromFile(){
         ObjectInputStream ois = null;
         StoreSystem storeSystem = null;
 

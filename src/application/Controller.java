@@ -29,6 +29,7 @@ public class Controller{
     public Button btnStartServer;
     public Button btnCloseAdminApp;
     public Button btnSaveDatabase;
+    public Button btnLoadDatabase;
     private MultiThreadServer server;
 
     // LOGIN WINDOW
@@ -106,13 +107,18 @@ public class Controller{
     // TESTING LOAD FROM FILE FUNCTION - ADMIN SIDE - LEE
     public void loadFromFile(ActionEvent actionEvent) {
         try {
-            this.store.loadFromFile();
+            if (server.isServerClosed()){
+                throw new Exception();
+            }
+
+            StoreSystem.loadFromFile();
             Alert success = new Alert(Alert.AlertType.CONFIRMATION,
                     "Success. The database has now been preloaded with data from the file.");
             success.show();
         }
         catch (Exception e){
-            Alert error = new Alert(Alert.AlertType.ERROR, "Data could not be uploaded to the server.");
+            Alert error = new Alert(Alert.AlertType.ERROR, "Data could not be uploaded to the server.\n" +
+                    "The server must be running to upload new data into the database.");
             error.show();
         }
     }
@@ -215,8 +221,8 @@ public class Controller{
 
     public void login(javafx.event.ActionEvent actionEvent) throws Exception {
         for(int i = 0; i < store.getListOfUsers().size(); i ++) {
-            if ((usernameTextField.getText().equals(store.getListOfUsers().get(i).getDisplayName()) |
-                    usernameTextField.getText().equals(store.getListOfUsers().get(i).getEmail())) &&
+            if ((usernameTextField.getText().equalsIgnoreCase(store.getListOfUsers().get(i).getDisplayName()) |
+                    usernameTextField.getText().equalsIgnoreCase(store.getListOfUsers().get(i).getEmail())) &&
                     passwordTextField.getText().equals(store.getListOfUsers().get(i).getPassword())) {
                 loginConfirmLabel.setText("Login Successful.");
                 loginConfirmLabel.setTextFill(Color.GREEN);

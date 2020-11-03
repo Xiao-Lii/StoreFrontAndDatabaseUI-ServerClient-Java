@@ -301,10 +301,11 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <GridPane layoutX="356.0" layoutY="204.0" prefHeight="117.0" prefWidth="551.0">
+                        <GridPane layoutX="356.0" layoutY="204.0" prefHeight="117.0" prefWidth="616.0">
                           <columnConstraints>
                             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                           </columnConstraints>
                           <rowConstraints>
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -323,6 +324,7 @@
                                  </font>
                               </Label>
                               <Button fx:id="btnCloseAdminApp" mnemonicParsing="false" onAction="#stopAdminApp" prefHeight="25.0" prefWidth="151.0" text="Exit Admin Application" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                              <Button fx:id="btnLoadDatabase" mnemonicParsing="false" onAction="#loadFromFile" text="Load Database from a File" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
                            </children>
                         </GridPane>
                         <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="107.0" layoutY="147.0" pickOnBounds="true" preserveRatio="true" />
