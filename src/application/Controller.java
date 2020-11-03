@@ -9,9 +9,9 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.*;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.TextFieldListCell;
 import javafx.stage.Stage;
 import javafx.fxml.FXML;
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -22,7 +22,6 @@ import Users.Customer;
 import Users.Order;
 import javafx.scene.control.ListView;
 
-import javax.swing.event.ChangeListener;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -81,10 +80,10 @@ public class Controller{
     public Tab tabCategoryList;
 
     // FINALIZED ORDER REPORT
-    public TextField Orderlist;
-    public Button checkOut;
-    public ListView<String> listOfCategoriesCust;
-    public Tab tabBrowseCategories;
+    public Tab tabFinalizedOrderReport;
+    public Button btnFinalizeOrder;
+    public ListView listAllCustomerOrdersAdmin;
+    public ListView listProductsInOrderAdmin;
     private Order order = new Order();
     private  Customer c = new Customer();
 
@@ -99,11 +98,56 @@ public class Controller{
 
     private StoreSystem store = new StoreSystem();
 
+    // START SERVER APP
+    public Button btnLoadData;
+    public Button btnStartServer;
+    private MultiThreadServer server;
+
+    public void loadFromFile(ActionEvent actionEvent) {
+        /*
+        public static StoreSystem loadFromFile(){
+            ObjectInputStream ois = null;
+            StoreSystem storeSystem = null;
+
+            try {
+                ois = new ObjectInputStream(new FileInputStream(StoreSystem.filename));
+                storeSystem = (StoreSystem) ois.readObject();
+            } catch (Exception e) {
+                e.printStackTrace();
+                storeSystem = new StoreSystem();
+            } finally {
+                if (ois != null) {
+                    try {
+                        ois.close();
+                    } catch (IOException ioe) {
+                        ioe.printStackTrace();
+                    }
+                }
+            }
+            return storeSystem;
+        } */
+    }
+
+    public void startServer(javafx.event.ActionEvent actionEvent) throws IOException {
+        server = new MultiThreadServer(10000);
+        new Thread(server).start();
+
+        Parent root = FXMLLoader.load(getClass().getResource("Login.fxml"));
+        Stage primaryStage = new Stage();
+        primaryStage.setTitle("Store System Login");
+        primaryStage.setScene(new Scene(root, 300, 300));
+        primaryStage.show();
+
+        if (server.isServerClosed()) {
+            System.out.println("STOPPING THE SERVER");
+            server.stop();
+        }
+    }
+
     public Controller(){
         this.boxProdType = new ComboBox<>();
         this.listOfCategories = new ListView<>();
         this.listOfProducts = new ListView<>();
-        this.listOfCategoriesCust = new ListView<>();
         client = new Client();
         client.connect();
     }
@@ -289,13 +333,13 @@ public class Controller{
         }
     }
 
-
     public void custOrderList(ActionEvent actionEvent) {
         store.countDuplicateItems(this.txtUsername.getText());
     }
 
     public void finalizeOrder(ActionEvent actionEvent) {
-        store.finalizeOrder(this.txtUsername.getText(), order.getOrderNum());
+        // WE NEED TO PASS THE CUSTOMER'S VALUE & THEIR ORDER THAT THEY'RE TRYING TO FINALIZE
+        //store.finalizeOrder(this.txtUsername.getText(), order.getOrderNum());
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Order Finalized!");
         alert.show();
     }
@@ -312,19 +356,20 @@ public class Controller{
         }
     }
 
-    //variables for Catalog GUI -> will transfer this on top later. just need this for easy reference
-
-    //Browse
-    public void displayCategoriesCatalog(ActionEvent actionEvent){
-        //feel free to delete this if needed. Got the code snippet from:
-
-            this.listOfCategoriesCust.setItems(FXCollections.observableArrayList(store.getNameListOfCategories()));
-            this.listOfCategoriesCust.setCellFactory(TextFieldListCell.forListView());
+    public void listAllCustomerOrders(Event event){
+        try {
+            if (this.tabFinalizedOrderReport.isSelected()) {
+                if (store.getFinalizedListOfCustOrders().size() == 0 | store.getFinalizedListOfCustOrders().equals(null))
+                    throw new IllegalArgumentException();
+                else
+                    this.listAllCustomerOrdersAdmin.setItems(FXCollections.observableArrayList(store.getFinalizedListOfCustOrders()));
+            }
+        }
+        catch (IllegalArgumentException iae){
+            Alert noOrders = new Alert(Alert.AlertType.INFORMATION, "No Finalized orders to display");
+            noOrders.show();
+        }
     }
 
-    public void displayProductsCatalog(ActionEvent actionEvent){
 
-    }
-
-    //Search
 }

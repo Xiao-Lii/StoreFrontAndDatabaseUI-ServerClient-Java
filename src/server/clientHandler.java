@@ -4,23 +4,30 @@ import java.io.*;
 import java.net.Socket;
 
 public class clientHandler implements Runnable{
-    private Socket clientSocket = null;
+    private Socket clientSocket;
     private BufferedReader input;
     private PrintWriter output;
+    private String serverText;
 
     public clientHandler(Socket clientSocket) throws IOException {
         this.clientSocket = clientSocket;
         this.input = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
         this.output = new PrintWriter(new PrintStream(clientSocket.getOutputStream()));
+        this.serverText = null;
+    }
+
+    public clientHandler(Socket clientSocket, String serverText) throws IOException {
+        this.clientSocket = clientSocket;
+        this.input = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+        this.output = new PrintWriter(new PrintStream(clientSocket.getOutputStream()));
+        this.serverText = serverText;
     }
 
     public void run() {
         try {
-            while (true){
-                output.write("PROCESS HAS BEEN COMPLETED.");
-            }
-
-        } /*
+            //long time = System.currentTimeMillis();
+            //output.write(("Client Handler: " + this.serverText + " - " + time + "").getBytes());
+        }/*
         catch (IOException e) {
             // Reports the exception.
             System.err.println("IO Exception in client handler.");
@@ -28,8 +35,10 @@ public class clientHandler implements Runnable{
         }*/
         finally {
             try {
-                output.close();
-                input.close();
+                if (output !=null)
+                    output.close();
+                if (input !=null)
+                    input.close();
             } catch (IOException e) {
                 System.err.println("ERROR: CLIENT HANDLER COULD NOT BE CLOSED.\n");
                 e.printStackTrace();

@@ -90,16 +90,16 @@
                                         <Label text="Date Incorporated" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
                                         <Label text="Default Category" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
                                         <Label text="Product ID" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                                        <Label text="Serial Num (Required for Electronics)" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
-                                        <Label text="Length of Warranty (Required for Electronics)" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
-                                        <Label text="IMEI (Required for Cellphones)" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
-                                        <Label text="Operating System (Required for Cellphones)" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
-                                        <Label text="RAM (Required for Computers)" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
-                                        <Label text="Hard Drive (Required for Computers)" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
-                                        <Label text="Author Name (Required for Books)" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
-                                        <Label text="Publication Date (Required for Books)" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
-                                        <Label text="Number of Pages (Required for Books)" GridPane.halignment="CENTER" GridPane.rowIndex="8" />
-                                        <Label text="Book Edition (Required for Books)" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="8" />
+                                        <Label text="Serial Number" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+                                        <Label text="Length of Warranty" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+                                        <Label text="IMEI" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
+                                        <Label text="Operating System" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
+                                        <Label text="RAM" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
+                                        <Label text="Hard Drive" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
+                                        <Label text="Author Name" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
+                                        <Label text="Publication Date" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
+                                        <Label text="Number of Pages" GridPane.halignment="CENTER" GridPane.rowIndex="8" />
+                                        <Label text="Book Edition" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="8" />
                                         <Label GridPane.halignment="CENTER">
                                             <font>
                                                 <Font size="24.0" />
@@ -114,19 +114,19 @@
                                         <TextField fx:id="txtProductName" GridPane.columnIndex="3" GridPane.rowIndex="1" />
                                         <TextField fx:id="txtBrandName" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                         <TextField fx:id="txtProductDesc" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-                                        <TextField fx:id="txtWarranty" GridPane.columnIndex="3" GridPane.rowIndex="4" />
-                                        <TextField fx:id="txtIMEI" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                                        <TextField fx:id="txtRAM" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                                        <TextField fx:id="txtOS" GridPane.columnIndex="3" GridPane.rowIndex="5" />
-                                        <TextField fx:id="txtHardDrive" GridPane.columnIndex="3" GridPane.rowIndex="6" />
-                                        <TextField fx:id="txtAuthorName" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-                                        <TextField fx:id="txtNumPages" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-                                        <TextField fx:id="txtBookEdition" GridPane.columnIndex="3" GridPane.rowIndex="8" />
+                                        <TextField fx:id="txtWarranty" promptText="Required for Electronics" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+                                        <TextField fx:id="txtIMEI" promptText="Required for Cellphones" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                        <TextField fx:id="txtRAM" promptText="Required for Computers" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                                        <TextField fx:id="txtOS" promptText="Required for Cellphones" GridPane.columnIndex="3" GridPane.rowIndex="5" />
+                                        <TextField fx:id="txtHardDrive" promptText="Required for Computers" GridPane.columnIndex="3" GridPane.rowIndex="6" />
+                                        <TextField fx:id="txtAuthorName" promptText="Required for Books" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                                        <TextField fx:id="txtNumPages" promptText="Required for Books" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                                        <TextField fx:id="txtBookEdition" promptText="Required for Books" GridPane.columnIndex="3" GridPane.rowIndex="8" />
                                         <DatePicker fx:id="calDateIncorp" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-                                        <DatePicker fx:id="calPubDate" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
-                                        <TextField fx:id="txtSerialNum" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                                        <Label text="Intended Location (Required for Home)" GridPane.halignment="CENTER" GridPane.rowIndex="9" />
-                                        <TextField fx:id="txtIntendedLoc" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+                                        <DatePicker fx:id="calPubDate" promptText="Required for Books" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
+                                        <TextField fx:id="txtSerialNum" promptText="Required for Electronics" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+                                        <Label text="Intended Location" GridPane.halignment="CENTER" GridPane.rowIndex="9" />
+                                        <TextField fx:id="txtIntendedLoc" promptText="Required for Home Products" GridPane.columnIndex="1" GridPane.rowIndex="9" />
                                         <ComboBox fx:id="boxProdType" prefWidth="150.0" promptText="Select Category" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
                                     </children>
                                 </GridPane>
@@ -231,33 +231,38 @@
                             </children></AnchorPane>
                     </content>
                 </Tab>
-                <Tab text="Finalized Order Report">
+                <Tab fx:id="tabFinalizedOrderReport" onSelectionChanged="#listAllCustomerOrders" text="Finalized Order Report">
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                             <children>
-                                <GridPane layoutX="32.0" layoutY="36.0" prefHeight="497.0" prefWidth="943.0">
+                                <GridPane layoutX="32.0" layoutY="36.0" prefHeight="515.0" prefWidth="943.0">
                                     <columnConstraints>
-                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="783.0" minWidth="0.0" prefWidth="783.0" />
-                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="448.0" minWidth="0.0" prefWidth="0.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="783.0" minWidth="0.0" prefWidth="490.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="783.0" minWidth="10.0" prefWidth="36.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="527.0" minWidth="0.0" prefWidth="490.0" />
                                     </columnConstraints>
                                     <rowConstraints>
-                                        <RowConstraints maxHeight="82.0" minHeight="0.0" prefHeight="3.3333282470703125" vgrow="SOMETIMES" />
-                                        <RowConstraints maxHeight="404.0" minHeight="10.0" prefHeight="404.0" vgrow="SOMETIMES" />
-                                        <RowConstraints maxHeight="233.5" minHeight="10.0" prefHeight="11.0" vgrow="SOMETIMES" />
+                                        <RowConstraints maxHeight="82.0" minHeight="0.0" prefHeight="37.5" vgrow="SOMETIMES" />
+                                        <RowConstraints maxHeight="485.0" minHeight="10.0" prefHeight="477.0" vgrow="SOMETIMES" />
                                     </rowConstraints>
                                     <children>
-                                        <Label prefHeight="17.0" prefWidth="211.0" GridPane.columnIndex="1">
+                                        <Label prefHeight="17.0" prefWidth="211.0" GridPane.columnIndex="2">
                                             <font>
                                                 <Font size="14.0" />
                                             </font>
                                         </Label>
-                                        <Label text="List of All Customer Orders" textAlignment="CENTER">
+                                        <Label text="List of All Finalized Orders" textAlignment="CENTER">
                                             <font>
                                                 <Font size="22.0" />
                                             </font>
                                         </Label>
-                                        <TextField fx:id="Orderlist" onAction="#custOrderList" prefHeight="402.0" prefWidth="783.0" GridPane.rowIndex="1" />
-                                        <Button fx:id="checkOut" mnemonicParsing="false" onAction="#finalizeOrder" text="Finalize Order" textAlignment="RIGHT" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                              <Label text="Products in Order" textAlignment="CENTER" GridPane.columnIndex="2">
+                                 <font>
+                                    <Font size="22.0" />
+                                 </font>
+                              </Label>
+                              <ListView fx:id="listAllCustomerOrdersAdmin" prefHeight="365.0" prefWidth="593.0" GridPane.rowIndex="1" />
+                              <ListView fx:id="listProductsInOrderAdmin" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                                     </children>
                                 </GridPane>
                             </children></AnchorPane>
