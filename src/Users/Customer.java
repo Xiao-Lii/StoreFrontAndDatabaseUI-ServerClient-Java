@@ -1,6 +1,7 @@
 package Users;
 
-import java.lang.reflect.Array;
+import Product.Product;
+
 import java.util.ArrayList;
 
 public class Customer extends User {
@@ -24,17 +25,24 @@ public class Customer extends User {
 
     public void createOrder() throws IllegalArgumentException{
         if (anyOpenOrders == true){
-            throw new IllegalArgumentException("Error. Can't create a new order with an order already open.");
+            throw new IllegalArgumentException("Error. Can't create a new order with an order already open");
         }
-        if (this.listOfCustOrders.size() == 0) {
-            this.listOfCustOrders.add(new Order());
-            this.anyOpenOrders = true;          // CHANGE TO TRUE NOW WE HAVE OPENED AN ORDER
-                                                // CHANGE TO FALSE WHEN FINALIZING THE ORDER
+        for (Order o : this.listOfCustOrders){
+            if (o.getIsFinalized() == false){
+                throw new IllegalArgumentException("Error. Can't create a new order with an order already open");
+            }
         }
+        this.listOfCustOrders.add(new Order());
+        this.anyOpenOrders = true;
     }
 
-    public void finalizeOrder() throws IllegalArgumentException{
-
+    public void addProductToCustomerOrder(Product product){
+        for (Order o : this.listOfCustOrders){
+            // WE WANT TO FIND THE UNFINALIZED ORDER
+            if (o.getIsFinalized() == false){
+                o.addProductToOrder(product);
+            }
+        }
     }
 
     @Override
