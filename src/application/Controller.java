@@ -9,9 +9,9 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.*;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.TextFieldListCell;
 import javafx.stage.Stage;
 import javafx.fxml.FXML;
-import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -22,6 +22,7 @@ import Users.Customer;
 import Users.Order;
 import javafx.scene.control.ListView;
 
+import javax.swing.event.ChangeListener;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -82,6 +83,8 @@ public class Controller{
     // FINALIZED ORDER REPORT
     public TextField Orderlist;
     public Button checkOut;
+    public ListView<String> listOfCategoriesCust;
+    public Tab tabBrowseCategories;
     private Order order = new Order();
     private  Customer c = new Customer();
 
@@ -100,6 +103,7 @@ public class Controller{
         this.boxProdType = new ComboBox<>();
         this.listOfCategories = new ListView<>();
         this.listOfProducts = new ListView<>();
+        this.listOfCategoriesCust = new ListView<>();
         client = new Client();
         client.connect();
     }
@@ -308,7 +312,19 @@ public class Controller{
         }
     }
 
-    public void displayCatergories(ActionEvent actionEvent){
+    //variables for Catalog GUI -> will transfer this on top later. just need this for easy reference
+
+    //Browse
+    public void displayCategoriesCatalog(ActionEvent actionEvent){
+        //feel free to delete this if needed. Got the code snippet from:
+
+            this.listOfCategoriesCust.setItems(FXCollections.observableArrayList(store.getNameListOfCategories()));
+            this.listOfCategoriesCust.setCellFactory(TextFieldListCell.forListView());
+    }
+
+    public void displayProductsCatalog(ActionEvent actionEvent){
 
     }
+
+    //Search
 }
