@@ -15,20 +15,35 @@ public class StoreSystem implements Serializable {
     public static final String filename = "./storeSystem.ser";
 
     public StoreSystem() {
-        listOfCategories = new ArrayList<Category>();
-        listOfCategories.add(new Category("Default", "Default", "Default Category"));
-        listOfCategories.add(new Category("Electronic","Electronic",
-                "Technological entertainment revolving around electronic devices and media."));
-        listOfCategories.add(new Category("Computer","Computer",
-                "Technological entertainment revolving around computers"));
-        listOfCategories.add(new Category("Cellphone","Cellphone",
-                "Technological entertainment revolving around personal cellphones"));
-        listOfCategories.add(new Category("Book", "Book", "Paperback media entertainment."));
-        listOfCategories.add(new Category("Home", "Home", "For decorating the household."));
-        listOfUsers = new ArrayList<User>();
-        catalog = new ArrayList<Product>();
-        listOfUsers.add(new Admin("admin@admin.com", "password", "admin"));
-        listOfUsers.add(new Customer("customer@gmail.com", "pw", "user"));
+        // Establishing Basic Default Categories
+        listOfCategories = new ArrayList<>();
+        Category defaultCategory = new Category("Default", "Default", "Default Category description");
+        Category electronic = new Category("Electronic","Electronic",
+                "Technological entertainment revolving around electronic devices and media");
+        Category computer = new Category("Computer","Computer",
+                "Technological entertainment revolving around computers");
+        Category cellphone = new Category("Cellphone","Cellphone",
+                "Technological entertainment revolving around personal cellphones");
+        Category book = new Category("Book", "Book", "Paperback media entertainment");
+        Category home = new Category("Home", "Home", "For decorating the household");
+        listOfCategories.add(defaultCategory);
+        listOfCategories.add(electronic);
+        listOfCategories.add(computer);
+        listOfCategories.add(cellphone);
+        listOfCategories.add(book);
+        listOfCategories.add(home);
+
+        // Establishing Basic Default Users - Customer & Admin
+        listOfUsers = new ArrayList<>();
+        Admin admin = new Admin("admin@admin.com", "password", "admin");
+        Customer customer = new Customer("customer@gmail.com", "pw", "user");
+        listOfUsers.add(admin);
+        listOfUsers.add(customer);
+
+        catalog = new ArrayList<>();
+
+
+        // BELOW TEST VALUES FOR CHECKING STORE SYSTEM
     }
 
     public ArrayList<Category> getListOfCategories() {
@@ -52,6 +67,11 @@ public class StoreSystem implements Serializable {
     }
 
     public ArrayList<Order> getListOfCustOrders() {
+        for (User u : listOfUsers){
+            if (u.getAccountType().equalsIgnoreCase("Customer")){
+                u.getListOfCustOrders();
+            }
+        }
         return listOfCustOrders;
     }
 
@@ -270,15 +290,17 @@ public class StoreSystem implements Serializable {
         }
     }
 
+    // MAY NEED TO REVIEW THIS - SHOULDN'T BE ABLE TO HAVE A CUSTOMER ACCOUNT W/ NO EMAIL, USERNAME, PW
     //counts list of orders... will change if needed
     public void countDuplicateItems(String userName){
         Customer c = new Customer();
-        Set<Order> orderList = new HashSet<Order>(c.getListOfCustOrders());
+        Set<Order> orderList = new HashSet<>(c.getListOfCustOrders());
         for (Order temp : orderList){
             System.out.println(temp + ": " + Collections.frequency(orderList, temp));
         }
     }
 
+    // MAY NEED TO REVIEW THIS - SHOULDN'T BE ABLE TO HAVE A CUSTOMER ACCOUNT W/ NO EMAIL, USERNAME, PW
     //is this right???
     public void finalizeOrder(String userName, int orderNum){
         Customer c = new Customer();
@@ -290,9 +312,9 @@ public class StoreSystem implements Serializable {
             if(listOfUsers.contains(c)){
                 for(Iterator<Order> or = c.getListOfCustOrders().iterator(); or.hasNext();){
                     if(c.getListOfCustOrders().contains(o.getOrderNum())){
-                        o.setStatus(true);// is this right?
+                        o.setIsFinalized(true);// is this right?
                     }else{
-                        o.setStatus(false);
+                        o.setIsFinalized(false);
 
                     }
                 }

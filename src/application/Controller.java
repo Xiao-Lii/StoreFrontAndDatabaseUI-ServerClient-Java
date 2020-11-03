@@ -3,6 +3,7 @@ package application;
 import Product.Category;
 import Product.Product;
 import Users.StoreSystem;
+import Users.User;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -24,6 +25,7 @@ import javafx.scene.control.ListView;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.util.ArrayList;
 import java.util.EventListener;
 
 
@@ -106,6 +108,44 @@ public class Controller{
         boxProdType.setItems(FXCollections.observableArrayList(store.getListOfCategories()));
         listOfProducts.setItems(FXCollections.observableArrayList(store.getCatalog()));
         listOfCategories.setItems(FXCollections.observableArrayList(store.getListOfCategories()));
+
+        // FOR ADMIN APP - ADD PRODUCT TAB - PRODUCT DEFAULT CATEGORY SELECTION OPTIONS
+        boxProdType.getSelectionModel().selectedItemProperty().addListener( (v, oldValue, newValue) ->
+                // BELOW IS THE CODE WE EXECUTE WHEN OUR DEFAULT PRODUCT CATEGORY IS SELECTED
+                System.out.println(newValue)
+        );
+
+        // STARTING TESTING FUNCTION - LISTENER FOR VIEWING ITEMS IN A CUSTOMER'S ORDER LIST
+
+        // WE WANT THE FOLLOWING TO HAPPEN WHEN
+        // 1. WHEN WE SELECT A USER(OR IF WE ARE THE USER), WE WANT TO SEE THEIR/OUR PERSONAL LIST OF ORDERS.
+        // 2. WHEN WE CLICK ON AN ORDER IN A LIST, IN ANOTHER LIST BESIDE IT, WE WANT TO VIEW ALL ITEMS IN THAT ORDER
+        //    WE WANT THESE BOTH THESE LISTS TO BE ON THE SAME TAB(ACCOUNT OVERVIEW) IN THE CATALOG APP
+        // 3. DUPLICATE ITEMS IN AN ORDER SHOULD BE DISPLAYED AS x2, x3, ETC. INSTEAD OF SHOWING UP TWICE IN THE LIST
+
+        // NOTE: THIS IS THE ORDER ARRAY LIST UNDER THE CUSTOMER CLASS THAT WE NEED TO ACCESS
+        // ArrayList<Order> listOfCustOrders;
+
+        /*
+        this.listOfCategories.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Category>() {
+
+            @Override
+            public void changed(ObservableValue<? extends Category> observable, oldValue, newValue) {
+                System.out.println("ListView selection changed from oldValue = " + oldValue + " to newValue = " + newValue);
+
+                // EDIT LINE BELOW
+                enrolledStudentList.setItems(FXCollections.observableArrayList(newValue.getEnrolledStudents()));
+                newValue.getEnrolledStudents();
+
+
+                public void listProductsByOrderUpdate(Event event) {
+                    if (this.tabListStudents.isSelected()){
+                        this.listStudents.setItems(FXCollections.observableArrayList(university.getStudents()));
+                    }
+                }
+            }
+        }); // END TESTING FUNCTION - LISTENER FOR VIEWING ITEMS IN A CUSTOMER'S ORDER LIST
+         */
     }
 
     public void login(javafx.event.ActionEvent actionEvent) throws Exception {
@@ -119,14 +159,15 @@ public class Controller{
                 if(store.getListOfUsers().get(i).getClass().getSimpleName().equals("Admin")) {
                     Parent root = FXMLLoader.load(getClass().getResource("Application.fxml"));
                     Stage primaryStage = new Stage();
-                    primaryStage.setTitle("Department Store Admin");
+                    primaryStage.setTitle("Store System Admin");
                     primaryStage.setScene(new Scene(root, 1000, 600));
                     primaryStage.show();
                     return;
-                }else if(store.getListOfUsers().get(i).getClass().getSimpleName().equals("Customer")) {
+                }
+                else if(store.getListOfUsers().get(i).getClass().getSimpleName().equals("Customer")) {
                     Parent root = FXMLLoader.load(getClass().getResource("CatalogApp.fxml"));
                     Stage primaryStage = new Stage();
-                    primaryStage.setTitle("Department Store Catalog");
+                    primaryStage.setTitle("Store System Catalog");
                     primaryStage.setScene(new Scene(root, 1000, 600));
                     primaryStage.show();
                     return;
