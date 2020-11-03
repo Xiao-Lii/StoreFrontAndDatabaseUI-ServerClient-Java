@@ -66,10 +66,12 @@ public class StoreSystem implements Serializable {
         return catalog;
     }
 
+
+    //store.getListOfUsers().get(i).getClass().getSimpleName().equals("Admin")
     public ArrayList<Order> getListOfCustOrders() {
-        for (User u : listOfUsers){
-            if (u.getAccountType().equalsIgnoreCase("Customer")){
-                u.getListOfCustOrders();
+        for (int i = 0; i < listOfUsers.size(); i++){
+            if (this.getListOfUsers().get(i).getClass().getSimpleName().equalsIgnoreCase("Customer")){
+                
             }
         }
         return listOfCustOrders;
