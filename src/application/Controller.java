@@ -98,6 +98,52 @@ public class Controller{
 
     private StoreSystem store = new StoreSystem();
 
+    // START SERVER APP
+    public Button btnLoadData;
+    public Button btnStartServer;
+    private MultiThreadServer server;
+
+    public void loadFromFile(ActionEvent actionEvent) {
+        /*
+        public static StoreSystem loadFromFile(){
+            ObjectInputStream ois = null;
+            StoreSystem storeSystem = null;
+
+            try {
+                ois = new ObjectInputStream(new FileInputStream(StoreSystem.filename));
+                storeSystem = (StoreSystem) ois.readObject();
+            } catch (Exception e) {
+                e.printStackTrace();
+                storeSystem = new StoreSystem();
+            } finally {
+                if (ois != null) {
+                    try {
+                        ois.close();
+                    } catch (IOException ioe) {
+                        ioe.printStackTrace();
+                    }
+                }
+            }
+            return storeSystem;
+        } */
+    }
+
+    public void startServer(javafx.event.ActionEvent actionEvent) throws IOException {
+        server = new MultiThreadServer(10000);
+        new Thread(server).start();
+
+        Parent root = FXMLLoader.load(getClass().getResource("Login.fxml"));
+        Stage primaryStage = new Stage();
+        primaryStage.setTitle("Store System Login");
+        primaryStage.setScene(new Scene(root, 300, 300));
+        primaryStage.show();
+
+        if (server.isServerClosed()) {
+            System.out.println("STOPPING THE SERVER");
+            server.stop();
+        }
+    }
+
     public Controller(){
         this.boxProdType = new ComboBox<>();
         this.listOfCategories = new ListView<>();
