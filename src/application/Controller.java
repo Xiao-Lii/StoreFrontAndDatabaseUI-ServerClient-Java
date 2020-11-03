@@ -285,6 +285,7 @@ public class Controller{
         }
     }
 
+
     public void custOrderList(ActionEvent actionEvent) {
         store.countDuplicateItems(this.txtUsername.getText());
     }
@@ -307,4 +308,7 @@ public class Controller{
         }
     }
 
+    public void displayCatergories(ActionEvent actionEvent){
+
+    }
 }
