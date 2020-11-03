@@ -54,6 +54,7 @@ public class Controller{
     public Button removeCatButton;
 
     // PRODUCT MANAGEMENT - ADMIN APP
+    // ADD PRODUCT - NESTED TAB IN ADMIN APP
     public Tab tabProductManagement;
     public TextField txtProductID;
     public TextField txtProductName;
@@ -78,6 +79,11 @@ public class Controller{
     public Button btnAddBook;
     public Button btnAddHome;
     public EventListener eventListener;
+
+    // PRODUCT MANAGEMENT - ADMIN APP
+    // REMOVE PRODUCT - NESTED TAB IN ADMIN APP
+    public TextField txtRemoveProductByID;
+    public Button btnRemoveProduct;
 
     // LIST ALL PRODUCTS TAB - ADMIN APP
     public ListView listOfProducts;

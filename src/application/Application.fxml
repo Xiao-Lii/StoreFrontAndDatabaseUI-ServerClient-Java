@@ -163,7 +163,38 @@
                             </Tab>
                             <Tab text="Remove">
                               <content>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                       <children>
+                                          <GridPane layoutY="38.0" prefHeight="158.0" prefWidth="967.0">
+                                             <columnConstraints>
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                             </columnConstraints>
+                                             <rowConstraints>
+                                                <RowConstraints maxHeight="48.3333740234375" minHeight="10.0" prefHeight="32.66665395100912" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="91.33334604899088" minHeight="10.0" prefHeight="66.66668701171875" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="68.0" minHeight="10.0" prefHeight="57.33331298828125" vgrow="SOMETIMES" />
+                                             </rowConstraints>
+                                             <children>
+                                                <Label text="Product ID" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                                                <Label GridPane.halignment="CENTER">
+                                                   <font>
+                                                      <Font size="24.0" />
+                                                   </font>
+                                                </Label>
+                                                <TextField fx:id="txtRemoveProductByID" promptText="Product ID" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                <Label text="Remove a Product" GridPane.halignment="CENTER">
+                                                   <font>
+                                                      <Font name="System Bold" size="19.0" />
+                                                   </font>
+                                                </Label>
+                                                <Button fx:id="btnRemoveProduct" mnemonicParsing="false" prefHeight="25.0" prefWidth="241.0" text="Remove Product from Database" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.valignment="TOP" />
+                                             </children>
+                                          </GridPane>
+                                       </children>
+                                    </AnchorPane>
                               </content>
                             </Tab>
                           </tabs>
