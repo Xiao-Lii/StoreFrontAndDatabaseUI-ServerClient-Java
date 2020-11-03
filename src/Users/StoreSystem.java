@@ -15,6 +15,10 @@ public class StoreSystem implements Serializable {
     public static final String filename = "./storeSystem.ser";
 
     public StoreSystem() {
+        // Establishing Empty Catalog and Empty List of Customer Orders
+        catalog = new ArrayList<>();
+        listOfCustOrders = new ArrayList<>();
+
         // Establishing Basic Default Categories
         listOfCategories = new ArrayList<>();
         Category defaultCategory = new Category("Default", "Default", "Default Category description");
@@ -40,10 +44,10 @@ public class StoreSystem implements Serializable {
         listOfUsers.add(admin);
         listOfUsers.add(customer);
 
-        catalog = new ArrayList<>();
+        // INSERT TEST VALUES BELOW FOR CHECKING STORE SYSTEM - WE CAN DELETE LATER
+        // Establishing Some of the Customer's Orders
+        customer.createOrder();
 
-
-        // BELOW TEST VALUES FOR CHECKING STORE SYSTEM
     }
 
     public ArrayList<Category> getListOfCategories() {
@@ -66,15 +70,28 @@ public class StoreSystem implements Serializable {
         return catalog;
     }
 
-
-    //store.getListOfUsers().get(i).getClass().getSimpleName().equals("Admin")
+    // GETS LIST OF ALL CUSTOMER ORDERS UNDER LIST OF USERS
     public ArrayList<Order> getListOfCustOrders() {
-        for (int i = 0; i < listOfUsers.size(); i++){
-            if (this.getListOfUsers().get(i).getClass().getSimpleName().equalsIgnoreCase("Customer")){
-                
+        for (User u : listOfUsers){
+            if (u.getClass().getSimpleName().equalsIgnoreCase("Customer")){
+                for (Order o : u.getListOfCustOrders())
+                    this.listOfCustOrders.add(o);
             }
         }
-        return listOfCustOrders;
+        return this.listOfCustOrders;
+    }
+
+    // GETS LIST OF ALL FINALIZED CUSTOMER ORDERS UNDER LIST OF USERS
+    public ArrayList<Order> getFinalizedListOfCustOrders() {
+        for (User u : listOfUsers){
+            if (u.getClass().getSimpleName().equalsIgnoreCase("Customer")){
+                for (Order o : u.getListOfCustOrders()) {
+                    if (o.getIsFinalized() == true)
+                        this.listOfCustOrders.add(o);
+                }
+            }
+        }
+        return this.listOfCustOrders;
     }
 
     @Override
@@ -302,8 +319,20 @@ public class StoreSystem implements Serializable {
         }
     }
 
+    // IF WE WANT TO FINALIZE AN ORDER - WE NEED TO LOOK AT CUSTOMER'S LIST OF ORDERS
+    // WHAT THEY HAVE SELECTED (THEIR CURRENT ORDER) IS CORRESPONDING TO CUSTOMER'S CURRENT ORDER
+    // SHOULD IN THEORY - BE MANIPULATED TO SAY FINALIZED
+    public void finalizeOrder(Customer customer, Order order) {
+        for (Order o : customer.getListOfCustOrders()){
+            if (o.equals(order)){
+                o.setIsFinalized(true);     // Changes order status to true = Finalized
+            }
+        }
+    }
+
     // MAY NEED TO REVIEW THIS - SHOULDN'T BE ABLE TO HAVE A CUSTOMER ACCOUNT W/ NO EMAIL, USERNAME, PW
     //is this right???
+    /*
     public void finalizeOrder(String userName, int orderNum){
         Customer c = new Customer();
         Order o = new Order();
@@ -323,6 +352,7 @@ public class StoreSystem implements Serializable {
             }
         }
     }
+     */
 
     public void cancelOrder(Customer c, Order o){
         if(listOfUsers.contains(c)){

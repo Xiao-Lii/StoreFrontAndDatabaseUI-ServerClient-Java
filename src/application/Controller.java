@@ -80,8 +80,10 @@ public class Controller{
     public Tab tabCategoryList;
 
     // FINALIZED ORDER REPORT
-    public TextField Orderlist;
-    public Button checkOut;
+    public Tab tabFinalizedOrderReport;
+    public Button btnFinalizeOrder;
+    public ListView listAllCustomerOrdersAdmin;
+    public ListView listProductsInOrderAdmin;
     private Order order = new Order();
     private  Customer c = new Customer();
 
@@ -290,7 +292,8 @@ public class Controller{
     }
 
     public void finalizeOrder(ActionEvent actionEvent) {
-        store.finalizeOrder(this.txtUsername.getText(), order.getOrderNum());
+        // WE NEED TO PASS THE CUSTOMER'S VALUE & THEIR ORDER THAT THEY'RE TRYING TO FINALIZE
+        //store.finalizeOrder(this.txtUsername.getText(), order.getOrderNum());
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Order Finalized!");
         alert.show();
     }
@@ -306,5 +309,21 @@ public class Controller{
             this.listOfCategories.setItems(FXCollections.observableArrayList(store.getListOfCategories()));
         }
     }
+
+    public void listAllCustomerOrders(Event event){
+        try {
+            if (this.tabFinalizedOrderReport.isSelected()) {
+                if (store.getFinalizedListOfCustOrders().size() == 0 | store.getFinalizedListOfCustOrders().equals(null))
+                    throw new IllegalArgumentException();
+                else
+                    this.listAllCustomerOrdersAdmin.setItems(FXCollections.observableArrayList(store.getFinalizedListOfCustOrders()));
+            }
+        }
+        catch (IllegalArgumentException iae){
+            Alert noOrders = new Alert(Alert.AlertType.INFORMATION, "No Finalized orders to display");
+            noOrders.show();
+        }
+    }
+
 
 }
