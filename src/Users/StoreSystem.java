@@ -330,30 +330,6 @@ public class StoreSystem implements Serializable {
         }
     }
 
-    // MAY NEED TO REVIEW THIS - SHOULDN'T BE ABLE TO HAVE A CUSTOMER ACCOUNT W/ NO EMAIL, USERNAME, PW
-    //is this right???
-    /*
-    public void finalizeOrder(String userName, int orderNum){
-        Customer c = new Customer();
-        Order o = new Order();
-
-        c.setDisplayName(userName);
-        o.setOrderNum(orderNum);
-        for(Iterator<User> u = listOfUsers.iterator(); u.hasNext();){//can I delete this?
-            if(listOfUsers.contains(c)){
-                for(Iterator<Order> or = c.getListOfCustOrders().iterator(); or.hasNext();){
-                    if(c.getListOfCustOrders().contains(o.getOrderNum())){
-                        o.setIsFinalized(true);// is this right?
-                    }else{
-                        o.setIsFinalized(false);
-
-                    }
-                }
-            }
-        }
-    }
-     */
-
     public void cancelOrder(Customer c, Order o){
         if(listOfUsers.contains(c)){
             if(c.getListOfCustOrders().contains(o.getOrderNum())){
