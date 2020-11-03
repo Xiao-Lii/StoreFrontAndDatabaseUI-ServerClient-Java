@@ -13,7 +13,7 @@ If prompted to 'Start the Server,' a login window will appear without prompting 
 
 Customer Username: user ------------------- Customer Password: pw </b>
 
-Our department store should be able to support many customers/clients all at once. For convenience, there will be only one pre-built Admin Account which will have all the options to manipulate products, categories, users, orders, and to terminate the server. There will also be one pre-built customer account that may only access the Catalog Application. 
+Our department store should be able to support many customers/clients all at once. For convenience, there will be only one pre-built Admin Account which will have all the options to manipulate products, categories, users, orders, etc. There will also be one pre-built customer account that may only access the Catalog Application. 
 
 ### ----------- Team Members -----------
     florealb    -   Alberto Flores
