@@ -1,27 +1,19 @@
 package application;
 
-import Product.Category;
-import Product.Product;
-import Users.StoreSystem;
-import Users.User;
+import Product.*;
+import Users.*;
+import javafx.scene.paint.Color;
+import server.*;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
 import javafx.event.*;
+import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import javafx.fxml.FXML;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.paint.Color;
-import server.*;
-import Users.Customer;
-import Users.Order;
-import javafx.scene.control.ListView;
-
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -32,13 +24,26 @@ import java.util.EventListener;
 public class Controller{
     // -------------- ADMIN APPLICATION --------------
 
-    // CREATE A USER
+    // START & CLOSE SERVER APP
+    public Button btnLoadData;
+    public Button btnStartServer;
+    public Button btnCloseAdminApp;
+    private MultiThreadServer server;
+
+    // LOGIN WINDOW
+    public Button loginButton;
+    public TextField usernameTextField;
+    public TextField passwordTextField;
+    public Label loginLabel;
+    public Label loginConfirmLabel;
+
+    // CREATE A USER - ADMIN APP
     public Button btnCreateUser;
     public TextField txtEmailAddress;
     public TextField txtPassword;
     public TextField txtUsername;
 
-    // CATEGORY MANAGEMENT
+    // CATEGORY MANAGEMENT - ADMIN APP
     public TextField addCatIdTextField;
     public TextField addCatNameTextField;
     public TextField addCatDescTextField;
@@ -46,7 +51,7 @@ public class Controller{
     public TextField removeCatIdTextField;
     public Button removeCatButton;
 
-    // PRODUCT MANAGEMENT
+    // PRODUCT MANAGEMENT - ADMIN APP
     public TextField txtProductID;
     public TextField txtProductName;
     public TextField txtBrandName;
@@ -71,15 +76,15 @@ public class Controller{
     public Button btnAddHome;
     public EventListener eventListener;
 
-    // LIST ALL PRODUCTS TAB
+    // LIST ALL PRODUCTS TAB - ADMIN APP
     public ListView listOfProducts;
     public Tab tabProductList;
 
-    //LIST ALL CATEGORIES TAB
+    //LIST ALL CATEGORIES TAB - ADMIN APP
     public ListView listOfCategories;
     public Tab tabCategoryList;
 
-    // FINALIZED ORDER REPORT
+    // FINALIZED ORDER REPORT - ADMIN APP
     public Tab tabFinalizedOrderReport;
     public Button btnFinalizeOrder;
     public ListView listAllCustomerOrdersAdmin;
@@ -87,21 +92,14 @@ public class Controller{
     private Order order = new Order();
     private  Customer c = new Customer();
 
-    Client client;
-
-    // LOGIN WINDOW
-    public Button loginButton;
-    public TextField usernameTextField;
-    public TextField passwordTextField;
-    public Label loginLabel;
-    public Label loginConfirmLabel;
+    // BROWSE CATEGORIES - CUSTOMER CATALOG APP
+    public Tab tabBrowseCategories;
+    public ListView listBrowseListOfCategories;
+    public ListView listItemsInCategory;
+    public Button btnAddItemToCart;
 
     private StoreSystem store = new StoreSystem();
-
-    // START SERVER APP
-    public Button btnLoadData;
-    public Button btnStartServer;
-    private MultiThreadServer server;
+    Client client;
 
     public void loadFromFile(ActionEvent actionEvent) {
         /*
@@ -144,10 +142,17 @@ public class Controller{
         }
     }
 
+    public void stopAdminApp(ActionEvent actionEvent) {
+        Stage stage = (Stage) this.btnCloseAdminApp.getScene().getWindow();
+        stage.close();
+    }
+
     public Controller(){
-        this.boxProdType = new ComboBox<>();
-        this.listOfCategories = new ListView<>();
-        this.listOfProducts = new ListView<>();
+        this.boxProdType = new ComboBox<>();                    // INITIALIZING COMBO BOX OF DEFAULT CATEGORIES - ADMIN APP
+        this.listOfCategories = new ListView<>();               // INITIALIZING LIST OF CATEGORIES - ADMIN APP
+        this.listOfProducts = new ListView<>();                 // INITIALIZING LIST OF PRODUCTS - ADMIN APP
+        this.listBrowseListOfCategories = new ListView<>();     // INITIALIZING LIST OF CATEGORIES - CUSTOMER APP
+        this.listItemsInCategory = new ListView<>();            // INITIALIZING LIST OF ITEMS IN A CATEGORY - CUSTOMER APP
         client = new Client();
         client.connect();
     }
@@ -156,6 +161,8 @@ public class Controller{
         boxProdType.setItems(FXCollections.observableArrayList(store.getListOfCategories()));
         listOfProducts.setItems(FXCollections.observableArrayList(store.getCatalog()));
         listOfCategories.setItems(FXCollections.observableArrayList(store.getListOfCategories()));
+        listBrowseListOfCategories.setItems(FXCollections.observableArrayList(store.getListOfCategories()));
+        
 
         // FOR ADMIN APP - ADD PRODUCT TAB - PRODUCT DEFAULT CATEGORY SELECTION OPTIONS
         boxProdType.getSelectionModel().selectedItemProperty().addListener( (v, oldValue, newValue) ->
@@ -168,7 +175,7 @@ public class Controller{
         // WE WANT THE FOLLOWING TO HAPPEN WHEN
         // 1. WHEN WE SELECT A USER(OR IF WE ARE THE USER), WE WANT TO SEE THEIR/OUR PERSONAL LIST OF ORDERS.
         // 2. WHEN WE CLICK ON AN ORDER IN A LIST, IN ANOTHER LIST BESIDE IT, WE WANT TO VIEW ALL ITEMS IN THAT ORDER
-        //    WE WANT THESE BOTH THESE LISTS TO BE ON THE SAME TAB(ACCOUNT OVERVIEW) IN THE CATALOG APP
+        //    WE WANT BOTH THESE LISTS TO BE ON THE SAME TAB IN THE CATALOG APP
         // 3. DUPLICATE ITEMS IN AN ORDER SHOULD BE DISPLAYED AS x2, x3, ETC. INSTEAD OF SHOWING UP TWICE IN THE LIST
 
         // NOTE: THIS IS THE ORDER ARRAY LIST UNDER THE CUSTOMER CLASS THAT WE NEED TO ACCESS
@@ -344,18 +351,21 @@ public class Controller{
         alert.show();
     }
 
+    // LIST ALL PRODUCTS - ADMIN SIDE
     public void listProducts(Event event){
         if (this.tabProductList.isSelected()){
             this.listOfProducts.setItems(FXCollections.observableArrayList(store.getCatalog()));
         }
     }
 
+    // LIST CATEGORIES - ADMIN SIDE
     public void listCategories(Event event){
         if (this.tabCategoryList.isSelected()){
             this.listOfCategories.setItems(FXCollections.observableArrayList(store.getListOfCategories()));
         }
     }
 
+    // LIST ALL CUSTOMER ORDERS - ADMIN SIDE
     public void listAllCustomerOrders(Event event){
         try {
             if (this.tabFinalizedOrderReport.isSelected()) {
@@ -368,6 +378,13 @@ public class Controller{
         catch (IllegalArgumentException iae){
             Alert noOrders = new Alert(Alert.AlertType.INFORMATION, "No Finalized orders to display");
             noOrders.show();
+        }
+    }
+
+    // LIST ALL CATEGORIES FOR CUSTOMER - CUSTOMER CATALOG APP SIDE
+    public void listAllCategories(Event event) {
+        if (this.tabBrowseCategories.isSelected()){
+            this.listBrowseListOfCategories.setItems(FXCollections.observableArrayList(store.getListOfCategories()));
         }
     }
 

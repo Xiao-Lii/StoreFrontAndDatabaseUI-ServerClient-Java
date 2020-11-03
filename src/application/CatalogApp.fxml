@@ -17,7 +17,7 @@
    <children>
       <TabPane layoutX="-1.0" prefHeight="600.0" prefWidth="1000.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
-          <Tab fx:id="tabBrowseCategories" text="Browse Categories">
+          <Tab fx:id="tabBrowseCategories" onSelectionChanged="#listAllCategories" text="Browse Categories">
               <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
@@ -58,7 +58,7 @@
                               <ListView fx:id="listItemsInCategory" prefHeight="419.0" prefWidth="455.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                            </children>
                         </GridPane>
-                        <Button fx:id="btnIncreaseQty1" layoutX="874.0" layoutY="506.0" mnemonicParsing="false" text="Add Item to Cart" />
+                        <Button fx:id="btnAddItemToCart" layoutX="874.0" layoutY="506.0" mnemonicParsing="false" text="Add Item to Cart" />
                      </children></AnchorPane>
               </content>
           </Tab>
