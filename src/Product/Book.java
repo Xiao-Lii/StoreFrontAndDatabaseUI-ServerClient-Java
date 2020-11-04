@@ -12,16 +12,17 @@ public class Book extends Product {
 
 
     public Book(String productID, String productName, String brandName, String productDesc,
-                LocalDate dateOfIncorp, ArrayList<Category> prodCategory, String authorName,
+                LocalDate dateOfIncorp, Category selectedCategory, String authorName,
                 LocalDate publicationData, int numPages, int edition) {
-        super(productID, productName, brandName, productDesc, dateOfIncorp, prodCategory);
+        super(productID, productName, brandName, productDesc, dateOfIncorp, selectedCategory);
         this.authorName = authorName;
         this.publicationData = publicationData;
         this.numPages = numPages;
         this.edition = edition;
         this.prodCategory = new ArrayList<Category>();
-        Category books = new Category("Book", "Book", "Paperback media entertainment.");
-        this.prodCategory.add(books);
+        this.prodCategory.add(selectedCategory);
+        //Category books = new Category("Book", "Book", "Paperback media entertainment.");
+        //this.prodCategory.add(books);
     }
 
     public Book(String productID, String productName, String brandName, String productDesc,

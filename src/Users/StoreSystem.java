@@ -22,7 +22,7 @@ public class StoreSystem implements Serializable {
 
         // Establishing Basic Default Categories
         listOfCategories = new ArrayList<>();
-        Category defaultCategory = new Category("Default", "Default", "Default Category description");
+        //Category defaultCategory = new Category("Default", "Default", "Default Category description");
         Category electronic = new Category("Electronic","Electronic",
                 "Technological entertainment revolving around electronic devices and media");
         Category computer = new Category("Computer","Computer",
@@ -31,10 +31,10 @@ public class StoreSystem implements Serializable {
                 "Technological entertainment revolving around personal cellphones");
         Category book = new Category("Book", "Book", "Paperback media entertainment");
         Category home = new Category("Home", "Home", "For decorating the household");
-        listOfCategories.add(defaultCategory);
+        //listOfCategories.add(defaultCategory);
         listOfCategories.add(electronic);
-        listOfCategories.add(computer);
         listOfCategories.add(cellphone);
+        listOfCategories.add(computer);
         listOfCategories.add(book);
         listOfCategories.add(home);
 
@@ -129,12 +129,109 @@ public class StoreSystem implements Serializable {
         }
     }
 
-    public Product getProduct(String productID, String productName){
+    public Product getProduct(String productID){
         for (Product p : catalog){
-            if (p.getProductID().equalsIgnoreCase(productID) && p.getProductName().equalsIgnoreCase(productName))
+            if (p.getProductID().equalsIgnoreCase(productID))
                 return p; }
         throw new IllegalArgumentException("Error: Product is not found in the catalog.");
     }
+
+    /*
+    public void addProduct(Category selectedCategory, String productID, String productName, String brandName, String productDesc,
+                           LocalDate dateOfIncorp, String serialNum, String warranty, String imei, String os,
+                           String ram, String hardDrive, String authorName, LocalDate datePublished, Integer numPages,
+                           Integer edition, String intendedLoc) throws IllegalArgumentException{
+
+
+    } */
+
+
+    public void addProduct(Category selectedCategory, String productID, String productName, String brandName, String productDesc,
+                           LocalDate dateOfIncorp, String serialNum, String warranty, String imei, String os,
+                           String ram, String hardDrive, String authorName, LocalDate datePublished, Integer numPages,
+                           Integer edition, String intendedLoc) throws IllegalArgumentException{
+        // WHEN IN APPLICATION - ADMIN CHOOSES ELECTRONIC - SERIAL NOS - UPDATE TAB
+        //Scanner input = new Scanner(System.in);
+        try{
+            this.getProduct(productID);
+        }
+        catch (IllegalArgumentException iae){
+            for (Category c : listOfCategories) {
+                if (c.equals(selectedCategory)) {
+                    // IF CATEGORY = C, THAT MEANS THAT CATEGORY EXISTS AND WE WANT TO ADD THAT PRODUCT TO THE CATALOG
+
+                    // IF NONE OF THE DEFAULT CATEGORIES ABOVE - LIKE ADDED CATEGORIES BY ADMIN
+                    if (productID != "" && productName != "" && brandName != "" && productDesc != "" &&
+                            dateOfIncorp != null){
+                        // CHECK FOR ADD CELLPHONE
+                        if (serialNum != "" && warranty != "" && imei != "" && os != ""){
+                            catalog.add(new Cellphone(productID, productName, brandName, productDesc, dateOfIncorp,
+                                    selectedCategory, serialNum, warranty, imei, os));
+                        }
+                        // CHECK FOR ADD COMPUTER
+                        else if (serialNum != "" && warranty != "" && ram != "" && hardDrive != ""){
+                            catalog.add(new Computer(productID, productName, brandName, productDesc, dateOfIncorp,
+                                    selectedCategory, serialNum, warranty, ram, hardDrive));
+                        }
+                        // CHECK FOR ADD ELECTRONIC
+                        else if (serialNum != "" && warranty != ""){
+                            catalog.add(new Electronic(productID, productName, brandName, productDesc, dateOfIncorp,
+                                    selectedCategory, serialNum, warranty));
+                        }
+                        // CHECK FOR ADD BOOK
+                        else if (authorName != "" && datePublished != null && numPages != null && edition != null){
+                            catalog.add(new Book(productID, productName, brandName, productDesc, dateOfIncorp,
+                                    selectedCategory, authorName, datePublished, numPages, edition));
+                        }
+                        // CHECK FOR ADD HOME
+                        else if (intendedLoc != ""){
+                            catalog.add(new HomeProduct(productID, productName, brandName, productDesc, dateOfIncorp,
+                                    selectedCategory, intendedLoc));
+                        }
+                        catalog.add(new Product(productID, productName, brandName, productDesc, dateOfIncorp,
+                                selectedCategory));
+                    }
+                    else{
+                        throw new IllegalArgumentException();
+                    }
+
+                } /*
+                    switch (prodType) {
+                        case "Electronics":
+                            // SERIAL NO, WARRANTY PERIOD
+                            catalog.add(new Electronic(productID, productName, brandName, productDesc, dateOfIncorp,
+                                    selectedCategory, serialNum, warranty));
+                            break;
+                        case "Cellphones":
+                            // SERIAL NO, WARRANTY PERIOD, IMEI, OS
+                            catalog.add(new Cellphone(productID, productName, brandName, productDesc, dateOfIncorp,
+                                    selectedCategory, serialNum, warranty, imei, os));
+                            break;
+                        case "Computers":
+                            // SERIAL NO, WARRANTY PERIOD, RAM, HARD DRIVE
+                            catalog.add(new Computer(productID, productName, brandName, productDesc, dateOfIncorp,
+                                    selectedCategory, serialNum, warranty, ram, hardDrive));
+                            break;
+                        case "Books":
+                            // AUTHOR NAME, PUBLICATION DATA, NUM PAGES, EDITION
+                            catalog.add(new Book(productID, productName, brandName, productDesc, dateOfIncorp,
+                                    selectedCategory, authorName, datePublished, numPages, edition));
+                            break;
+                        case "Homelines":
+                            // INTENDED LOCATION
+                            catalog.add(new HomeProduct(productID, productName, brandName, productDesc, dateOfIncorp,
+                                    selectedCategory, intendedLoc));
+                            break;
+                        default:
+                            System.out.println("Error: The object type is invalid.\n");
+                            break;
+
+                    }           // END OF SWITCH CASE - ADD BY PRODUCT TYPE
+                    */
+            }
+        }               // END OF CATCH ILLEGAL ARGUMENT EXCEPTION - IF PRODUCT WASN'T ALREADY IN CATALOG
+    }                   // END OF ADD PRODUCT METHOD
+
 
     public void addElectronic(String productID, String productName, String brandName, String productDesc,
                               LocalDate dateOfIncorp, String serialNum, String warranty)
@@ -276,6 +373,7 @@ public class StoreSystem implements Serializable {
         }
     }
 
+    /*
     //Customer's credentials should already been authenticated
     public void newOrder(Customer c, Product p) {
         SecureRandom random = new SecureRandom();//order#
@@ -295,6 +393,8 @@ public class StoreSystem implements Serializable {
             }
         }
     }
+
+    // FOR CUSTOMER SIDE
 
     public void addProduct(Customer c, Product p, Order o){
         StoreSystem sp = null;
@@ -326,6 +426,19 @@ public class StoreSystem implements Serializable {
             }
         }
     }
+     */
+
+    public ArrayList<Product> getProductsInCategory (Object category){
+        ArrayList<Product> productsInCategory = new ArrayList<>();
+        for (Product p : catalog){
+            for (Category c : p.getProdCategory()){
+                if (c.equals(category)){
+                    productsInCategory.add(p);
+                }
+            }
+        }
+        return productsInCategory;
+    }
 
     public ArrayList<Product> getProductsInOrder (Order order){
         // LOOK AT ORDER
@@ -334,6 +447,7 @@ public class StoreSystem implements Serializable {
         return null;
     }
 
+    // HASH MAP - CONTAINS KEY TO CHECK FOR DUPLICATES
     // MAY NEED TO REVIEW THIS - SHOULDN'T BE ABLE TO HAVE A CUSTOMER ACCOUNT W/ NO EMAIL, USERNAME, PW
     //counts list of orders... will change if needed
     public void countDuplicateItems(String userName){

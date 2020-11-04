@@ -10,15 +10,15 @@ public class Computer extends Electronic {
 
 
     public Computer(String productID, String productName, String brandName, String productDesc,
-                    LocalDate dateOfIncorp, ArrayList<Category> prodCategory, String serialNum,
+                    LocalDate dateOfIncorp, Category selectedCategory, String serialNum,
                     String warrantyPer, String ram, String hardDrive) {
-        super(productID, productName, brandName, productDesc, dateOfIncorp, prodCategory, serialNum, warrantyPer);
+        super(productID, productName, brandName, productDesc, dateOfIncorp, serialNum, warrantyPer);
         this.ram = ram;
         this.hardDrive = hardDrive;
         this.prodCategory = new ArrayList<Category>();
-        Category electronic = new Category("Computer","Computer",
-                "Technological entertainment revolving around computers");
-        this.prodCategory.add(electronic);
+        //Category electronic = new Category("Computer","Computer", "Technological entertainment revolving around computers");
+        //this.prodCategory.add(electronic);
+        this.prodCategory.add(selectedCategory);
     }
 
     public Computer(String productID, String productName, String brandName, String productDesc,

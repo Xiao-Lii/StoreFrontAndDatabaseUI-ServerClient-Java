@@ -11,11 +11,13 @@ public class Category {
         this.catDesc = catDesc;
     }
 
+    /*
     public Category() {
         this.catID = "Default00";
         this.catName = "Default";
         this.catDesc = "The default category for viewing all the entire contents of the catalog.";
     }
+     */
 
     // THIS IS IMPORTANT WHEN DISPLAYING TO LISTVIEW TABLES
     @Override

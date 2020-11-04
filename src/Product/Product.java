@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public abstract class Product implements Serializable {
+public class Product implements Serializable {
     private String productID;
     private String productName;
     private String brandName;
@@ -13,15 +13,14 @@ public abstract class Product implements Serializable {
     private ArrayList<Category> prodCategory;
 
     public Product(String productID, String productName, String brandName, String productDesc,
-                   LocalDate dateOfIncorp, ArrayList<Category> prodCategory) {
+                   LocalDate dateOfIncorp, Category selectedCategory) {
         this.productID = productID;
         this.productName = productName;
         this.brandName = brandName;
         this.productDesc = productDesc;
         this.dateOfIncorp = dateOfIncorp;
-        this.prodCategory = prodCategory;
-        Category defaultCategory = new Category();
-        this.prodCategory.add(defaultCategory);
+        this.prodCategory = new ArrayList<>();
+        this.prodCategory.add(selectedCategory);
     }
 
     public Product(String productID, String productName, String brandName, String productDesc,
@@ -32,8 +31,6 @@ public abstract class Product implements Serializable {
         this.productDesc = productDesc;
         this.dateOfIncorp = dateOfIncorp;
         this.prodCategory = new ArrayList<Category>();
-        Category defaultCategory = new Category();
-        this.prodCategory.add(defaultCategory);
     }
 
     // THIS IS IMPORTANT WHEN DISPLAYING TO LISTVIEW TABLES
