@@ -8,13 +8,14 @@ public class HomeProduct extends Product {
     private ArrayList<Category> prodCategory;
 
     public HomeProduct(String productID, String productName, String brandName, String productDesc,
-                       LocalDate dateOfIncorp, ArrayList<Category> prodCategory, String intendedLoc) {
-        super(productID, productName, brandName, productDesc, dateOfIncorp, prodCategory);
+                       LocalDate dateOfIncorp, Category selectedCategory, String intendedLoc) {
+        super(productID, productName, brandName, productDesc, dateOfIncorp, selectedCategory);
         this.intendedLoc = intendedLoc;
+        this.prodCategory = new ArrayList<>();
+        this.prodCategory.add(selectedCategory);
         // Category(String catID, String catName, String catDesc)
-        Category homeCategory = new Category("Home", "Home",
-                "For decorating the household.");
-        prodCategory.add(homeCategory);
+        //Category homeCategory = new Category("Home", "Home", "For decorating the household.");
+        //selectedCategory.add(homeCategory);
     }
 
     public HomeProduct(String productID, String productName, String brandName, String productDesc,

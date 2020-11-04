@@ -19,6 +19,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.EventListener;
+import java.util.concurrent.ExecutionException;
 
 
 public class Controller{
@@ -78,6 +79,18 @@ public class Controller{
     public Button btnAddComputer;
     public Button btnAddBook;
     public Button btnAddHome;
+    public Button btnAddProduct;
+    public Label LabelSerialNum;
+    public Label LabelWarranty;
+    public Label LabelIMEI;
+    public Label LabelRAM;
+    public Label LabelHardDrive;
+    public Label LabelOS;
+    public Label LabelAuthorName;
+    public Label LabelPubDate;
+    public Label labelNumPages;
+    public Label LabelBookEd;
+    public Label LabelIntendedLoc;
     public EventListener eventListener;
 
     // PRODUCT MANAGEMENT - ADMIN APP
@@ -110,8 +123,22 @@ public class Controller{
     public ListView listItemsInCategory;
     public Button btnAddItemToCart;
 
+    // SEARCH FOR PRODUCT - CUSTOMER CATALOG APP
+    public Tab tabSearchProduct;
+    public ListView listOfSearchedProducts;
+
     private StoreSystem store = new StoreSystem();
     Client client;
+    Category electronic = new Category("Electronic","Electronic",
+            "Technological entertainment revolving around electronic devices and media.");
+    Category computer = new Category("Computer","Computer", "Technological entertainment revolving around computers");
+    //this.prodCategory.add(electronic)
+    Category home = new Category("Home", "Home",
+            "For decorating the household.");
+    Category cellphone = new Category("Cellphone","Cellphone",
+            "Technological entertainment revolving around personal cellphones");
+    Category book = new Category("Book", "Book", "Paperback media entertainment.");
+
 
     // TESTING LOAD FROM FILE FUNCTION - ADMIN SIDE - LEE
     public void loadFromFile(ActionEvent actionEvent) {
@@ -170,6 +197,7 @@ public class Controller{
         this.listOfProducts = new ListView<>();                 // INITIALIZING LIST OF PRODUCTS - ADMIN APP
         this.listBrowseListOfCategories = new ListView<>();     // INITIALIZING LIST OF CATEGORIES - CUSTOMER APP
         this.listItemsInCategory = new ListView<>();            // INITIALIZING LIST OF ITEMS IN A CATEGORY - CUSTOMER APP
+        this.listOfSearchedProducts = new ListView<>();         // INITIALIZING LIST OF SEARCH PRODUCT LIST - CUSTOMER APP
         client = new Client();
         client.connect();
     }
@@ -185,45 +213,33 @@ public class Controller{
         listOfProducts.setItems(FXCollections.observableArrayList(store.getCatalog()));
         listOfCategories.setItems(FXCollections.observableArrayList(store.getListOfCategories()));
         listBrowseListOfCategories.setItems(FXCollections.observableArrayList(store.getListOfCategories()));
+        listOfSearchedProducts.setItems(FXCollections.observableArrayList(store.getCatalog()));
 
         // FOR ADMIN APP - ADD PRODUCT TAB - PRODUCT DEFAULT CATEGORY SELECTION OPTIONS
         boxProdType.getSelectionModel().selectedItemProperty().addListener( (v, oldValue, newValue) ->
                 // BELOW IS THE CODE WE EXECUTE WHEN OUR DEFAULT PRODUCT CATEGORY IS SELECTED
-                System.out.println(newValue)
+                //System.out.println(newValue)
+                viewOptionsOnly()
         );
-
-        // STARTING TESTING FUNCTION - LISTENER FOR VIEWING ITEMS IN A CUSTOMER'S ORDER LIST
-
-        // WE WANT THE FOLLOWING TO HAPPEN WHEN
-        // 1. WHEN WE SELECT A USER(OR IF WE ARE THE USER), WE WANT TO SEE THEIR/OUR PERSONAL LIST OF ORDERS.
-        // 2. WHEN WE CLICK ON AN ORDER IN A LIST, IN ANOTHER LIST BESIDE IT, WE WANT TO VIEW ALL ITEMS IN THAT ORDER
-        //    WE WANT BOTH THESE LISTS TO BE ON THE SAME TAB IN THE CATALOG APP
-        // 3. DUPLICATE ITEMS IN AN ORDER SHOULD BE DISPLAYED AS x2, x3, ETC. INSTEAD OF SHOWING UP TWICE IN THE LIST
-
-        // NOTE: THIS IS THE ORDER ARRAY LIST UNDER THE CUSTOMER CLASS THAT WE NEED TO ACCESS
-        // ArrayList<Order> listOfCustOrders;
-
-        /*
-        this.listOfCategories.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Category>() {
-
-            @Override
-            public void changed(ObservableValue<? extends Category> observable, oldValue, newValue) {
-                System.out.println("ListView selection changed from oldValue = " + oldValue + " to newValue = " + newValue);
-
-                // EDIT LINE BELOW
-                enrolledStudentList.setItems(FXCollections.observableArrayList(newValue.getEnrolledStudents()));
-                newValue.getEnrolledStudents();
-
-
-                public void listProductsByOrderUpdate(Event event) {
-                    if (this.tabListStudents.isSelected()){
-                        this.listStudents.setItems(FXCollections.observableArrayList(university.getStudents()));
-                    }
-                }
-            }
-        }); // END TESTING FUNCTION - LISTENER FOR VIEWING ITEMS IN A CUSTOMER'S ORDER LIST
-         */
+        listBrowseListOfCategories.getSelectionModel().selectedItemProperty().addListener( (v, oldValue, newValue) ->
+                // BELOW IS THE CODE WE EXECUTE WHEN OUR DEFAULT PRODUCT CATEGORY IS SELECTED
+                // NEW VALUE IS OUR NEW SELECTED CATEGORY
+                updateListOfItems(newValue)
+                //System.out.println(newValue)
+                //listItemsInCategory.setItems(FXCollections.observableArrayList(store.getProductsInCategory(newValue)))
+        );
     }
+
+    public void updateListOfItems(Object category){
+        listItemsInCategory.setItems(FXCollections.observableArrayList(store.getProductsInCategory(category)));
+    }
+
+    /*
+       public void listProductsToRemove(Event event){
+            if (this.tabRemoveProduct.isSelected()){
+                this.listOfProductsToRemove.setItems(FXCollections.observableArrayList(store.getCatalog()));
+            }
+        }*/
 
     public void login(javafx.event.ActionEvent actionEvent) throws Exception {
         for(int i = 0; i < store.getListOfUsers().size(); i ++) {
@@ -291,11 +307,143 @@ public class Controller{
         }
     }
 
+    public void addProduct(ActionEvent actionEvent){
+        try {
+            // CHECK FOR GENERAL PRODUCTS
+            if (txtProductID.getText() != "" && txtProductName.getText() != "" && txtBrandName.getText() != "" &&
+                    txtProductDesc.getText() != "" && calDateIncorp.getValue() != null){
+                // CHECK FOR ADD CELLPHONE
+                if (txtSerialNum.getText() != "" && txtWarranty.getText() != "" && txtIMEI.getText() != "" &&
+                        txtOS.getText() != "") {
+                    store.addCellphone(txtProductID.getText(), txtProductName.getText(),
+                            txtBrandName.getText(), txtProductDesc.getText(), calDateIncorp.getValue(),
+                            txtSerialNum.getText(), txtWarranty.getText(), txtIMEI.getText(), txtOS.getText());
+                    clearInputs();
+                    Alert success = new Alert(Alert.AlertType.CONFIRMATION, "Cellphone has been added successfully.");
+                    success.show();
+                }
+
+                // CHECK FOR COMPUTER
+                else if (txtSerialNum.getText() != "" && txtWarranty.getText() != "" && txtRAM.getText() != "" &&
+                            txtHardDrive.getText() != "") {
+                        store.addComputer(txtProductID.getText(), txtProductName.getText(),
+                                txtBrandName.getText(), txtProductDesc.getText(), calDateIncorp.getValue(),
+                                txtSerialNum.getText(), txtWarranty.getText(), txtRAM.getText(), txtHardDrive.getText());
+                        clearInputs();
+                    Alert success = new Alert(Alert.AlertType.CONFIRMATION, "Computer has been added successfully.");
+                    success.show();
+                }
+
+                // CHECK FOR ELECTRONIC
+                else if (txtSerialNum.getText() != "" && txtWarranty.getText() != "") {
+                    store.addElectronic(txtProductID.getText(), txtProductName.getText(),
+                            txtBrandName.getText(), txtProductDesc.getText(), calDateIncorp.getValue(),
+                            txtSerialNum.getText(), txtWarranty.getText());
+                    clearInputs();
+                    Alert success = new Alert(Alert.AlertType.CONFIRMATION, "Electronic has been added successfully.");
+                    success.show();
+                }
+
+                // CHECK FOR BOOK
+                else if (txtAuthorName.getText() != "" && calPubDate.getValue() != null && txtNumPages.getText() != "" &&
+                        txtBookEdition.getText() != "") {
+                    store.addBook(txtProductID.getText(), txtProductName.getText(),
+                            txtBrandName.getText(), txtProductDesc.getText(), calDateIncorp.getValue(),
+                            txtAuthorName.getText(), calPubDate.getValue(), Integer.parseInt(txtNumPages.getText()),
+                            Integer.parseInt(txtBookEdition.getText()));
+                    clearInputs();
+                    Alert success = new Alert(Alert.AlertType.CONFIRMATION, "Book has been added successfully.");
+                    success.show();
+                }
+
+                // CHECK FOR HOME PRODUCT
+                 else if (txtIntendedLoc.getText() != "") {
+                        store.addHome(txtProductID.getText(), txtProductName.getText(),
+                                txtBrandName.getText(), txtProductDesc.getText(), calDateIncorp.getValue(),
+                                txtIntendedLoc.getText());
+                     clearInputs();
+                    Alert success = new Alert(Alert.AlertType.CONFIRMATION, "Home Product has been added successfully.");
+                    success.show();
+                    }
+
+                else{
+                    store.addProduct(boxProdType.getValue(), txtProductID.getText(), txtProductName.getText(),
+                            txtBrandName.getText(), txtProductDesc.getText(), calDateIncorp.getValue(), txtSerialNum.getText(),
+                            txtWarranty.getText(), txtIMEI.getText(), txtOS.getText(), txtRAM.getText(), txtHardDrive.getText(),
+                            txtAuthorName.getText(), calPubDate.getValue(), Integer.parseInt(txtNumPages.getText()),
+                            Integer.parseInt(txtBookEdition.getText()), txtIntendedLoc.getText());
+                    Alert success = new Alert(Alert.AlertType.CONFIRMATION, "General has been added successfully.");
+                    success.show();
+                    clearInputs();
+                }
+            }
+            else
+                throw new IllegalArgumentException();
+        /*
+        txtProductID.clear();txtProductName.clear();txtBrandName.clear();txtProductDesc.clear();calDateIncorp.setValue(null);
+        txtSerialNum.clear();txtWarranty.clear();txtIMEI.clear();txtOS.clear();txtRAM.clear();txtHardDrive.clear();
+        txtAuthorName.clear();calPubDate.setValue(null);txtNumPages.clear();txtBookEdition.clear();txtIntendedLoc.clear();
+         */
+        }
+        catch (IllegalArgumentException iae){
+            Alert error = new Alert(Alert.AlertType.ERROR, "Error adding product. Please try again.");
+            error.show();
+        }
+    }
+
+    public void addGeneralProduct (ActionEvent actionEvent){
+        try {
+            store.addProduct(boxProdType.getValue(), txtProductID.getText(), txtProductName.getText(),
+                    txtBrandName.getText(), txtProductDesc.getText(), calDateIncorp.getValue(), txtSerialNum.getText(),
+                    txtWarranty.getText(), txtIMEI.getText(), txtOS.getText(), txtRAM.getText(), txtHardDrive.getText(),
+                    txtAuthorName.getText(), calPubDate.getValue(), Integer.parseInt(txtNumPages.getText()),
+                    Integer.parseInt(txtBookEdition.getText()), txtIntendedLoc.getText());
+            Alert success = new Alert(Alert.AlertType.CONFIRMATION, "General has been added successfully.");
+            success.show();
+        }
+        catch (IllegalArgumentException iae){
+            Alert error = new Alert(Alert.AlertType.ERROR, "Error adding product. Please try again.");
+            error.show();
+        }
+    }
+
+    public void clearInputs(){
+        txtProductID.clear();txtProductName.clear();txtBrandName.clear();txtProductDesc.clear();calDateIncorp.setValue(null);
+        txtSerialNum.clear();txtWarranty.clear();txtIMEI.clear();txtOS.clear();txtRAM.clear();txtHardDrive.clear();
+        txtAuthorName.clear();calPubDate.setValue(null);txtNumPages.clear();txtBookEdition.clear();txtIntendedLoc.clear();
+    }
+
+    public void viewOptionsOnly(){
+        if (this.boxProdType.equals(electronic)){
+            /*
+            LabelIMEI.disableProperty();
+            txtIMEI.disableProperty();
+            LabelOS.disableProperty();
+            txtOS.disableProperty();
+            LabelRAM.disableProperty();
+            txtRAM.disableProperty();
+            LabelHardDrive.disableProperty();
+            txtHardDrive.disableProperty();
+            LabelAuthorName.disableProperty();
+            txtAuthorName.disableProperty();
+            LabelPubDate.disableProperty();
+            calPubDate.disableProperty();
+            labelNumPages.disableProperty();
+            txtNumPages.disableProperty();
+            LabelBookEd.disableProperty();
+            txtBookEdition.disableProperty();
+            LabelIntendedLoc.disableProperty();
+            txtIntendedLoc.disableProperty();
+             */
+        }
+    }
+
     public void addElectronic(ActionEvent actionEvent) {
         try {
             store.addElectronic(txtProductID.getText(), txtProductName.getText(),
                     txtBrandName.getText(), txtProductDesc.getText(), calDateIncorp.getValue(),
                     txtSerialNum.getText(), txtWarranty.getText());
+            clearInputs();
             Alert success = new Alert(Alert.AlertType.CONFIRMATION, "Product has been added successfully.");
             success.show();
         }
@@ -310,6 +458,7 @@ public class Controller{
         store.addCellphone(txtProductID.getText(), txtProductName.getText(),
                 txtBrandName.getText(), txtProductDesc.getText(), calDateIncorp.getValue(),
                 txtSerialNum.getText(), txtWarranty.getText(), txtIMEI.getText(), txtOS.getText());
+        clearInputs();
             Alert success = new Alert(Alert.AlertType.CONFIRMATION, "Product has been added successfully.");
             success.show();
         }
@@ -324,6 +473,7 @@ public class Controller{
         store.addComputer(txtProductID.getText(), txtProductName.getText(),
                 txtBrandName.getText(), txtProductDesc.getText(), calDateIncorp.getValue(),
                 txtSerialNum.getText(), txtWarranty.getText(), txtRAM.getText(), txtHardDrive.getText());
+        clearInputs();
             Alert success = new Alert(Alert.AlertType.CONFIRMATION, "Product has been added successfully.");
             success.show();
         }
@@ -339,6 +489,7 @@ public class Controller{
                 txtBrandName.getText(), txtProductDesc.getText(), calDateIncorp.getValue(),
                 txtAuthorName.getText(), calPubDate.getValue(), Integer.parseInt(txtNumPages.getText()),
                 Integer.parseInt(txtBookEdition.getText()));
+            clearInputs();
             Alert success = new Alert(Alert.AlertType.CONFIRMATION, "Product has been added successfully.");
             success.show();
         }
@@ -353,6 +504,7 @@ public class Controller{
         store.addHome(txtProductID.getText(), txtProductName.getText(),
                 txtBrandName.getText(), txtProductDesc.getText(), calDateIncorp.getValue(),
                 txtIntendedLoc.getText());
+            clearInputs();
             Alert success = new Alert(Alert.AlertType.CONFIRMATION, "Product has been added successfully.");
             success.show();
         }
@@ -394,6 +546,17 @@ public class Controller{
         }
     }
 
+    // LIST ALL PRODUCTS - SEARCH FOR A PRODUCT CUSTOMER CATALOG SIDE
+    public void updateSearchList(Event event){
+        // WHEN SEARCH FOR A PRODUCT TAB IS SELECTED - UPDATE LIST OF PRODUCTS
+        if (this.tabSearchProduct.isSelected()){
+            this.listOfSearchedProducts.setItems(FXCollections.observableArrayList(store.getCatalog()));
+        }
+
+        // NOW WHEN SOMETHING IS SEARCHED BY NAME, WE WANT TO UPDATE THE LIST TO SHOW RELEVANT PRODUCTS
+        // MAYBE WE CAN ACHIEVE THIS BY GETTING A STRING OF PRODUCT NAME AND USING CONTAINS
+    }
+
     public void listProductsToRemove(Event event){
         if (this.tabRemoveProduct.isSelected()){
             this.listOfProductsToRemove.setItems(FXCollections.observableArrayList(store.getCatalog()));
@@ -409,17 +572,11 @@ public class Controller{
 
     // LIST ALL CUSTOMER ORDERS - ADMIN SIDE
     public void listAllCustomerOrders(Event event){
-        try {
-            if (this.tabFinalizedOrderReport.isSelected()) {
-                if (store.getFinalizedListOfCustOrders().size() == 0 | store.getFinalizedListOfCustOrders().equals(null))
-                    throw new IllegalArgumentException();
-                else
-                    this.listAllCustomerOrdersAdmin.setItems(FXCollections.observableArrayList(store.getFinalizedListOfCustOrders()));
-            }
-        }
-        catch (IllegalArgumentException iae){
-            Alert noOrders = new Alert(Alert.AlertType.INFORMATION, "No Finalized orders to display");
-            noOrders.show();
+        if (this.tabFinalizedOrderReport.isSelected()) {
+            if (store.getFinalizedListOfCustOrders().equals(null))
+                throw new IllegalArgumentException();
+            else
+                this.listAllCustomerOrdersAdmin.setItems(FXCollections.observableArrayList(store.getFinalizedListOfCustOrders()));
         }
     }
 
@@ -437,5 +594,13 @@ public class Controller{
             // IF YES = ADD ITEM TO CURRENT OPEN ORDER
             // IF NO = CALL CREATE ORDER FOR USER
     }
+
+    // LIST ALL PRODUCTS - ADMIN SIDE
+    public void listAllProducts(Event event){
+        if (this.tabProductList.isSelected()){
+            this.listOfProducts.setItems(FXCollections.observableArrayList(store.getCatalog()));
+        }
+    }
+
 
 }

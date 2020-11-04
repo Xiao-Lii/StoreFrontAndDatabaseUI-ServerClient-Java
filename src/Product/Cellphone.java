@@ -9,15 +9,15 @@ public class Cellphone extends Electronic {
     private ArrayList<Category> prodCategory;
 
     public Cellphone(String productID, String productName, String brandName, String productDesc,
-                     LocalDate dateOfIncorp, ArrayList<Category> prodCategory, String serialNum,
+                     LocalDate dateOfIncorp, Category selectedCategory, String serialNum,
                      String warrantyPer, String imei, String os) {
-        super(productID, productName, brandName, productDesc, dateOfIncorp, prodCategory, serialNum, warrantyPer);
+        super(productID, productName, brandName, productDesc, dateOfIncorp, selectedCategory, serialNum, warrantyPer);
         this.imei = imei;
         this.os = os;
         this.prodCategory = new ArrayList<Category>();
-        Category electronic = new Category("Cellphone","Cellphone",
-                "Technological entertainment revolving around personal cellphones");
-        this.prodCategory.add(electronic);
+        this.prodCategory.add(selectedCategory);
+        //Category electronic = new Category("Cellphone","Cellphone", "Technological entertainment revolving around personal cellphones");
+        //this.prodCategory.add(electronic);
     }
 
     public Cellphone(String productID, String productName, String brandName, String productDesc,
