@@ -161,14 +161,12 @@
                                     </AnchorPane>
                               </content>
                             </Tab>
-                            <Tab text="Remove">
+                            <Tab fx:id="tabRemoveProduct" onSelectionChanged="#listProductsToRemove" text="Remove">
                               <content>
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                                        <children>
-                                          <GridPane layoutY="38.0" prefHeight="158.0" prefWidth="967.0">
+                                          <GridPane layoutY="38.0" prefHeight="163.0" prefWidth="485.0">
                                              <columnConstraints>
-                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                                              </columnConstraints>
@@ -190,9 +188,10 @@
                                                       <Font name="System Bold" size="19.0" />
                                                    </font>
                                                 </Label>
-                                                <Button fx:id="btnRemoveProduct" mnemonicParsing="false" prefHeight="25.0" prefWidth="241.0" text="Remove Product from Database" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.valignment="TOP" />
+                                                <Button fx:id="btnRemoveProductByID" mnemonicParsing="false" onAction="#removeProductByID" prefHeight="25.0" prefWidth="241.0" text="Remove Product from Database" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.valignment="TOP" />
                                              </children>
                                           </GridPane>
+                                          <ListView fx:id="listOfProductsToRemove" layoutX="524.0" layoutY="38.0" prefHeight="463.0" prefWidth="453.0" />
                                        </children>
                                     </AnchorPane>
                               </content>

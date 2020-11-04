@@ -82,8 +82,11 @@ public class Controller{
 
     // PRODUCT MANAGEMENT - ADMIN APP
     // REMOVE PRODUCT - NESTED TAB IN ADMIN APP
+    public Tab tabRemoveProduct;
     public TextField txtRemoveProductByID;
-    public Button btnRemoveProduct;
+    public Button btnRemoveProductByID;
+    public ListView listOfProductsToRemove;
+    public Button btnRemoveProductBySelection;
 
     // LIST ALL PRODUCTS TAB - ADMIN APP
     public ListView listOfProducts;
@@ -113,9 +116,6 @@ public class Controller{
     // TESTING LOAD FROM FILE FUNCTION - ADMIN SIDE - LEE
     public void loadFromFile(ActionEvent actionEvent) {
         try {
-            if (server.isServerClosed()){
-                throw new Exception();
-            }
 
             StoreSystem.loadFromFile();
             Alert success = new Alert(Alert.AlertType.CONFIRMATION,
@@ -362,6 +362,20 @@ public class Controller{
         }
     }
 
+    public void removeProductByID(ActionEvent actionEvent) {
+        try {
+            store.removeProductByID(txtRemoveProductByID.getText());
+            this.listOfProductsToRemove.setItems(FXCollections.observableArrayList(store.getCatalog()));
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Product removed successfully.");
+            alert.show();
+        }
+        catch (IllegalArgumentException iae){
+            Alert error = new Alert(Alert.AlertType.ERROR, "Product could not be removed. \n" +
+                    "Please verify that the Product ID matches with the product you'd like to remove.");
+            error.show();
+        }
+    }
+
     public void custOrderList(ActionEvent actionEvent) {
         store.countDuplicateItems(this.txtUsername.getText());
     }
@@ -377,6 +391,12 @@ public class Controller{
     public void listProducts(Event event){
         if (this.tabProductList.isSelected()){
             this.listOfProducts.setItems(FXCollections.observableArrayList(store.getCatalog()));
+        }
+    }
+
+    public void listProductsToRemove(Event event){
+        if (this.tabRemoveProduct.isSelected()){
+            this.listOfProductsToRemove.setItems(FXCollections.observableArrayList(store.getCatalog()));
         }
     }
 
@@ -417,6 +437,5 @@ public class Controller{
             // IF YES = ADD ITEM TO CURRENT OPEN ORDER
             // IF NO = CALL CREATE ORDER FOR USER
     }
-
 
 }

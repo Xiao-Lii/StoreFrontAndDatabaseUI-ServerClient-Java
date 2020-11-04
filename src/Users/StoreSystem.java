@@ -1,6 +1,7 @@
 package Users;
 
 import Product.*;
+import org.omg.CORBA.ORB;
 
 import java.io.*;
 import java.security.SecureRandom;
@@ -213,6 +214,7 @@ public class StoreSystem implements Serializable {
         catalog.add(new HomeProduct(productID, productName, brandName, productDesc, dateOfIncorp, intendedLoc));
     }
 
+    // REMOVE A PRODUCT BY PRODUCT SELECTION
     public void removeProduct(Product product){
         for (Product p : catalog) {
             if (catalog.contains(product))
@@ -221,6 +223,23 @@ public class StoreSystem implements Serializable {
                 throw new IllegalArgumentException("ERROR: NO SUCH PRODUCT EXISTS");
         }
     }                   // END OF REMOVE PRODUCT FROM CATALOG METHOD
+
+    // REMOVE PRODUCT BY SEARCHING PRODUCT ID
+    public void removeProductByID(String productID) {
+        try {
+            for (int i = 0; i < catalog.size(); i++) {
+                if (catalog.get(i).getProductID().equalsIgnoreCase(productID)) {
+                    catalog.remove(i);
+                    break;
+                }
+                else
+                    throw new IllegalArgumentException();
+            }
+        }
+        catch (Exception e){
+            throw new IllegalArgumentException();
+        }
+    }
 
     public void addCategory(String catID, String catName, String catDesc) throws IllegalArgumentException {
         if(listOfCategories.size() == 0) {
@@ -256,7 +275,6 @@ public class StoreSystem implements Serializable {
             throw new IllegalArgumentException("Category doesn't exist.");
         }
     }
-
 
     //Customer's credentials should already been authenticated
     public void newOrder(Customer c, Product p) {
@@ -307,6 +325,13 @@ public class StoreSystem implements Serializable {
                 }
             }
         }
+    }
+
+    public ArrayList<Product> getProductsInOrder (Order order){
+        // LOOK AT ORDER
+        // GET LIST OF PRODUCTS IN ORDER
+        // RETURN THAT LIST
+        return null;
     }
 
     // MAY NEED TO REVIEW THIS - SHOULDN'T BE ABLE TO HAVE A CUSTOMER ACCOUNT W/ NO EMAIL, USERNAME, PW
