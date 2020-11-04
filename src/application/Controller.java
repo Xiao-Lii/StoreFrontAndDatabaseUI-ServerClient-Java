@@ -415,6 +415,7 @@ public class Controller{
 
     public void viewOptionsOnly(){
         if (this.boxProdType.equals(electronic)){
+            /*
             LabelIMEI.disableProperty();
             txtIMEI.disableProperty();
             LabelOS.disableProperty();
@@ -433,6 +434,7 @@ public class Controller{
             txtBookEdition.disableProperty();
             LabelIntendedLoc.disableProperty();
             txtIntendedLoc.disableProperty();
+             */
         }
     }
 
