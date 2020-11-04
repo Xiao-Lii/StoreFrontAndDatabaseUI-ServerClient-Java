@@ -62,95 +62,142 @@
                             </children></AnchorPane>
                     </content>
                 </Tab>
-                <Tab text="Product Management">
+                <Tab fx:id="tabProductManagement" onSelectionChanged="#updateDefaultCategoryBox" text="Product Management">
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                             <children>
-                                <GridPane layoutX="14.0" layoutY="33.0" prefHeight="383.0" prefWidth="975.0">
-                                    <columnConstraints>
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                    </columnConstraints>
-                                    <rowConstraints>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                    </rowConstraints>
-                                    <children>
-                                        <Label text="Product Name" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                                        <Label text="Product Description" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-                                        <Label text="Brand Name" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-                                        <Label text="Date Incorporated" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-                                        <Label text="Default Category" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-                                        <Label text="Product ID" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                                        <Label text="Serial Number" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
-                                        <Label text="Length of Warranty" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
-                                        <Label text="IMEI" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
-                                        <Label text="Operating System" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
-                                        <Label text="RAM" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
-                                        <Label text="Hard Drive" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
-                                        <Label text="Author Name" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
-                                        <Label text="Publication Date" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
-                                        <Label text="Number of Pages" GridPane.halignment="CENTER" GridPane.rowIndex="8" />
-                                        <Label text="Book Edition" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="8" />
-                                        <Label GridPane.halignment="CENTER">
-                                            <font>
-                                                <Font size="24.0" />
-                                            </font>
-                                        </Label>
-                                        <Label text="Add a New Product" GridPane.halignment="CENTER">
-                                            <font>
-                                                <Font name="System Bold" size="19.0" />
-                                            </font>
-                                        </Label>
-                                        <TextField fx:id="txtProductID" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                        <TextField fx:id="txtProductName" GridPane.columnIndex="3" GridPane.rowIndex="1" />
-                                        <TextField fx:id="txtBrandName" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                        <TextField fx:id="txtProductDesc" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-                                        <TextField fx:id="txtWarranty" promptText="Required for Electronics" GridPane.columnIndex="3" GridPane.rowIndex="4" />
-                                        <TextField fx:id="txtIMEI" promptText="Required for Cellphones" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                                        <TextField fx:id="txtRAM" promptText="Required for Computers" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                                        <TextField fx:id="txtOS" promptText="Required for Cellphones" GridPane.columnIndex="3" GridPane.rowIndex="5" />
-                                        <TextField fx:id="txtHardDrive" promptText="Required for Computers" GridPane.columnIndex="3" GridPane.rowIndex="6" />
-                                        <TextField fx:id="txtAuthorName" promptText="Required for Books" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-                                        <TextField fx:id="txtNumPages" promptText="Required for Books" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-                                        <TextField fx:id="txtBookEdition" promptText="Required for Books" GridPane.columnIndex="3" GridPane.rowIndex="8" />
-                                        <DatePicker fx:id="calDateIncorp" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-                                        <DatePicker fx:id="calPubDate" promptText="Required for Books" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
-                                        <TextField fx:id="txtSerialNum" promptText="Required for Electronics" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
-                                        <Label text="Intended Location" GridPane.halignment="CENTER" GridPane.rowIndex="9" />
-                                        <TextField fx:id="txtIntendedLoc" promptText="Required for Home Products" GridPane.columnIndex="1" GridPane.rowIndex="9" />
-                                        <ComboBox fx:id="boxProdType" prefWidth="150.0" promptText="Select Category" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-                                    </children>
-                                </GridPane>
-                                <GridPane layoutX="20.0" layoutY="439.0" prefHeight="62.0" prefWidth="964.0">
-                                    <columnConstraints>
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                    </columnConstraints>
-                                    <rowConstraints>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                                    </rowConstraints>
-                                    <children>
-                                        <Button fx:id="btnAddElectronic" mnemonicParsing="false" onAction="#addElectronic" text="Add New Electronic" GridPane.halignment="CENTER" />
-                                        <Button fx:id="btnAddCellphone" mnemonicParsing="false" onAction="#addCellphone" text="Add New Cellphone" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
-                                        <Button fx:id="btnAddComputer" mnemonicParsing="false" onAction="#addComputer" text="Add New Computer" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
-                                        <Button fx:id="btnAddBook" mnemonicParsing="false" onAction="#addBook" text="Add New Book" GridPane.columnIndex="3" GridPane.halignment="CENTER" />
-                                        <Button fx:id="btnAddHome" mnemonicParsing="false" onAction="#addHome" text="Add New Home Product" GridPane.columnIndex="4" GridPane.halignment="CENTER" />
-                                    </children>
-                                </GridPane>
+                        <TabPane layoutX="-1.0" prefHeight="570.0" prefWidth="1000.0" tabClosingPolicy="UNAVAILABLE">
+                          <tabs>
+                            <Tab text="Add">
+                              <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                       <children>
+                                          <GridPane layoutY="35.0" prefHeight="383.0" prefWidth="975.0">
+                                             <columnConstraints>
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                             </columnConstraints>
+                                             <rowConstraints>
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                             </rowConstraints>
+                                             <children>
+                                                <Label text="Product Name" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                                                <Label text="Product Description" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                                                <Label text="Brand Name" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                                                <Label text="Date Incorporated" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+                                                <Label text="Default Category" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+                                                <Label text="Product ID" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                                                <Label text="Serial Number" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+                                                <Label text="Length of Warranty" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+                                                <Label text="IMEI" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
+                                                <Label text="Operating System" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
+                                                <Label text="RAM" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
+                                                <Label text="Hard Drive" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="6" />
+                                                <Label text="Author Name" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
+                                                <Label text="Publication Date" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
+                                                <Label text="Number of Pages" GridPane.halignment="CENTER" GridPane.rowIndex="8" />
+                                                <Label text="Book Edition" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="8" />
+                                                <Label GridPane.halignment="CENTER">
+                                                   <font>
+                                                      <Font size="24.0" />
+                                                   </font>
+                                                </Label>
+                                                <Label text="Add a New Product" GridPane.halignment="CENTER">
+                                                   <font>
+                                                      <Font name="System Bold" size="19.0" />
+                                                   </font>
+                                                </Label>
+                                                <TextField fx:id="txtProductID" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                <TextField fx:id="txtProductName" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+                                                <TextField fx:id="txtBrandName" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                <TextField fx:id="txtProductDesc" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+                                                <TextField fx:id="txtWarranty" promptText="Required for Electronics" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+                                                <TextField fx:id="txtIMEI" promptText="Required for Cellphones" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                                <TextField fx:id="txtRAM" promptText="Required for Computers" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                                                <TextField fx:id="txtOS" promptText="Required for Cellphones" GridPane.columnIndex="3" GridPane.rowIndex="5" />
+                                                <TextField fx:id="txtHardDrive" promptText="Required for Computers" GridPane.columnIndex="3" GridPane.rowIndex="6" />
+                                                <TextField fx:id="txtAuthorName" promptText="Required for Books" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                                                <TextField fx:id="txtNumPages" promptText="Required for Books" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                                                <TextField fx:id="txtBookEdition" promptText="Required for Books" GridPane.columnIndex="3" GridPane.rowIndex="8" />
+                                                <DatePicker fx:id="calDateIncorp" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+                                                <DatePicker fx:id="calPubDate" promptText="Required for Books" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="7" />
+                                                <TextField fx:id="txtSerialNum" promptText="Required for Electronics" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+                                                <Label text="Intended Location" GridPane.halignment="CENTER" GridPane.rowIndex="9" />
+                                                <TextField fx:id="txtIntendedLoc" promptText="Required for Home Products" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+                                                <ComboBox fx:id="boxProdType" prefWidth="150.0" promptText="Select Category" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+                                             </children>
+                                          </GridPane>
+                                          <GridPane layoutX="81.0" layoutY="445.0" prefHeight="61.0" prefWidth="860.0">
+                                             <columnConstraints>
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                             </columnConstraints>
+                                             <rowConstraints>
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                             </rowConstraints>
+                                             <children>
+                                                <Button fx:id="btnAddElectronic" mnemonicParsing="false" onAction="#addElectronic" text="Add New Electronic" GridPane.halignment="CENTER" />
+                                                <Button fx:id="btnAddCellphone" mnemonicParsing="false" onAction="#addCellphone" text="Add New Cellphone" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                                                <Button fx:id="btnAddComputer" mnemonicParsing="false" onAction="#addComputer" text="Add New Computer" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
+                                                <Button fx:id="btnAddBook" mnemonicParsing="false" onAction="#addBook" text="Add New Book" GridPane.columnIndex="3" GridPane.halignment="CENTER" />
+                                                <Button fx:id="btnAddHome" mnemonicParsing="false" onAction="#addHome" text="Add New Home Product" GridPane.columnIndex="4" GridPane.halignment="CENTER" />
+                                             </children>
+                                          </GridPane>
+                                       </children>
+                                    </AnchorPane>
+                              </content>
+                            </Tab>
+                            <Tab fx:id="tabRemoveProduct" onSelectionChanged="#listProductsToRemove" text="Remove">
+                              <content>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                                       <children>
+                                          <GridPane layoutY="38.0" prefHeight="163.0" prefWidth="485.0">
+                                             <columnConstraints>
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                             </columnConstraints>
+                                             <rowConstraints>
+                                                <RowConstraints maxHeight="48.3333740234375" minHeight="10.0" prefHeight="32.66665395100912" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="91.33334604899088" minHeight="10.0" prefHeight="66.66668701171875" vgrow="SOMETIMES" />
+                                                <RowConstraints maxHeight="68.0" minHeight="10.0" prefHeight="57.33331298828125" vgrow="SOMETIMES" />
+                                             </rowConstraints>
+                                             <children>
+                                                <Label text="Product ID" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                                                <Label GridPane.halignment="CENTER">
+                                                   <font>
+                                                      <Font size="24.0" />
+                                                   </font>
+                                                </Label>
+                                                <TextField fx:id="txtRemoveProductByID" promptText="Product ID" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                <Label text="Remove a Product" GridPane.halignment="CENTER">
+                                                   <font>
+                                                      <Font name="System Bold" size="19.0" />
+                                                   </font>
+                                                </Label>
+                                                <Button fx:id="btnRemoveProductByID" mnemonicParsing="false" onAction="#removeProductByID" prefHeight="25.0" prefWidth="241.0" text="Remove Product from Database" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.valignment="TOP" />
+                                             </children>
+                                          </GridPane>
+                                          <ListView fx:id="listOfProductsToRemove" layoutX="524.0" layoutY="38.0" prefHeight="463.0" prefWidth="453.0" />
+                                       </children>
+                                    </AnchorPane>
+                              </content>
+                            </Tab>
+                          </tabs>
+                        </TabPane>
                             </children></AnchorPane>
                     </content>
 
@@ -223,11 +270,6 @@
                                                     </children></AnchorPane>
                                             </content>
                                         </Tab>
-                                        <Tab text="Set Default">
-                                            <content>
-                                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-                                            </content>
-                                        </Tab>
                                     </tabs>
                                 </TabPane>
                             </children></AnchorPane>
@@ -297,19 +339,40 @@
                   </AnchorPane>
                </content>
             </Tab>
-            <Tab text="Exit Admin Application">
+            <Tab text="Admin Options">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <Button fx:id="btnCloseAdminApp" layoutX="366.0" layoutY="157.0" mnemonicParsing="false" onAction="#stopAdminApp" prefHeight="37.0" prefWidth="236.0" text="Yes Please Exit" />
-                        <Label layoutX="26.0" layoutY="47.0" prefHeight="68.0" prefWidth="948.0" text="Are you sure you want to leave the Admin Application?">
-                           <font>
-                              <Font size="39.0" />
-                           </font>
-                        </Label>
-                        <ImageView fitHeight="174.0" fitWidth="305.0" layoutX="630.0" layoutY="124.0" pickOnBounds="true" preserveRatio="true">
+                        <GridPane layoutX="356.0" layoutY="204.0" prefHeight="117.0" prefWidth="616.0">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <Label text="Database Options" GridPane.halignment="CENTER">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Label>
+                              <Button fx:id="btnSaveDatabase" mnemonicParsing="false" onAction="#saveDatabaseToFile" text="Save Database to a File" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                              <Label prefHeight="36.0" prefWidth="111.0" text="Exit Options" GridPane.halignment="CENTER" GridPane.rowIndex="1">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </Label>
+                              <Button fx:id="btnCloseAdminApp" mnemonicParsing="false" onAction="#stopAdminApp" prefHeight="25.0" prefWidth="151.0" text="Exit Admin Application" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                              <Button fx:id="btnLoadDatabase" mnemonicParsing="false" onAction="#loadFromFile" text="Load Database from a File" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
+                           </children>
+                        </GridPane>
+                        <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="107.0" layoutY="147.0" pickOnBounds="true" preserveRatio="true" />
+                        <ImageView fitHeight="273.0" fitWidth="534.0" layoutX="83.0" layoutY="126.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@Resources/sadface2.png" />
+                              <Image url="@Resources/admin.png" />
                            </image>
                         </ImageView>
                      </children></AnchorPane>

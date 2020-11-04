@@ -28,6 +28,8 @@ public class Controller{
     public Button btnLoadData;
     public Button btnStartServer;
     public Button btnCloseAdminApp;
+    public Button btnSaveDatabase;
+    public Button btnLoadDatabase;
     private MultiThreadServer server;
 
     // LOGIN WINDOW
@@ -52,6 +54,8 @@ public class Controller{
     public Button removeCatButton;
 
     // PRODUCT MANAGEMENT - ADMIN APP
+    // ADD PRODUCT - NESTED TAB IN ADMIN APP
+    public Tab tabProductManagement;
     public TextField txtProductID;
     public TextField txtProductName;
     public TextField txtBrandName;
@@ -75,6 +79,14 @@ public class Controller{
     public Button btnAddBook;
     public Button btnAddHome;
     public EventListener eventListener;
+
+    // PRODUCT MANAGEMENT - ADMIN APP
+    // REMOVE PRODUCT - NESTED TAB IN ADMIN APP
+    public Tab tabRemoveProduct;
+    public TextField txtRemoveProductByID;
+    public Button btnRemoveProductByID;
+    public ListView listOfProductsToRemove;
+    public Button btnRemoveProductBySelection;
 
     // LIST ALL PRODUCTS TAB - ADMIN APP
     public ListView listOfProducts;
@@ -101,29 +113,34 @@ public class Controller{
     private StoreSystem store = new StoreSystem();
     Client client;
 
+    // TESTING LOAD FROM FILE FUNCTION - ADMIN SIDE - LEE
     public void loadFromFile(ActionEvent actionEvent) {
-        /*
-        public static StoreSystem loadFromFile(){
-            ObjectInputStream ois = null;
-            StoreSystem storeSystem = null;
+        try {
 
-            try {
-                ois = new ObjectInputStream(new FileInputStream(StoreSystem.filename));
-                storeSystem = (StoreSystem) ois.readObject();
-            } catch (Exception e) {
-                e.printStackTrace();
-                storeSystem = new StoreSystem();
-            } finally {
-                if (ois != null) {
-                    try {
-                        ois.close();
-                    } catch (IOException ioe) {
-                        ioe.printStackTrace();
-                    }
-                }
-            }
-            return storeSystem;
-        } */
+            StoreSystem.loadFromFile();
+            Alert success = new Alert(Alert.AlertType.CONFIRMATION,
+                    "Success. The database has now been preloaded with data from the file.");
+            success.show();
+        }
+        catch (Exception e){
+            Alert error = new Alert(Alert.AlertType.ERROR, "Data could not be uploaded to the server.\n" +
+                    "The server must be running to upload new data into the database.");
+            error.show();
+        }
+    }
+
+    // TESTING SAVE DATABASE TO FILE FUNCTION - ADMIN SIDE - LEE
+    public void saveDatabaseToFile(ActionEvent actionEvent) {
+        try {
+            this.store.saveToFile();
+            Alert success = new Alert(Alert.AlertType.CONFIRMATION,
+                    "The database has been successfully saved.");
+            success.show();
+        }
+        catch (Exception e){
+            Alert error = new Alert(Alert.AlertType.ERROR, "The database could not be saved.");
+            error.show();
+        }
     }
 
     public void startServer(javafx.event.ActionEvent actionEvent) throws IOException {
@@ -155,6 +172,12 @@ public class Controller{
         this.listItemsInCategory = new ListView<>();            // INITIALIZING LIST OF ITEMS IN A CATEGORY - CUSTOMER APP
         client = new Client();
         client.connect();
+    }
+
+    public void updateDefaultCategoryBox(Event event) {
+        if (this.tabProductManagement.isSelected()){
+            boxProdType.setItems(FXCollections.observableArrayList(store.getListOfCategories()));
+        }
     }
 
     public void initialize() {
@@ -204,8 +227,8 @@ public class Controller{
 
     public void login(javafx.event.ActionEvent actionEvent) throws Exception {
         for(int i = 0; i < store.getListOfUsers().size(); i ++) {
-            if ((usernameTextField.getText().equals(store.getListOfUsers().get(i).getDisplayName()) |
-                    usernameTextField.getText().equals(store.getListOfUsers().get(i).getEmail())) &&
+            if ((usernameTextField.getText().equalsIgnoreCase(store.getListOfUsers().get(i).getDisplayName()) |
+                    usernameTextField.getText().equalsIgnoreCase(store.getListOfUsers().get(i).getEmail())) &&
                     passwordTextField.getText().equals(store.getListOfUsers().get(i).getPassword())) {
                 loginConfirmLabel.setText("Login Successful.");
                 loginConfirmLabel.setTextFill(Color.GREEN);
@@ -339,6 +362,20 @@ public class Controller{
         }
     }
 
+    public void removeProductByID(ActionEvent actionEvent) {
+        try {
+            store.removeProductByID(txtRemoveProductByID.getText());
+            this.listOfProductsToRemove.setItems(FXCollections.observableArrayList(store.getCatalog()));
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Product removed successfully.");
+            alert.show();
+        }
+        catch (IllegalArgumentException iae){
+            Alert error = new Alert(Alert.AlertType.ERROR, "Product could not be removed. \n" +
+                    "Please verify that the Product ID matches with the product you'd like to remove.");
+            error.show();
+        }
+    }
+
     public void custOrderList(ActionEvent actionEvent) {
         store.countDuplicateItems(this.txtUsername.getText());
     }
@@ -354,6 +391,12 @@ public class Controller{
     public void listProducts(Event event){
         if (this.tabProductList.isSelected()){
             this.listOfProducts.setItems(FXCollections.observableArrayList(store.getCatalog()));
+        }
+    }
+
+    public void listProductsToRemove(Event event){
+        if (this.tabRemoveProduct.isSelected()){
+            this.listOfProductsToRemove.setItems(FXCollections.observableArrayList(store.getCatalog()));
         }
     }
 
@@ -387,5 +430,12 @@ public class Controller{
         }
     }
 
+
+    // BROWSE CATEGORY - CUSTOMER SIDE APP - ADD ITEM TO CART
+    public void addItemToCart(ActionEvent actionEvent) {
+        // CHECK IF CUSTOMER HAS ANY OPEN ORDERS
+            // IF YES = ADD ITEM TO CURRENT OPEN ORDER
+            // IF NO = CALL CREATE ORDER FOR USER
+    }
 
 }

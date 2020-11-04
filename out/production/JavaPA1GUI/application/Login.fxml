@@ -14,7 +14,7 @@
             <Font size="16.0" />
          </font>
       </Button>
-      <TextField fx:id="usernameTextField" layoutX="50.0" layoutY="87.0" promptText="Username">
+      <TextField fx:id="usernameTextField" layoutX="50.0" layoutY="87.0" promptText="Username or Email">
          <font>
             <Font size="16.0" />
          </font>
