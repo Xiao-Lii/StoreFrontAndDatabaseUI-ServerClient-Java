@@ -4,7 +4,6 @@
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.ScrollBar?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextField?>
@@ -18,36 +17,49 @@
    <children>
       <TabPane layoutX="-1.0" prefHeight="600.0" prefWidth="1000.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
-          <Tab text="Browse Categories">
+          <Tab fx:id="tabBrowseCategories" onSelectionChanged="#listAllCategories" text="Browse Categories">
               <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                      <children>
-                          <GridPane layoutX="85.0" layoutY="88.0" prefHeight="405.0" prefWidth="835.0">
-                              <columnConstraints>
-                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                              </columnConstraints>
-                              <rowConstraints>
-                                  <RowConstraints maxHeight="208.66668701171875" minHeight="10.0" prefHeight="53.666664123535156" vgrow="SOMETIMES" />
-                                  <RowConstraints maxHeight="392.33333079020184" minHeight="10.0" prefHeight="351.66666920979816" vgrow="SOMETIMES" />
-                              </rowConstraints>
-                              <children>
-                                  <Label text="Category:">
-                                      <font>
-                                          <Font size="30.0" />
-                                      </font>
-                                  </Label>
-                                  <Label text="Product List:" GridPane.columnIndex="1">
-                                      <font>
-                                          <Font size="30.0" />
-                                      </font>
-                                  </Label>
-                                  <ListView fx:id="catalogCategories" onContextMenuRequested="#custCatalogList" prefHeight="359.0" prefWidth="418.0" GridPane.rowIndex="1" />
-                                  <ListView fx:id="catalogProducts" onContextMenuRequested="#custProductList" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                              </children>
-                          </GridPane>
-                      </children></AnchorPane>
+                     <children>
+                        <GridPane layoutX="242.0" layoutY="88.0">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                        </GridPane>
+                        <GridPane layoutX="14.0" layoutY="14.0" prefHeight="462.0" prefWidth="975.0">
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="400.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="10.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="400.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints maxHeight="197.5" minHeight="10.0" prefHeight="53.5" vgrow="SOMETIMES" />
+                              <RowConstraints maxHeight="488.0" minHeight="10.0" prefHeight="422.5" vgrow="SOMETIMES" />
+                           </rowConstraints>
+                           <children>
+                              <Label text="List of Categories">
+                                 <font>
+                                    <Font size="28.0" />
+                                 </font>
+                              </Label>
+                              <Label text="Items In Category" GridPane.columnIndex="2">
+                                 <font>
+                                    <Font size="28.0" />
+                                 </font>
+                              </Label>
+                              <ListView fx:id="listBrowseListOfCategories" prefHeight="450.0" prefWidth="500.0" GridPane.rowIndex="1" />
+                              <ListView fx:id="listItemsInCategory" prefHeight="419.0" prefWidth="455.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                           </children>
+                        </GridPane>
+                        <Button fx:id="btnAddItemToCart" layoutX="874.0" layoutY="506.0" mnemonicParsing="false" text="Add Item to Cart" />
+                     </children></AnchorPane>
               </content>
           </Tab>
           <Tab text="Search for a Product">
@@ -55,68 +67,92 @@
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                       <children>
-                          <GridPane layoutX="121.0" layoutY="45.0" prefHeight="165.0" prefWidth="443.0">
+                          <GridPane layoutX="214.0" layoutY="142.0" prefHeight="252.0" prefWidth="557.0">
                               <columnConstraints>
-                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="679.6666717529297" minWidth="10.0" prefWidth="241.66666666666666" />
-                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="679.6666717529297" minWidth="10.0" prefWidth="262.0000203450521" />
+                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="408.33331298828125" minWidth="10.0" prefWidth="221.33331298828125" />
+                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="679.6666717529297" minWidth="10.0" prefWidth="262.0000203450521" />
                               </columnConstraints>
                               <rowConstraints>
-                                  <RowConstraints maxHeight="107.33334350585938" minHeight="10.0" prefHeight="38.666656494140625" vgrow="SOMETIMES" />
-                                  <RowConstraints maxHeight="107.33334350585938" minHeight="0.0" prefHeight="20.66667683919271" vgrow="SOMETIMES" />
-                                  <RowConstraints maxHeight="227.0" minHeight="0.0" prefHeight="24.666671752929688" vgrow="SOMETIMES" />
-                                  <RowConstraints maxHeight="298.33333333333337" minHeight="4.666681925455734" prefHeight="24.66666158040364" vgrow="SOMETIMES" />
-                                  <RowConstraints maxHeight="298.33333333333337" minHeight="10.0" prefHeight="30.999989827473968" vgrow="SOMETIMES" />
+                                  <RowConstraints maxHeight="107.33334350585938" minHeight="10.0" prefHeight="53.66666666666667" vgrow="SOMETIMES" />
+                                  <RowConstraints maxHeight="107.33334350585938" minHeight="0.0" prefHeight="60.33333333333334" vgrow="SOMETIMES" />
+                                  <RowConstraints maxHeight="227.0" minHeight="0.0" prefHeight="57.0" vgrow="SOMETIMES" />
+                                  <RowConstraints maxHeight="298.33333333333337" minHeight="4.666681925455734" prefHeight="36.333343505859375" vgrow="SOMETIMES" />
+                                  <RowConstraints maxHeight="298.33333333333337" minHeight="10.0" prefHeight="48.66668701171875" vgrow="SOMETIMES" />
                               </rowConstraints>
                               <children>
                                   <Label text="Category:" GridPane.rowIndex="1" />
                                   <Label text="Product Keyword:" GridPane.rowIndex="2" />
-                                  <Label prefHeight="39.0" prefWidth="249.0" text="Product Search:">
+                                  <Label GridPane.rowIndex="3" />
+                                  <Label prefHeight="39.0" prefWidth="249.0" text="Search products:">
                                       <font>
                                           <Font size="27.0" />
                                       </font>
                                   </Label>
-                                  <TextField fx:id="userCatInput" text="e.g.: &quot;Home Decor&quot;, &quot;Electronics&quot;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                  <TextField fx:id="userProdInput" text="e.g.: &quot;Book&quot;, &quot;Cellphone&quot;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                  <CheckBox fx:id="prodAvailability" mnemonicParsing="false" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="3" />
-                              <Button fx:id="resetSearch" mnemonicParsing="false" text="Reset Search Fields" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
-                              <Button fx:id="search" mnemonicParsing="false" text="Search" GridPane.halignment="RIGHT" GridPane.rowIndex="4" />
-                              <Label text="Show in-stock products only:" GridPane.rowIndex="3" />
+                                  <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                  <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                  <CheckBox mnemonicParsing="false" text="Available" GridPane.rowIndex="4" />
+                                  <CheckBox mnemonicParsing="false" text="Unavailable" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                               </children>
                           </GridPane>
-                        <GridPane layoutX="121.0" layoutY="248.0" prefHeight="269.0" prefWidth="789.0">
+                      </children></AnchorPane>
+              </content>
+          </Tab>
+            <Tab fx:id="tabShoppingCart" text="Shopping Cart">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <GridPane layoutX="14.0" layoutY="14.0" prefHeight="462.0" prefWidth="975.0">
                           <columnConstraints>
-                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="400.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="10.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="400.0" />
+                          </columnConstraints>
+                          <rowConstraints>
+                            <RowConstraints maxHeight="197.5" minHeight="10.0" prefHeight="53.5" vgrow="SOMETIMES" />
+                            <RowConstraints maxHeight="488.0" minHeight="10.0" prefHeight="422.5" vgrow="SOMETIMES" />
+                          </rowConstraints>
+                           <children>
+                              <Label text="Order Summary">
+                                 <font>
+                                    <Font size="28.0" />
+                                 </font>
+                              </Label>
+                              <Label text="Items In Order" GridPane.columnIndex="2">
+                                 <font>
+                                    <Font size="28.0" />
+                                 </font>
+                              </Label>
+                              <ListView fx:id="listCustOrderSummary" prefHeight="450.0" prefWidth="500.0" GridPane.rowIndex="1" />
+                              <ListView fx:id="listCustItemsInOrder" prefHeight="419.0" prefWidth="455.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                           </children>
+                        </GridPane>
+                        <GridPane layoutX="15.0" layoutY="497.0" prefHeight="47.0" prefWidth="973.0">
+                          <columnConstraints>
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="207.0" minWidth="10.0" prefWidth="167.5" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="304.5" minWidth="10.0" prefWidth="170.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="358.0" minWidth="10.0" prefWidth="155.0" />
+                              <ColumnConstraints hgrow="SOMETIMES" maxWidth="384.0" minWidth="10.0" prefWidth="244.0" />
+                            <ColumnConstraints hgrow="SOMETIMES" maxWidth="236.5" minWidth="10.0" prefWidth="236.5" />
                           </columnConstraints>
                           <rowConstraints>
                             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
-                              <ListView prefHeight="251.0" prefWidth="789.0" />
-                              <ScrollBar orientation="VERTICAL" GridPane.halignment="RIGHT" />
+                              <Button fx:id="btnRemoveItem" mnemonicParsing="false" text="Remove Item From Cart" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
+                              <Button fx:id="btnFinalizeOrder" mnemonicParsing="false" text="Finalize Order" GridPane.columnIndex="4" GridPane.halignment="CENTER" />
+                              <Button fx:id="btnIncreaseQty" mnemonicParsing="false" text="Increase Quantity of Item" GridPane.halignment="CENTER" />
+                              <Button fx:id="btnDecreaseQty" mnemonicParsing="false" text="Decrease Quantity of Item" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                              <Button fx:id="btnCancelOrder" mnemonicParsing="false" text="Cancel Order" GridPane.columnIndex="3" GridPane.halignment="CENTER" />
                            </children>
                         </GridPane>
-                      </children></AnchorPane>
-              </content>
-          </Tab>
-            <Tab text="Account Overview">
-               <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <ListView layoutX="40.0" layoutY="85.0" prefHeight="450.0" prefWidth="389.0" />
-                        <Label layoutX="40.0" layoutY="40.0" text="Order Summary">
-                           <font>
-                              <Font size="28.0" />
-                           </font>
-                        </Label>
-                        <ListView layoutX="567.0" layoutY="80.0" prefHeight="450.0" prefWidth="389.0" />
-                        <Label layoutX="567.0" layoutY="40.0" text="Items In Order">
-                           <font>
-                              <Font size="28.0" />
-                           </font>
-                        </Label>
                      </children>
                   </AnchorPane>
                </content>
+            </Tab>
+            <Tab text="Untitled Tab">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              </content>
             </Tab>
         </tabs>
       </TabPane>
