@@ -1,4 +1,4 @@
-## JavaPAOne - CSCI 3920 Programming Assignment for PA#1
+## Store Front GUI w/ Database Management GUI - Java Programming Assignment #1
 
 ### Program Summary
 Upon the start of the program, it will prompt the user if they'd like to:
