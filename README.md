@@ -31,6 +31,6 @@ Products that are added through the designated Default Category buttons at the b
 Must of the Customer GUI is not complete nor functional due to the nature of not being able to pre-load in data. 
 
 ### ----------- Team Members -----------
-    Xiao-Lii    -   Lee Phonthongsy
+    Xiao-Lii    -   Lee P
     rinv12      -   Rin(Loureen) Viloria 
     rrk01       -   Rizzul(Ryan Karki)
